@@ -1,0 +1,27 @@
+{
+  "name": "log1x/sage-directives",
+  "type": "package",
+  "description": "A set of Blade directives for use with Roots Sage.",
+  "keywords": [
+    "roots",
+    "sage",
+    "wordpress",
+    "blade"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Brandon Nifong",
+      "email": "brandon@tendency.me"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "src/Directives.php",
+      "src/Utilities.php"
+    ]
+  },
+  "require": {
+    "php": ">=7.0"
+  }
+}
