@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Directives;
-
 use function App\sage;
 
 /**
@@ -38,6 +37,10 @@ if (!class_exists('Directives')) {
              * Register Directives with Blade
              */
             add_action('after_setup_theme', function () use ($directives) {
+                if (!function_exists('App\sage')) {
+                    return;
+                }
+
                 collect($directives)->each(function ($directive, $function) {
                     sage('blade')->compiler()->directive($function, $directive);
                 });
