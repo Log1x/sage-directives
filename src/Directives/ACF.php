@@ -19,8 +19,8 @@ return [
         return "<?php if (have_rows({$expression})) : while (have_rows({$expression})) : the_row(); ?>";
     },
 
-    /** Create @endFields Blade directive */
-    'endFields' => function () {
+    /** Create @endfields Blade directive */
+    'endfields' => function () {
         return "<?php endwhile; endif; ?>";
     },
 
@@ -34,13 +34,13 @@ return [
         return "<?= get_field({$expression}); ?>";
     },
 
-    /** Create @getField() Blade directive */
-    'getField' => function ($expression) {
+    /** Create @getfield() Blade directive */
+    'getfield' => function ($expression) {
         return "<?php return get_field({$expression}); ?>";
     },
 
-    /** Create @hasField() Blade directive */
-    'hasField' => function ($expression) {
+    /** Create @hasfield() Blade directive */
+    'hasfield' => function ($expression) {
         if (count(Util::Args($expression)) > 1) {
             [$key, $value] = Util::Args($expression);
             return "<?php if (get_field({$key})[{$value}]) : ?>";
@@ -49,14 +49,14 @@ return [
         return "<?php if (get_field({$expression})) : ?>";
     },
 
-    /** Create @isField() Blade directive */
-    'isField' => function ($expression) {
+    /** Create @isfield() Blade directive */
+    'isfield' => function ($expression) {
         [$name, $value] = Util::Args($expression);
         return "<?php if (get_field({$name}) == {$value}): ?>";
     },
 
-    /** Create @endField Blade directive */
-    'endField' => function () {
+    /** Create @endfield Blade directive */
+    'endfield' => function () {
         return "<?php endif; ?>";
     },
 
@@ -70,13 +70,13 @@ return [
         return "<?= get_sub_field({$expression}); ?>";
     },
 
-    /** Create @getSub() Blade directive */
-    'getSub' => function ($expression) {
+    /** Create @getsub() Blade directive */
+    'getsub' => function ($expression) {
         return "<?php return get_sub_field({$expression}); ?>";
     },
 
-    /** Create @hasSub() Blade directive */
-    'hasSub' => function ($expression) {
+    /** Create @hassub() Blade directive */
+    'hassub' => function ($expression) {
         if (count(Util::Args($expression)) > 1) {
             [$key, $value] = Util::Args($expression);
             return "<?php if (get_sub_field({$key})[{$value}]) : ?>";
@@ -85,14 +85,14 @@ return [
         return "<?php if (get_sub_field({$expression})) : ?>";
     },
 
-    /** Create @isSub() Blade directive */
-    'isSub' => function ($expression) {
+    /** Create @issub() Blade directive */
+    'issub' => function ($expression) {
         [$name, $value] = Util::Args($expression);
         return "<?php if (get_sub_field({$name}) == {$value}) : ?>";
     },
 
-    /** Create @endSub Blade directive */
-    'endSub' => function () {
+    /** Create @endsub Blade directive */
+    'endsub' => function () {
         return "<?php endif; ?>";
     },
 
@@ -101,8 +101,8 @@ return [
         return "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
-    /** Create @endLayouts Blade directive */
-    'endLayouts' => function () {
+    /** Create @endlayouts Blade directive */
+    'endlayouts' => function () {
         return "<?php endwhile; ?>";
     },
 
@@ -111,8 +111,8 @@ return [
         return "<?php if (get_row_layout() == {$expression}) : ?>";
     },
 
-    /** Create @endLayout Blade directive */
-    'endLayout' => function () {
+    /** Create @endlayout Blade directive */
+    'endlayout' => function () {
         return "<?php endif; ?>";
     },
 
@@ -121,8 +121,8 @@ return [
         return "<?php if (have_rows({$expression})) : while (have_rows({$expression})) : the_row(); ?>";
     },
 
-    /** Create @endGroup Blade directive */
-    'endGroup' => function () {
+    /** Create @endgroup Blade directive */
+    'endgroup' => function () {
         return "<?php endwhile; endif; ?>";
     },
 
@@ -131,13 +131,13 @@ return [
         return "<?= get_field({$expression}, 'option'); ?>";
     },
 
-    /** Create @hasOption () Blade directive */
-    'hasOption' => function ($expression) {
+    /** Create @hasoption () Blade directive */
+    'hasoption' => function ($expression) {
         return "<?php if (get_field({$expression}, 'option')) : ?>";
     },
 
-    /** Create @endOption Blade directive */
-    'endOption' => function () {
+    /** Create @endoption Blade directive */
+    'endoption' => function () {
         return "<?php endif; ?>";
     },
 
@@ -146,13 +146,13 @@ return [
         return "<?php if (have_rows({$expression}, 'options')) : while (have_rows({$expression}, 'options')) : the_row(); ?>";
     },
 
-    /** Create @endOptions Blade directive */
-    'endOptions' => function () {
+    /** Create @endoptions Blade directive */
+    'endoptions' => function () {
         return "<?php endwhile; endif; ?>";
     },
 
-    /** Create @endFields Blade directive */
-    'endFields' => function () {
+    /** Create @endfields Blade directive */
+    'endfields' => function () {
         return "<?php endwhile; endif; ?>";
     },
 ];

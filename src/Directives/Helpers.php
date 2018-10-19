@@ -47,16 +47,6 @@ return [
         return "<?php @extract({$expression}); ?>";
     },
 
-    /** Create @dump() Blade directive */
-    'dump' => function ($obj) {
-        return "<?php App\\dump({$obj}); ?>";
-    },
-
-    /** Create @console() Blade directive */
-    'console' => function ($obj) {
-        return "<?php App\\console({$obj}); ?>";
-    },
-
     /** Create @explode() Blade directive */
     'explode' => function ($expression) {
         [$delimiter, $string] = Util::Args($expression);

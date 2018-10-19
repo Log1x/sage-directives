@@ -25,7 +25,7 @@ return [
     },
 
     /** Create @endposts Blade directive */
-    'endPosts' => function () {
+    'endposts' => function () {
         return '<?php endwhile; wp_reset_postdata(); ?>';
     },
 
