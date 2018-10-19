@@ -16,17 +16,17 @@ return [
 
     /** Create @query() Blade directive */
     'query' => function ($expression) {
-        return "<?php \$bladeQuery = new WP_Query({$expression}); ?>";
+        return "<?php global \$query; \$query = new WP_Query({$expression}); ?>";
     },
 
     /** Create @posts Blade directive */
     'posts' => function () {
-        return '<?php while ($bladeQuery->have_posts()) : $bladeQuery->the_post(); ?>';
+        return '<?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>';
     },
 
     /** Create @endposts Blade directive */
     'endposts' => function () {
-        return '<?php endwhile; wp_reset_postdata(); ?>';
+        return '<?php endwhile; wp_reset_postdata(); endif; ?>';
     },
 
     /** Create @shortcode() Blade directive */

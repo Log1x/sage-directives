@@ -126,12 +126,12 @@ return [
         return "<?php endwhile; endif; ?>";
     },
 
-    /** Create @option () Blade directive */
+    /** Create @option() Blade directive */
     'option' => function ($expression) {
         return "<?= get_field({$expression}, 'option'); ?>";
     },
 
-    /** Create @hasoption () Blade directive */
+    /** Create @hasoption() Blade directive */
     'hasoption' => function ($expression) {
         return "<?php if (get_field({$expression}, 'option')) : ?>";
     },
