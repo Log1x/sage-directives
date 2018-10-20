@@ -3,12 +3,15 @@
 namespace App\Directives;
 
 /**
- * Directives
+ * Return if Directives already exists.
  */
 if (class_exists('Directives')) {
     return;
 }
 
+/**
+ * Directives
+ */
 class Directives
 {
     /**
@@ -27,19 +30,23 @@ class Directives
      */
     public function __construct()
     {
-        $directives = collect($this->directives)->flatMap(function ($directive) {
-            if ($directive === 'ACF' && !function_exists('acf')) {
-                return;
-            }
+        /**
+         * Collect Directives into a flattened array.
+         */
+        $directives = collect($this->directives)
+            ->flatMap(function ($directive) {
+                if ($directive === 'ACF' && !function_exists('acf')) {
+                    return;
+                }
 
-            return $this->get($directive);
-        });
+                return $this->get($directive);
+            });
 
         /**
          * Register Directives with Blade
          */
         add_action('after_setup_theme', function () use ($directives) {
-            if (!function_exists('\App\sage')) {
+            if (!function_exists('App\sage')) {
                 return;
             }
 
