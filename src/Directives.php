@@ -5,60 +5,62 @@ namespace App\Directives;
 /**
  * Directives
  */
-if (!class_exists('Directives')) {
-    class Directives
+if (class_exists('Directives')) {
+    return;
+}
+
+class Directives
+{
+    /**
+     * Directives
+     *
+     * @var array
+     */
+    protected $directives = [
+        'ACF',
+        'Helpers',
+        'WordPress'
+    ];
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        /**
-         * Directives
-         *
-         * @var array
-         */
-        protected $directives = [
-            'ACF',
-            'Helpers',
-            'WordPress'
-        ];
-
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-            $directives = collect($this->directives)->flatMap(function ($directive) {
-                if ($directive === 'ACF' && !function_exists('acf')) {
-                    return;
-                }
-
-                return $this->get($directive);
-            });
-
-            /**
-             * Register Directives with Blade
-             */
-            add_action('after_setup_theme', function () use ($directives) {
-                if (!function_exists('\App\sage')) {
-                    return;
-                }
-
-                collect($directives)->each(function ($directive, $function) {
-                    \App\sage('blade')->compiler()->directive($function, $directive);
-                });
-            }, 20);
-        }
-
-        /**
-         * Returns the specified directives as an array.
-         *
-         * @param  string $name
-         * @return array
-         */
-        public function get($name)
-        {
-            if (file_exists($directives = __DIR__.'/Directives/'.$name.'.php')) {
-                return require_once($directives);
+        $directives = collect($this->directives)->flatMap(function ($directive) {
+            if ($directive === 'ACF' && !function_exists('acf')) {
+                return;
             }
-        }
+
+            return $this->get($directive);
+        });
+
+        /**
+         * Register Directives with Blade
+         */
+        add_action('after_setup_theme', function () use ($directives) {
+            if (!function_exists('\App\sage')) {
+                return;
+            }
+
+            collect($directives)->each(function ($directive, $function) {
+                \App\sage('blade')->compiler()->directive($function, $directive);
+            });
+        }, 20);
     }
 
-    new Directives();
+    /**
+     * Returns the specified directives as an array.
+     *
+     * @param  string $name
+     * @return array
+     */
+    public function get($name)
+    {
+        if (file_exists($directives = __DIR__.'/Directives/'.$name.'.php')) {
+            return require_once($directives);
+        }
+    }
 }
+
+new Directives();
