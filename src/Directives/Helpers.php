@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Directives;
-use App\Util;
 
 return [
 
@@ -15,14 +14,16 @@ return [
     */
 
     /** Create @asset() Blade directive */
-    'asset' => function ($asset) {
-        return "<?= App\\asset_path({$asset}); ?>";
+    'asset' => function ($expression) {
+        return "<?= App\\asset_path({$expression}); ?>";
     },
 
     /** Create @condition() Blade directive */
     'condition' => function ($expression) {
-        [$condition, $value] = Util::Args($expression);
-        return "<?php if ($condition) { echo $value; } ?>";
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+            return "<?php if ({$expression->get(0)}) { echo {$expression->get(1)}; } ?>";
+        }
     },
 
     /** Create @global() Blade directive */
@@ -32,30 +33,35 @@ return [
 
     /** Create @set() Blade directive */
     'set' => function ($expression) {
-        [$name, $value] = Util::Args($expression);
-        return "<?php $name = $value; ?>";
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+            return "<?php {$expression->get(0)} = {$expression->get(1)}; ?>";
+        }
     },
 
     /** Create @unset() Blade directive */
     'unset' => function ($expression) {
-        $expression = Util::Args($expression);
-        return "<?php unset {$expression}; ?>";
+        return "<?php unset({$expression}); ?>";
     },
 
     /** Create @extract() Blade directive */
     'extract' => function ($expression) {
-        return "<?php @extract({$expression}); ?>";
+        return "<?php extract({$expression}); ?>";
     },
 
     /** Create @explode() Blade directive */
     'explode' => function ($expression) {
-        [$delimiter, $string] = Util::Args($expression);
-        return "<?= explode({$delimiter}, {$string}); ?>";
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+            return "<?= explode({$expression->get(0)}, {$expression->get(1)}); ?>";
+        }
     },
 
     /** Create @implode() Blade directive */
     'implode' => function ($expression) {
-        [$delimiter, $array] = Util::Args($expression);
-        return "<?= implode({$delimiter}, {$array}); ?>";
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+            return "<?= implode({$expression->get(0)}, {$expression->get(1)}); ?>";
+        }
     },
 ];
