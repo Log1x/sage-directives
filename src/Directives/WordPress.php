@@ -20,9 +20,14 @@ return [
     },
 
     /** Create @posts Blade directive */
-    'posts' => function () {
-        return "<?php if (\$query->have_posts()) : ?>".
-               "<?php while (\$query->have_posts()) : \$query->the_post(); ?>";
+    'posts' => function ($expression) {
+        if ($expression) {
+            return "<?php if ({$expression}->have_posts()) : ?>".
+                "<?php while ({$expression}->have_posts()) : {$expression}->the_post(); ?>";
+        }
+
+        return "<?php if (have_posts()) : ?>".
+            "<?php while (have_posts()) : the_post(); ?>";
     },
 
     /** Create @endposts Blade directive */
