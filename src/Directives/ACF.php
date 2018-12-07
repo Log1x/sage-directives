@@ -92,14 +92,6 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (!empty($expression->get(2)) && !is_string($expression->get(2))) {
-                return "<?= get_sub_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
-            }
-
-            if (!is_string($expression->get(1))) {
-                return "<?= get_sub_field({$expression->get(0)}, {$expression->get(1)})";
-            }
-
             return "<?= get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
         }
 
@@ -111,14 +103,6 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (!empty($expression->get(2)) && !is_string($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
-            }
-
-            if (!is_string($expression->get(1))) {
-                return "<?php if (get_sub_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
-            }
-
             return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
         }
 
@@ -129,10 +113,6 @@ return [
     'issub' => function ($expression) {
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
-
-            if (!empty($expression->get(2)) && !is_string($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)}, {$expression->get(2)}) == {$expression->get(1)}) : ?>";
-            }
 
             return "<?php if (get_sub_field({$expression->get(0)}) == {$expression->get(1)}) : ?>";
         }
@@ -191,12 +171,27 @@ return [
 
     /** Create @option() Blade directive */
     'option' => function ($expression) {
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?= get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
+        }
+
         return "<?= get_field({$expression}, 'option'); ?>";
     },
 
     /** Create @hasoption() Blade directive */
     'hasoption' => function ($expression) {
         return "<?php if (get_field({$expression}, 'option')) : ?>";
+    },
+
+    /** Create @isoption() Blade directive */
+    'isoption' => function ($expression) {
+        if (str_contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?php if (get_field({$expression->get(0)}, 'option') == {$expression->get(1)}) : ?>";
+        }
     },
 
     /** Create @endoption Blade directive */
@@ -206,17 +201,12 @@ return [
 
     /** Create @options() Blade directive */
     'options' => function ($expression) {
-        return "<?php if (have_rows({$expression}, 'options')) : ?>".
-               "<?php while (have_rows({$expression}, 'options')) : the_row(); ?>";
+        return "<?php if (have_rows({$expression}, 'option')) : ?>".
+               "<?php while (have_rows({$expression}, 'option')) : the_row(); ?>";
     },
 
     /** Create @endoptions Blade directive */
     'endoptions' => function () {
-        return "<?php endwhile; endif; ?>";
-    },
-
-    /** Create @endfields Blade directive */
-    'endfields' => function () {
         return "<?php endwhile; endif; ?>";
     },
 ];

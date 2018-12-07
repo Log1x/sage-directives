@@ -22,7 +22,9 @@ return [
     'condition' => function ($expression) {
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
-            return "<?php if ({$expression->get(0)}) { echo {$expression->get(1)}; } ?>";
+            return "<?php if ({$expression->get(0)}) : ?>".
+                   "<?= {$expression->get(1)} ?>".
+                   "<?php endif; ?>";
         }
     },
 
