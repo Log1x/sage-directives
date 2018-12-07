@@ -24,11 +24,12 @@ Once Sage Directives is installed with Composer, it is automatically loaded and 
 | :----------------------- | :--------------------- | :----------------------- | :----------------------- |
 | [@query](#query)         | [@fields](#fields)     | [@layouts](#layouts)     | [@condition](#condition) |
 | [@posts](#posts)         | [@field](#field)       | [@layout](#layout)       | [@global](#global)       |
-| [@shortcode](#shortcode) | [@hasfield](#hasfield) | [@group](#group)         | [@set](#set)             |
-| [@user](#user)           | [@isfield](#isfield)   | [@option](#option)       | [@unset](#unset)         |
-| [@guest](#guest)         | [@sub](#sub)           | [@hasoption](#hasoption) | [@extract](#extract)     |
-|                          | [@hassub](#hassub)     | [@isoption](#isoption)   | [@explode](#explode)     |
-|                          | [@issub](#issub)       | [@options](#options)     | [@implode](#implode)     |
+| [@title](#title)         | [@hasfield](#hasfield) | [@group](#group)         | [@set](#set)             |
+| [@content](#content)     | [@isfield](#isfield)   | [@option](#option)       | [@unset](#unset)         |
+| [@excerpt](#excerpt)     | [@sub](#sub)           | [@hasoption](#hasoption) | [@extract](#extract)     |
+| [@shortcode](#shortcode) | [@hassub](#hassub)     | [@isoption](#isoption)   | [@explode](#explode)     |
+| [@user](#user)           | [@issub](#issub)       | [@options](#options)     | [@implode](#implode)     |
+| [@guest](#guest)         |                        |                          |                          |
 
 ### WordPress
 
