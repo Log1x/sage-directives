@@ -1,5 +1,7 @@
 # Sage Directives
 
+[![Latest Stable Version](https://poser.pugx.org/log1x/sage-directives/v/stable)](https://packagist.org/packages/log1x/sage-directives) [![Total Downloads](https://poser.pugx.org/log1x/sage-directives/downloads)](https://packagist.org/packages/log1x/sage-directives)
+
 Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9.
 
 ## Requirements
