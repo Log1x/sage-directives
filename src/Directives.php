@@ -70,4 +70,6 @@ class Directives
     }
 }
 
-new Directives();
+if (function_exists('add_action')) {
+    new Directives();
+}
