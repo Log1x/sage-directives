@@ -24,8 +24,14 @@ return [
         if (!empty($expression)) {
             return "<?php if (is_a({$expression}, 'WP_Query')) : ?>".
                    "<?php \$query = {$expression}; ?>".
+                   "<?php elseif (is_a({$expression}, 'WP_Post')) : ?>".
+                   "<?php \$query = new WP_Query(['p'=>({$expression})->ID]); ?>".
+                   "<?php elseif (is_numeric({$expression})) : ?>".
+                   "<?php \$query = new WP_Query(['p'=>{$expression}]); ?>".
                    "<?php elseif (is_array({$expression})) : ?>".
-                   "<?php \$query = new WP_Query(['posts_per_page'=>-1,'post__in'=>{$expression}]); ?>".
+                   "<?php \$map = function(\$value) { return is_a(\$value, 'WP_Post') ? \$value->ID : \$value; }; ?>".
+                   "<?php \$post_in = array_map(\$map, {$expression}); ?>".
+                   "<?php \$query = new WP_Query(['posts_per_page'=>-1,'post__in'=>\$post_in,'ignore_sticky_posts'=>true]); ?>".
                    "<?php else : ?>".
                    "<?php global \$wp_query; ?>".
                    "<?php \$query = \$wp_query; ?>".
