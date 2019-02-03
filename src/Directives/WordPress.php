@@ -22,8 +22,16 @@ return [
     /** Create @posts Blade directive */
     'posts' => function ($expression) {
         if (!empty($expression)) {
-            return "<?php if ({$expression}->have_posts()) : ?>".
-                   "<?php while ({$expression}->have_posts()) : {$expression}->the_post(); ?>";
+            return "<?php if (is_a({$expression}, 'WP_Query')) : ?>".
+                   "<?php \$query = {$expression}; ?>".
+                   "<?php elseif (is_array({$expression})) : ?>".
+                   "<?php \$query = new WP_Query(['posts_per_page'=>-1,'post__in'=>{$expression}]); ?>".
+                   "<?php else : ?>".
+                   "<?php global \$wp_query; ?>".
+                   "<?php \$query = \$wp_query; ?>".
+                   "<?php endif; ?>".
+                   "<?php if (\$query->have_posts()) : ?>".
+                   "<?php while (\$query->have_posts()) : \$query->the_post(); ?>";
         }
 
         return "<?php if (empty(\$query)) : ?>".
