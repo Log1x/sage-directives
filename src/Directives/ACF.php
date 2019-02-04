@@ -18,7 +18,7 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)}) : ?>".
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
