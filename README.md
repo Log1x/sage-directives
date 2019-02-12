@@ -2,12 +2,12 @@
 
 [![Latest Stable Version](https://poser.pugx.org/log1x/sage-directives/v/stable)](https://packagist.org/packages/log1x/sage-directives) [![Total Downloads](https://poser.pugx.org/log1x/sage-directives/downloads)](https://packagist.org/packages/log1x/sage-directives)
 
-Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9.
+Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9 including directives for WordPress, ACF, and various miscellaneous helpers.
 
 ## Requirements
 
 - [Sage](https://github.com/roots/sage) >= 9.0
-- [PHP](https://secure.php.net/manual/en/install.php) >= 7.0
+- [PHP](https://secure.php.net/manual/en/install.php) >= 7.1.3
 - [Composer](https://getcomposer.org/download/)
 
 ## Installation
@@ -22,16 +22,27 @@ composer require log1x/sage-directives
 
 Once Sage Directives is installed with Composer, it is automatically loaded and is ready for use. If a directive appears to not be rendering properly, please make sure you clear your Blade cache before further debugging or opening an issue.
 
-| [WordPress](#wordpress)  | [ACF](#acf)            |                          | [Helpers](#helpers)      |
-| :----------------------- | :--------------------- | :----------------------- | :----------------------- |
-| [@query](#query)         | [@fields](#fields)     | [@layouts](#layouts)     | [@condition](#condition) |
-| [@posts](#posts)         | [@field](#field)       | [@layout](#layout)       | [@global](#global)       |
-| [@title](#title)         | [@hasfield](#hasfield) | [@group](#group)         | [@set](#set)             |
-| [@content](#content)     | [@isfield](#isfield)   | [@option](#option)       | [@unset](#unset)         |
-| [@excerpt](#excerpt)     | [@sub](#sub)           | [@hasoption](#hasoption) | [@extract](#extract)     |
-| [@shortcode](#shortcode) | [@hassub](#hassub)     | [@isoption](#isoption)   | [@explode](#explode)     |
-| [@user](#user)           | [@issub](#issub)       | [@options](#options)     | [@implode](#implode)     |
-| [@guest](#guest)         |                        |                          |                          |
+|  [WordPress](#wordpress) |                          |       [ACF](#acf)      |                          |     [Helpers](#helpers)    |                                |
+|:------------------------:|:------------------------:|:----------------------:|:------------------------:|:--------------------------:|--------------------------------|
+|     [@query](#query)     |      [@user](#user)      |   [@fields](#fields)   |     [@group](#group)     |     [@istrue](#istrue)     | [@extract](#extract)           |
+|     [@posts](#posts)     |     [@guest](#guest)     |    [@field](#field)    |    [@option](#option)    |    [@isfalse](#isfalse)    | [@explode](#explode)           |
+|     [@title](#title)     | [@shortcode](#shortcode) | [@hasfield](#hasfield) | [@hasoption](#hasoption) |     [@isnull](#isnull)     | [@implode](#implode)           |
+|   [@content](#content)   |    [@wpauto](#wpautop)   |  [@isfield](#isfield)  |  [@isoption](#isoption)  |  [@isnotnull](#isnotnull)  | [@repeat](#repeat)             |
+|   [@excerpt](#excerpt)   |  [@wpautokp](#wpautokp)  |      [@sub](#sub)      |   [@options](#options)   | [@instanceof](#instanceof) | [@style](#style)               |
+|    [@author](#author)    |                          |   [@hassub](#hassub)   |                          |     [@typeof](#typeof)     | [@script](#script)             |
+| [@authorurl](#authorurl) |                          |    [@issub](#issub)    |                          |     [@global](#global)     | [@js](#js)                     |
+| [@published](#published) |                          |  [@layouts](#layouts)  |                          |        [@set](#set)        | [@inline](#inline)             |
+|  [@modified](#modified)  |                          |   [@layout](#layout)   |                          |      [@unset](#unset)      | [@fa](#fa--fas--far--fal--fab) |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
+|                          |                          |                        |                          |                            |                                |
 
 ### WordPress
 
@@ -66,16 +77,16 @@ The following directives are specific to WordPress core functionality.
 @endposts
 ```
 
-If an instance of `WP_Query` is passed to `@posts` as a variable, it will use that instead.
+If an instance of `WP_Query` is passed to `@posts`, it will use that instead:
 
 ```php
 @php
-  $My_Query = new WP_Query([
+  $query = new WP_Query([
     'post_type' => 'post'
   ]);
 @endphp
 
-@posts($My_Query)
+@posts($query)
   <h2 class="entry-title">@title</h2>
   <div class="entry-content">
     @content
@@ -83,20 +94,53 @@ If an instance of `WP_Query` is passed to `@posts` as a variable, it will use th
 @endposts
 ```
 
-If `$query` is not defined and a variable is not passed to `@posts`, it will use the main loop from the `$wp_query` global.
+Additionally, you can pass a single post ID, post object, or an array containing a mixture of the two:
+
+```php
+@posts(12)
+  <h2 class="entry-title">@title</h2>
+  <div class="entry-content">
+    @content
+  </div>
+@endposts
+  
+@posts(get_post(4))
+  <h2 class="entry-title">@title</h2>
+  <div class="entry-content">
+    @content
+  </div>
+@endposts
+  
+@posts([6, get_post(9), 3])
+  <h2 class="entry-title">@title</h2>
+  <div class="entry-content">
+    @content
+  </div>
+@endposts
+```
+
+When passing an array of ID's / objects, the posts will be sorted by the order of the array.
+
+If `@query` is not used and an argument is not passed to `@posts`, it will use the main loop from the `$wp_query` global.
 
 #### @title
 
-`@title` simply echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/). It can also accept a specific post as a parameter.
+`@title` echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
 
 ```php
 @title
-@title(123)
+```
+
+To echo the title of a specific post, you can pass the post ID or a `WP_Post` instance as a second parameter:
+
+```php
+@title(1)
+@title(get_post(1))
 ```
 
 #### @content
 
-`@content` simply echo's the current posts content using [`the_content()`](https://developer.wordpress.org/reference/functions/the_content/).
+`@content` echo's the current posts content using [`the_content()`](https://developer.wordpress.org/reference/functions/the_content/).
 
 ```php
 @content
@@ -104,15 +148,110 @@ If `$query` is not defined and a variable is not passed to `@posts`, it will use
 
 #### @excerpt
 
-`@excerpt` simply echo's the current posts excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
+`@excerpt` echo's the current posts excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
 
 ```php 
 @excerpt
 ```
 
+#### @author
+
+`@author` echo's the author of the current posts display name.
+
+```php
+@author
+```
+
+To echo the display name of a specific author, you can pass the author's ID as a second parameter:
+
+```php
+@author(1)
+```
+
+#### @authorurl
+
+`@authorurl` echo's the author of the current posts archive URL.
+
+```php
+<span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="@authorurl" itemprop="url">
+    <span class="fn" itemprop="name" rel="author">@author</span>
+  </a>
+</span>
+```
+
+To echo the URL of a specific author, you can pass the author's ID as a second parameter:
+
+```php
+<a href="@authorurl">@author</a>
+```
+
+#### @published
+
+`@published` echo's the current posts published date. By default, it uses the date format set in `Settings > General`.
+
+```php
+@date
+```
+
+To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
+
+```php
+<time class="entry-time">
+  <span>@date('F j, Y')</span>
+  <span itemprop="datePublished" content="@date('c')"></span>
+</time>
+```
+
+To echo the published date of a specific post, you can pass a post ID or an instance of `WP_Post` as the first parameter:
+
+```php
+@date(1)
+@date(get_post(1))
+```
+
+To format the published date of a specific post, you can pass the format as the first parameter, and the post ID or instance of `WP_Post` as the second parameter:
+
+```php
+@date('F j, Y', 1)
+@date('F j, Y', get_post(1))
+```
+
+#### @modified
+
+`@modified` is similar to `@published`, but instead echo's the current posts last modified date. By default, it uses the date format set in `Settings > General`.
+
+```php
+@date
+```
+
+To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
+
+```php
+<time class="entry-time">
+  <span>@date('F j, Y')</span>
+  <span itemprop="datePublished" content="@date('c')"></span>
+  <span itemprop="dateModified" class="updated" content="@modified('c')"></span>
+</time>
+```
+
+To echo the modified date of a specific post, you can pass a post ID or an instance of `WP_Post` as the first parameter:
+
+```php
+@modified(1)
+@modified(get_post(1))
+```
+
+To format the modified date of a specific post, you can pass the format as the first parameter, and the post ID or instance of `WP_Post` as the second parameter:
+
+```php
+@modified('F j, Y', 1)
+@modified('F j, Y', get_post(1))
+```
+
 #### @shortcode
 
-`@shortcode` simply echo's the provided shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).
+`@shortcode` echo's the specified shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).
 
 ```php
 @shortcode('[my-shortcode]')
@@ -130,12 +269,28 @@ If `$query` is not defined and a variable is not passed to `@posts`, it will use
 
 #### @guest
 
-`@guest` is a simple `!is_user_logged_in()` conditional to display specific content only when a user is not logged in. It can be closed using `@endguest`.
+`@guest` is a simple `! is_user_logged_in()` conditional to display specific content only when a user is not logged in. It can be closed using `@endguest`.
 
 ```php
 @guest
   You must be <a href="/wp-login.php">logged in</a> to view this content.
 @endguest
+```
+
+#### @wpautop
+
+`@wpautop` runs a passed string through [`wpautop()`](https://codex.wordpress.org/Function_Reference/wpautop) and echo's the output.
+
+```php
+@wpautop($content)
+```
+
+#### @wpautokp
+
+`@wpautokp` does the same as `@wpautop` but also sanitizes the string with [`wp_kses_post()`](https://codex.wordpress.org/Function_Reference/wp_kses_post).
+
+```php
+@wpautokp($content)
 ```
 
 ### ACF
@@ -144,18 +299,33 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
 
 #### @field
 
-`@field` does what you would expect it to do and echo's the specified field using `get_field()`. In an attempt to help keep things clean, it can also intelligently accept parameters to assist in pulling specific values if your field happens to be an array (e.g. an image field). This is done simply by checking if the second parameter passed is a string.
+`@field` echo's the specified field using `get_field()`.
 
 ```php
 @field('text')
-@field('text', 123)         // Returns the text field from post ID 123.
-@field('image', 'url')      // If image is an array, returns the url value.
-@field('image', 'url', 123) // If image is an array, returns the url value for post ID 123.
+```
+
+To echo a field for a specific post, you can pass a post ID as a second parameter:
+
+```php
+@field('text', 1)
+```
+
+If the field you are echoing is an array, you can pass the array key as a second parameter:
+
+```php
+@field('image', 'url')
+```
+
+To echo a field for a specific post that is also an array, you can pass the post ID as a third parameter:
+
+```php
+@field('image', 'url', 1)
 ```
 
 #### @hasfield
 
-`@hasfield` is a simple conditional checking if the specified field returns a value. Similar to `@field`, it accepts parameters to check array values as well as the post ID in the event you need your conditional to be specific. It can be closed using `@endfield`.
+`@hasfield` is a simple conditional checking if the specified field exists and is not empty. It can be closed using `@endfield`.
 
 ```php
 @hasfield('list')
@@ -165,7 +335,23 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
     @fields
   </ul>
 @endfield
+```
 
+To check the existance of a field for a specific post, you can pass a post ID as a second parameter:
+
+```php
+@hasfield('list', 5)
+  <ul>
+    @fields('list', 5)
+      <li>@sub('item')</li>
+    @fields
+  </ul>
+@endfield
+```
+
+If the field you are checking against is an array, you can pass the array key as a second parameter:
+
+```php
 @hasfield('image', 'url')
   <figure class="image">
     <img src="@field('image', 'url')" alt="@field('image', 'alt')" />
@@ -173,23 +359,53 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
 @endfield
 ```
 
+To check the existance of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
+
+```php
+@hasfield('image', 'url', 1)
+  <figure class="image">
+    <img src="@field('image', 'url', 1)" alt="@field('image', 'alt', 1)" />
+  </figure>
+@endfield
+```
+
 #### @isfield
 
-`@isfield` is a simple conditional for checking if your field value equals a specified value. As a third parameter, it accepts a post ID. It can be closed using `@endfield`.
+`@isfield` is a simple conditional for checking if your field value equals a specified value. It can be closed using `@endfield`.
 
 ```php
 @isfield('cta_type', 'phone')
-  <i class="fa fa-phone"></i>
+  <i class="fas fa-phone"></i>
 @endfield
+```
 
-@isfield('cta_type', 'phone', 123)
-  <i class="fa fa-phone"></i>
+To check the field value of a specific post, you can pass a post ID as a third parameter:
+
+```php
+@isfield('cta_type', 'phone', 1)
+  <i class="fas fa-phone"></i>
+@endfield
+```
+
+If the field you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
+
+```php
+@isfield('cta', 'type', 'phone')
+  <i class="fas fa-phone"></i>
+@endfield
+```
+
+To check the field value of a field that is an array for a specific post, you can pass the array key as a second parameter, the value you are checking against as a third parameter, and the post ID as a fourth parameter:
+
+```php
+@isfield('cta', 'type', 'phone', 1)
+  <i class="fas fa-phone"></i>
 @endfield
 ```
 
 #### @fields
 
-`@fields` acts as a helper for handling repeater fields. It is wrapped with a [`have_rows()`](https://www.advancedcustomfields.com/resources/have_rows/) conditional, and if it returns true, begins the while loop followed by `the_row()`. It can be closed using `@endfields`.
+`@fields` acts as a helper for handling repeater fields. It is wrapped with a [`have_rows()`](https://www.advancedcustomfields.com/resources/have_rows/) conditional, and if it exists and is not empty, begins the while loop followed by `the_row()`. It can be closed using `@endfields`.
 
 ```php
 <ul>
@@ -199,19 +415,19 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
 </ul>
 ```
 
-Optionally, it can be passed a post ID:
+To retrieve fields for a specific post, you can pass a post ID as a second parameter:
 
 ```php
-@fields('list', 123)
-  [...]
-@endfields
+<ul>
+  @fields('list', 1)
+    <li>@sub('item')</li>
+  @endfields
+</ul>
 ```
 
 #### @sub
 
-`@sub` does what you would expect it to do and echo's the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
-
-Similar to `@field`, it can also accept a second parameter allowing you to return a value if the sub field is an array. More examples of `@sub` can be found within' the repeatable field examples listed above.
+`@sub` echo's the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
 
 ```php
 <ul>
@@ -219,7 +435,11 @@ Similar to `@field`, it can also accept a second parameter allowing you to retur
     <li>@sub('item')</li>
   @endfields
 </ul>
+```
 
+If the sub field is an array, you can pass the key as a second parameter:
+
+```php
 <ul class="slider">
   @fields('slides')
     <li class="slide">
@@ -229,17 +449,21 @@ Similar to `@field`, it can also accept a second parameter allowing you to retur
 </ul>
 ```
 
+More usage of `@sub` can be found alongside the examples of the repeatable fields listed above.
+
 #### @hassub
 
-`@hassub` is a simple conditional checking if the specified sub field returns a value.
-
-Similar to `@hasfield`, it also accepts a second parameter to check an array value. It can be closed using `@endsub`.
+`@hassub` is a simple conditional checking if the specified field exists and is not empty. It can be closed using `@endsub`.
 
 ```php
 @hassub('icon')
-  <i class="fa @sub('icon')"></i>
+  <i class="fas fa-@sub('icon')"></i>
 @endsub
+```
 
+If the sub field you are checking against is an array, you can pass the array key as a second parameter:
+
+```php
 @hassub('image', 'url')
   <img src="@sub('image', 'url')" alt="@sub('image', 'alt')" />
 @endsub
@@ -251,22 +475,32 @@ Similar to `@hasfield`, it also accepts a second parameter to check an array val
 
 ```php
 @issub('icon', 'arrow')
-  <i class="fa fa-arrow-up fa-rotate-90"></i>
+  <i class="fas fa-arrow-up fa-rotate-90"></i>
+@endsub
+```
+
+If the sub field you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
+
+```php
+@issub('icon', 'name', 'arrow')
+  <i class="fas fa-@sub('icon', 'value') fa-rotate-90"></i>
 @endsub
 ```
 
 #### @layouts
 
-`@layouts` acts as a helper for handling flexible content fields. Under the hood, it is essentially the exact same as `@fields`, but is provided to allow for a more clean, readable code-base in conjunction with `@layout` which calls `get_row_layout()`.
-
-As with `@fields`, it accepts a post ID as a second parameter. It can be closed using `@endlayouts`.
+`@layouts` acts as a helper for handling flexible content fields. Under the hood, it is essentially the exact same as `@fields`, but is provided to allow for a more clean, readable code-base in conjunction with `@layout` which calls `get_row_layout()`. It can be closed using `@endlayouts`.
 
 ```php
 @layouts('components')
   [...]
 @endlayouts
+```
 
-@layouts('components', 123)
+To retrieve layouts for a specific post, you can pass a post ID as a second parameter:
+
+```php
+@layouts('components', 1)
   [...]
 @endlayouts
 ```
@@ -317,7 +551,7 @@ Using `@layouts`, this allows you to have a rather clean view when displaying yo
 
 #### @group
 
-`@group` acts as a helper for handling group fields. Under the hood, it is essentially the exact same as `@fields` and thus serves as a simple alias for code readability purposes. Which one you prefer is entirely up to you. It can be closed using `@endgroup`.
+`@group` acts as a helper for handling grouped fields. Under the hood, it is essentially the exact same as `@fields` and thus serves as a simple alias for code readability purposes. Which one you prefer is entirely up to you. It can be closed using `@endgroup`.
 
 ```php
 @group('button')
@@ -329,13 +563,29 @@ Using `@layouts`, this allows you to have a rather clean view when displaying yo
 @endgroup
 ```
 
+To retrieve a group for a specific post, you can pass a post ID as a second parameter:
+
+```php
+@group('button', 1)
+  @hassub('url')
+    <a href="@sub('url')" class="button button--@sub('color')">
+      @sub('label')
+    </a>
+  @endsub
+@endgroup
+```
+
 #### @option
 
-`@option` echo's the specified theme options field using `get_field($field, 'option')`. As with the other field directives, it accepts a second parameter allowing you to retrieve a value if the option field returns an array.
+`@option` echo's the specified theme options field using `get_field($field, 'option')`.
 
 ```php
 Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
+```
 
+If the option is an array, you can pass the key as a second parameter:
+
+```php
 <div class="navbar-brand">
   <a class="navbar-item" href="{{ home_url() }}">
     <img src="@option('logo', 'url')" alt="{{ get_bloginfo('name', 'display') }}" />
@@ -345,11 +595,27 @@ Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
 
 #### @hasoption
 
-`@hasoption` is a simple conditional checking if the specified theme option field returns a value. It can be closed using `@endoption`.
+`@hasoption` is a simple conditional checking if the specified theme option field exists and is not empty. It can be closed using `@endoption`.
 
 ```php
 @hasoption('facebook_url')
   Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
+@endoption
+```
+
+If the option you are checking against is an array, you can pass the array key as a second parameter:
+
+```php
+@hasoption('facebook', 'url')
+  <a href="@option('facebook', 'url')" target="_blank">
+    @hasoption('facebook', 'icon')
+      <span class="icon">
+        <i class="fas @option('facebook', 'icon')"></i>
+      </span>
+    @else 
+      <span class="label">Facebook</span>
+    @endoption
+  </a>
 @endoption
 ```
 
@@ -358,14 +624,22 @@ Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
 `@isoption` is a simple conditional for checking if your theme option field equals a specified value. It can be closed using `@endoption`.
 
 ```php
-@isoption('logo_type', 'svg')
-  [...]
+@isoption('logo_type', 'image')
+  <img src="@option('logo')" alt="{{ get_bloginfo('name', 'display') }}" />
+@endoption
+```
+
+If the option you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
+
+```php
+@isoption('logo', 'type', 'image')
+  <img src="@option('logo', 'url')" alt="{{ get_bloginfo('name', 'display') }}" />
 @endoption
 ```
 
 #### @options
 
-`@options` acts as a helper for handling repeater and group fields within' your theme options. Under the hood, it is essentially the exact same as `@fields` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
+`@options` acts as a helper for handling repeater and group fields within' your theme options. Under the hood, it is essentially the exact same as `@fields` and `@group` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
 
 ```php
 @hasoption('social')
@@ -374,7 +648,9 @@ Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
       <li>
         <a href="@sub('url')" target="_blank">
           @hassub('icon')
-            <i class="icon fa-@sub('icon')"></i>
+            <span class="icon">
+              <i class="fas fa-@sub('icon')"></i>
+            </span>
           @endsub
           <span>@sub('platform')</span>
         </a>
@@ -389,23 +665,93 @@ Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
 
 The following directives are generalized helpers in an attempt to avoid using `@php` and `@endphp` where it isn't absolutely necessary.
 
-#### @condition
+#### @istrue
 
-`@condition` is a simple `if` condition that checks the first parameter passed, and if it equals true, echo's the value passed in the second parameter.
+`@istrue` is a simple conditional that displays the specified output if the parameter passed exists and returns true. It can be closed using `@endistrue`.
 
 ```php
-@if ($phone = App::phone())
-  Call us at <a href="#">{{ App::phone() }}</a>
-@endif
+@istrue($variable)
+  Hello World
+@endistrue
+```
 
-<a href="#" class="text @condition($phone, 'is-hidden-mobile')">
-  Visit our website
-</a>
+Alternatively, you can pass the output as a second parameter:
+
+```php
+@istrue($variable, 'Hello World')
+```
+
+#### @isfalse
+
+`@isfalse` is a simple conditional that displays the specified output if the parameter passed exists but returns false. It can be closed using `@endisfalse`.
+
+```php
+@isfalse($variable)
+  Goodbye World
+@endistrue
+```
+
+Alternatively, you can pass the output as a second parameter:
+
+```php
+@isfalse($variable, 'Goodbye World')
+```
+
+#### @isnull
+
+`@isnull` is a simple conditional that displays the specified output if the parameter passed is null. It can be closed using `@endisnull`.
+
+```php
+@isnull($variable)
+  There is nothing here.
+@endisnull
+```
+
+Alternatively, you can pass the output as a second parameter:
+
+```php
+@isnull($variable, 'There is nothing here.')
+```
+
+#### @isnotnull
+
+`@isnotnull` is a simple conditional that displays the specified output if the parameter passed exists and is not null. It can be closed using `@endisnotnull`.
+
+```php
+@isnotnull($variable)
+  There is something here.
+@endisnull
+```
+
+Alternatively, you can pass the output as a second parameter:
+
+```php
+@isnotnull($variable, 'There is something here.')
+```
+
+#### @instanceof
+
+`@instanceof` checks if the first parameter is an instance of the second parameter. It can be closed using `@endinstanceof`.
+
+```php
+@instanceof($post, 'WP_Post')
+  The post ID is {{ $post->ID }}.
+@endinstanceof
+```
+
+#### @typeof
+
+`@typeof` checks if the first parameter is of a specified type. It can be closed using `@endtypeof`.
+
+```php
+@typeof(14, 'integer')
+  This is a whole number.
+@endtypeof
 ```
 
 #### @global
 
-`@global` global's the specified variable.
+`@global` globals the specified variable.
 
 ```php
 @global($post)
@@ -429,7 +775,7 @@ The following directives are generalized helpers in an attempt to avoid using `@
 
 #### @extract
 
-`@extract` extracts the passed array into variables. I find this particularly useful when I want to make my views customizable when passing parameters to `@include` but also having default values set within' the view.
+`@extract` extracts the passed array into variables. This can be useful for making views customizable when passing parameters to `@include` but also having default values set within' the view.
 
 ```php
 // single.blade.php
@@ -460,4 +806,94 @@ The following directives are generalized helpers in an attempt to avoid using `@
 ```php
 @implode(', ' ['dog', 'cat', 'mouse', 'snake'])
 // dog, cat, mouse, snake
+```
+
+#### @repeat
+
+`@repeat` repeats its contents a specified number of times. It can be closed using `@endrepeat`.
+
+```php
+<ul>
+  @repeat(5)
+    <li>{{ $loop->iteration }}</li>
+  @endrepeat
+</ul>
+```
+
+Similar to Laravel's native looping, a `$loop` variable is available inside of `@repeat`:
+
+```php
+@repeat(5)
+  @if ($loop->first)
+    This is the first iteration.
+  @endif
+  
+  @if ($loop->last)
+    This is the last iteration.
+  @endif
+  
+  This is iteration {{ $loop->iteration }} out of $loop->count. 
+  There are {{ $loop->remaining }} iterations left.
+  The current iteration index is {{ $loop->index }}
+@endrepeat
+```
+
+#### @style
+
+`@style` allows you to quickly inline a block of CSS or define a path to a stylesheet. When being used for inline CSS, it can be closed using `@endstyle`.
+
+```php
+@style
+  .button {
+    background-color: LightGreen;
+    color: white;
+    padding: 0.75rem 1rem;
+  }
+@endstyle
+  
+@style('/path/to/style.css')
+```
+
+#### @script
+
+`@script` allows you to quickly inline a block of Javascript or define a path to a script. When being used for inline JS, it can be closed using `@endscript`.
+
+```php
+@script
+  console.log('Hello World')
+@endscript
+  
+@script('/path/to/script.js')
+```
+
+#### @js
+
+`@js` allows you to declare inline Javascript variables similar to [wp_add_inline_script()](https://developer.wordpress.org/reference/functions/wp_add_inline_script/). The passed value can be in the form of a string or an array.
+
+```php
+@js('hello', 'world')
+  
+// <script>
+//   window.hello = 'world';
+// </script>
+```
+
+#### @inline
+
+`@inline` loads the contents of a CSS, JS, or HTML file inline into your view and wraps the content with the proper HTML tag depending on the file extension. By default, the path is set to your current theme directory.
+
+```php
+@inline('dist/styles/critical.css')
+```
+
+#### @fa
+
+`@fa` and its related directives serve as helpers for quickly outputting Font Awesome icons. `@fa` is for Font Awesome 4, while `@fas`, `@far`, `@fal`, and `@fab` are for their corrosponding Font Awesome 5 variation.
+
+```php
+@fa('arrow-up', 'optional-css-classes')
+@fas('arrow-down', 'optional-css-classes')
+@far('arrow-left', 'optional-css-classes')
+@fal('arrow-right', 'optional-css-classes')
+@fab('twitter', 'optional-css-classes')
 ```

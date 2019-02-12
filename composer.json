@@ -14,7 +14,8 @@
     "roots",
     "sage",
     "wordpress",
-    "blade"
+    "blade",
+    "directives"
   ],
   "support": {
     "issues": "https://github.com/log1x/sage-directives/issues"
@@ -26,6 +27,6 @@
     ]
   },
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.1"
   }
 }

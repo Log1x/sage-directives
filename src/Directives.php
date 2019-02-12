@@ -35,7 +35,7 @@ class Directives
          */
         $directives = collect($this->directives)
             ->flatMap(function ($directive) {
-                if ($directive === 'ACF' && !function_exists('acf')) {
+                if ($directive === 'ACF' && ! function_exists('acf')) {
                     return;
                 }
 
@@ -46,7 +46,7 @@ class Directives
          * Register Directives with Blade
          */
         add_action('after_setup_theme', function () use ($directives) {
-            if (!function_exists('App\sage')) {
+            if (! function_exists('App\sage')) {
                 return;
             }
 
