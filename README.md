@@ -181,30 +181,30 @@ To echo the URL of a specific author, you can pass the author's ID as a second p
 `@published` echo's the current posts published date. By default, it uses the date format set in `Settings > General`.
 
 ```php
-@date
+@published
 ```
 
 To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
 
 ```php
 <time class="entry-time">
-  <span>@date('F j, Y')</span>
-  <span itemprop="datePublished" content="@date('c')"></span>
+  <span>@published('F j, Y')</span>
+  <span itemprop="datePublished" content="@published('c')"></span>
 </time>
 ```
 
 To echo the published date of a specific post, you can pass a post ID or an instance of `WP_Post` as the first parameter:
 
 ```php
-@date(1)
-@date(get_post(1))
+@published(1)
+@published(get_post(1))
 ```
 
 To format the published date of a specific post, you can pass the format as the first parameter, and the post ID or instance of `WP_Post` as the second parameter:
 
 ```php
-@date('F j, Y', 1)
-@date('F j, Y', get_post(1))
+@published('F j, Y', 1)
+@published('F j, Y', get_post(1))
 ```
 
 #### @modified
@@ -212,15 +212,15 @@ To format the published date of a specific post, you can pass the format as the 
 `@modified` is similar to `@published`, but instead echo's the current posts last modified date. By default, it uses the date format set in `Settings > General`.
 
 ```php
-@date
+@modified
 ```
 
 To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
 
 ```php
 <time class="entry-time">
-  <span>@date('F j, Y')</span>
-  <span itemprop="datePublished" content="@date('c')"></span>
+  <span>@published('F j, Y')</span>
+  <span itemprop="datePublished" content="@published('c')"></span>
   <span itemprop="dateModified" class="updated" content="@modified('c')"></span>
 </time>
 ```
