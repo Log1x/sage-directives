@@ -165,20 +165,12 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @extract / @explode / @implode
+    | @extract / @implode
     |---------------------------------------------------------------------
     */
 
     'extract' => function ($expression) {
         return "<?php extract({$expression}); ?>";
-    },
-
-    'explode' => function ($expression) {
-        if (str_contains($expression, ',')) {
-            $expression = Util::parse($expression);
-
-            return "<?= explode({$expression->get(0)}, {$expression->get(1)}); ?>";
-        }
     },
 
     'implode' => function ($expression) {
