@@ -106,7 +106,7 @@ return [
 
     'published' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_number({$expression})) : ?>".
+            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
                    "<?= get_the_date('', {$expression}); ?>".
                    "<?php endif; ?>".
 
@@ -118,7 +118,7 @@ return [
 
     'modified' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_number({$expression})) : ?>".
+            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
                    "<?= get_the_modified_date('', {$expression}); ?>".
                    "<?php endif; ?>".
 
