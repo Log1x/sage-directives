@@ -109,13 +109,13 @@ Additionally, you can pass a single post ID, post object, or an array containing
 @endposts
 ```
 
-When passing an array of ID's / objects, the posts will be sorted by the order of the array.
+When passing an array of IDs / objects, the posts will be sorted by the order of the array.
 
 If `@query` is not used and an argument is not passed to `@posts`, it will use the main loop from the `$wp_query` global.
 
 #### @title
 
-`@title` echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
+`@title` echoes the current post's title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
 
 ```php
 @title
@@ -130,7 +130,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 #### @content
 
-`@content` echo's the current posts content using [`the_content()`](https://developer.wordpress.org/reference/functions/the_content/).
+`@content` echoes the current post's content using [`the_content()`](https://developer.wordpress.org/reference/functions/the_content/).
 
 ```php
 @content
@@ -138,7 +138,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 #### @excerpt
 
-`@excerpt` echo's the current posts excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
+`@excerpt` echoes the current post's excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
 
 ```php 
 @excerpt
@@ -146,7 +146,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 #### @author
 
-`@author` echo's the author of the current posts display name.
+`@author` echoes the author of the current post's display name.
 
 ```php
 @author
@@ -160,7 +160,7 @@ To echo the display name of a specific author, you can pass the author's ID as a
 
 #### @authorurl
 
-`@authorurl` echo's the author of the current posts archive URL.
+`@authorurl` echoes the author of the current post's archive URL.
 
 ```php
 <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,7 +178,7 @@ To echo the URL of a specific author, you can pass the author's ID as a second p
 
 #### @published
 
-`@published` echo's the current posts published date. By default, it uses the date format set in `Settings > General`.
+`@published` echoes the current post's published date. By default, it uses the date format set in `Settings > General`.
 
 ```php
 @published
@@ -209,7 +209,7 @@ To format the published date of a specific post, you can pass the format as the 
 
 #### @modified
 
-`@modified` is similar to `@published`, but instead echo's the current posts last modified date. By default, it uses the date format set in `Settings > General`.
+`@modified` is similar to `@published`, but instead echoes the current post's last modified date. By default, it uses the date format set in `Settings > General`.
 
 ```php
 @modified
@@ -241,7 +241,7 @@ To format the modified date of a specific post, you can pass the format as the f
 
 #### @shortcode
 
-`@shortcode` echo's the specified shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).
+`@shortcode` echoes the specified shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).
 
 ```php
 @shortcode('[my-shortcode]')
@@ -269,7 +269,7 @@ To format the modified date of a specific post, you can pass the format as the f
 
 #### @wpautop
 
-`@wpautop` runs a passed string through [`wpautop()`](https://codex.wordpress.org/Function_Reference/wpautop) and echo's the output.
+`@wpautop` runs a passed string through [`wpautop()`](https://codex.wordpress.org/Function_Reference/wpautop) and echoes the output.
 
 ```php
 @wpautop($content)
@@ -289,7 +289,7 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
 
 #### @field
 
-`@field` echo's the specified field using `get_field()`.
+`@field` echoes the specified field using `get_field()`.
 
 ```php
 @field('text')
@@ -327,7 +327,7 @@ To echo a field for a specific post that is also an array, you can pass the post
 @endfield
 ```
 
-To check the existance of a field for a specific post, you can pass a post ID as a second parameter:
+To check the existence of a field for a specific post, you can pass a post ID as a second parameter:
 
 ```php
 @hasfield('list', 5)
@@ -349,7 +349,7 @@ If the field you are checking against is an array, you can pass the array key as
 @endfield
 ```
 
-To check the existance of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
+To check the existence of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
 
 ```php
 @hasfield('image', 'url', 1)
@@ -417,7 +417,7 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 
 #### @sub
 
-`@sub` echo's the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
+`@sub` echoes the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
 
 ```php
 <ul>
@@ -567,7 +567,7 @@ To retrieve a group for a specific post, you can pass a post ID as a second para
 
 #### @option
 
-`@option` echo's the specified theme options field using `get_field($field, 'option')`.
+`@option` echoes the specified theme options field using `get_field($field, 'option')`.
 
 ```php
 Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
@@ -629,7 +629,7 @@ If the option you are checking against is an array, you can pass the array key a
 
 #### @options
 
-`@options` acts as a helper for handling repeater and group fields within' your theme options. Under the hood, it is essentially the exact same as `@fields` and `@group` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
+`@options` acts as a helper for handling repeater and group fields within your theme options. Under the hood, it is essentially the exact same as `@fields` and `@group` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
 
 ```php
 @hasoption('social')
@@ -765,7 +765,7 @@ Alternatively, you can pass the output as a second parameter:
 
 #### @extract
 
-`@extract` extracts the passed array into variables. This can be useful for making views customizable when passing parameters to `@include` but also having default values set within' the view.
+`@extract` extracts the passed array into variables. This can be useful for making views customizable when passing parameters to `@include` but also having default values set within the view.
 
 ```php
 // single.blade.php
@@ -791,7 +791,7 @@ Alternatively, you can pass the output as a second parameter:
 
 #### @implode
 
-`@implode` echo's a string containing a representation of each element within' the array passed to it with a glue string between each element.
+`@implode` echoes a string containing a representation of each element within the array passed to it with a glue string between each element.
 
 ```php
 @implode(', ' ['dog', 'cat', 'mouse', 'snake'])
