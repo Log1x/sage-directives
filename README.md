@@ -23,7 +23,7 @@ composer require log1x/sage-directives
 Once Sage Directives is installed with Composer, it is automatically loaded and is ready for use. If a directive appears to not be rendering properly, please make sure you clear your Blade cache before further debugging or opening an issue.
 
 | [WordPress](#wordpress)  |                          | [ACF](#acf)            |                          | [Helpers](#helpers)        |                      |
-|--------------------------|--------------------------|------------------------|--------------------------|----------------------------|----------------------|
+|:--------------------------|--------------------------|:------------------------|--------------------------|:----------------------------|----------------------|
 | [@query](#query)         | [@user](#user)           | [@fields](#fields)     | [@group](#group)         | [@istrue](#istrue)         | [@extract](#extract) |
 | [@posts](#posts)         | [@guest](#guest)         | [@field](#field)       | [@option](#option)       | [@isfalse](#isfalse)       | [@implode](#implode) |
 | [@title](#title)         | [@shortcode](#shortcode) | [@hasfield](#hasfield) | [@hasoption](#hasoption) | [@isnull](#isnull)         | [@repeat](#repeat)   |
