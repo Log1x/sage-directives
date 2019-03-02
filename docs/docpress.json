@@ -1,0 +1,16 @@
+{
+  "github": "log1x/sage-directives",
+  "css": [
+    "dist/styles/main.css"
+  ],
+  "markdown": {
+    "typographer": true,
+    "plugins": {
+      "decorate": {}
+    }
+  },
+  "plugins": {
+    "docpress-core": {},
+    "docpress-base": {}
+  }
+}

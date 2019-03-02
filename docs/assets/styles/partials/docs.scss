@@ -1,0 +1,149 @@
+///* ==========================================================================
+//   Documentation
+//   ========================================================================== */
+
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700';
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.header-nav {
+  .iconlink:hover {
+    color: $brand;
+
+    .icon {
+      color: $brand;
+    }
+  }
+}
+
+.footer-nav {
+  .left,
+  .right {
+    a:hover {
+      .title,
+      &:before,
+      &:after {
+        color: $brand;
+      }
+    }
+  }
+}
+
+.toc-menu {
+  .title {
+    height: auto;
+  }
+
+  .heading-item,
+  .menu-item {
+    .link,
+    .hlink {
+      padding: 6px 24px;
+      height: auto;
+
+      &.-active {
+        color: $brand;
+        font-weight: $weight-bold;
+        box-shadow: inset -2px 0 $brand;
+      }
+    }
+
+    &.-depth-2 {
+      margin-left: 0.75rem;
+    }
+  }
+
+  .submenu {
+    .menu-item.-parent .submenu {
+      .title {
+        &:before {
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 8px;
+          height: 2px;
+          width: 12px;
+          background: #505d6b;
+          opacity: .3;
+        }
+      }
+    }
+  }
+}
+
+.markdown-body {
+  max-width: 740px;
+
+  a {
+    color: $brand;
+    font-weight: $weight-bold;
+
+    &:hover {
+      color: lighten($brand, 5%);
+    }
+  }
+
+  pre {
+    padding: 1.5rem;
+    box-shadow: 1px 1px 1px rgba($black, 0.04);
+    background: $white-bis;
+  }
+
+  p,
+  blockquote,
+  pre,
+  ol
+  ul {
+    margin-bottom: 1.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: $white-bis;
+    color: $brand;
+    font-weight: $weight-light;
+  }
+
+  h1 {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $white-bis;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+}
+
+#nprogress {
+  .bar {
+    background-color: $brand;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px $brand, 0 0 5px $brand;
+  }
+
+  .spinner-icon {
+    border-top-color: $brand;
+    border-bottom-color: $brand;
+  }
+}

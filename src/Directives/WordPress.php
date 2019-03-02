@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Directives;
+namespace Log1x\SageDirectives;
 
 return [
 
@@ -34,11 +34,12 @@ return [
 
                    "<?php if (is_array({$expression})) : ?>".
                    "<?php \$posts
+                       ->put('ignore_sticky_posts', true)
                        ->put('posts_per_page', -1)
                        ->put('post__in', collect({$expression})
                            ->map(function (\$post) {
                                return is_a(\$post, 'WP_Post') ? \$post->ID : \$post;
-                       }))
+                           })->all())
                        ->put('orderby', 'post__in');
                    ?>".
                    "<?php endif; ?>".

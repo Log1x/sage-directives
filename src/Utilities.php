@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Directives;
+namespace Log1x\SageDirectives;
 
 class Util
 {

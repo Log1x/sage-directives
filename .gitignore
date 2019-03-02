@@ -1,5 +1,10 @@
 # Vendor (e.g. Composer)
 vendor
+node_modules
+
+# Documentation
+_docpress
+docs/dist
 
 # Visual Studio
 .vscode

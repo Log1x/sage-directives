@@ -1,0 +1,53 @@
+///* ==========================================================================
+//   Variables
+//   ========================================================================== */
+
+// Colors
+$black: hsl(0, 0%, 4%);
+$black-bis: hsl(0, 0%, 7%);
+$black-ter: hsl(0, 0%, 14%);
+
+$grey-darker: hsl(0, 0%, 21%);
+$grey-dark: hsl(0, 0%, 29%);
+$grey: hsl(0, 0%, 48%);
+$grey-light: hsl(0, 0%, 71%);
+$grey-lighter: hsl(0, 0%, 86%);
+
+$white-ter: hsl(0, 0%, 96%);
+$white-bis: hsl(0, 0%, 98%);
+$white: hsl(0, 0%, 100%);
+
+$trim-darker: hsl(0, 0%, 15%);
+$trim-dark: hsl(0, 0%, 20%);
+$trim: hsl(0, 0%, 27%);
+$trim-light: hsl(0, 0%, 30%);
+$trim-lighter: hsl(0, 0%, 35%);
+
+$brand: hsl(236, 66%, 59%);
+
+// Typography
+$family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$family-monospace: monospace;
+
+$size-1: 3rem;
+$size-2: 2.5rem;
+$size-3: 2rem;
+$size-4: 1.5rem;
+$size-5: 1.25rem;
+$size-6: 1rem;
+$size-7: 0.9rem;
+$size-8: 0.75rem;
+
+$weight-light: 300;
+$weight-normal: 400;
+$weight-semibold: 500;
+$weight-bold: 700;
+$weight-black: 800;
+
+// Grid
+$gap: 64px;
+
+// Breakpoints
+$mobile: 480px;
+$tablet: 769px;
+$desktop: 960px + (2 * $gap);
