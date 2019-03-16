@@ -63,7 +63,7 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @title / @content / @excerpt
+    | @title / @content / @excerpt / @permalink
     |---------------------------------------------------------------------
     */
 
@@ -81,6 +81,14 @@ return [
 
     'excerpt' => function () {
         return "<?php the_excerpt(); ?>";
+    },
+
+    'permalink' => function ($expression) {
+        if (! empty($expression)) {
+            return "<?php get_permalink({$expression}); ?>";
+        }
+
+        return "<?php get_permalink(); ?>";
     },
 
     /*
