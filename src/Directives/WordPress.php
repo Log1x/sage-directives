@@ -85,10 +85,10 @@ return [
 
     'permalink' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php get_permalink({$expression}); ?>";
+            return "<?= get_permalink({$expression}); ?>";
         }
 
-        return "<?php get_permalink(); ?>";
+        return "<?= get_permalink(); ?>";
     },
 
     /*
