@@ -131,6 +131,74 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @category / @term
+    |---------------------------------------------------------------------
+    */
+
+    'category' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if ($expression->get(1) === 'true') {
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
+                    "<a href=\"<?= get_category_link(collect(get_the_category({$expression->get(0)}))->pop()->cat_ID); ?>\">".
+                    "<?= collect(get_the_category({$expression->get(0)}))->pop()->name; ?>".
+                    "</a>".
+                    "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(0))) {
+            if ($expression->get(0) === 'true') {
+                return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
+                       "<a href=\"<?= get_category_link(collect(get_the_category())->pop()->cat_ID); ?>\">".
+                       "<?= collect(get_the_category())->pop()->name; ?>".
+                       "</a>".
+                       "<?php endif; ?>";
+            }
+
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_category({$expression->get(0)}))->pop()->name; ?>".
+                   "<?php endif; ?>";
+        }
+
+        return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
+               "<?= collect(get_the_category())->pop()->name; ?>".
+               "<?php endif; ?>";
+    },
+
+    'term' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if (! empty($expression->get(2))) {
+            return "<?php if (collect(get_the_terms({$expression->get(0)}, {$expression->get(1)}))->isNotEmpty()) : ?>".
+                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(0)}, {$expression->get(1)}))->pop()->term_ID); ?>\">".
+                   "<?= collect(get_the_terms({$expression->get(0)}, {$expression->get(1)}))->pop()->name(); ?>".
+                   "</a>".
+                   "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(1))) {
+            if ($expression->get(1) === 'true') {
+                return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
+                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->pop()->term_ID); ?>\">".
+                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->pop()->name(); ?>".
+                       "</a>".
+                       "<?php endif; ?>";
+            }
+
+            return "<?php if (collect(get_the_terms({$expression->get(0)}, {$expression->get(1)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_terms({$expression->get(0)}, {$expression->get(1)}))->pop()->name(); ?>".
+                   "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(0))) {
+            return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->pop()->name; ?>".
+                   "<?php endif; ?>";
+        }
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @user / @enduser / @guest / @endguest
     |---------------------------------------------------------------------
     */
