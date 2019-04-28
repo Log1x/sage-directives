@@ -85,7 +85,7 @@ If `@query` is not used and an argument is not passed to `@posts`, it will use t
 @title
 ```
 
-To echo the title of a specific post, you can pass the post ID or a `WP_Post` instance as a second parameter:
+To echo the title of a specific post, you can pass the post ID or a `WP_Post` instance as a parameter:
 
 ```php
 @title(1)
@@ -108,6 +108,55 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 @excerpt
 ```
 
+## @permalink
+
+`@permalink` echo's the current posts URL using [`get_permalink()`](https://developer.wordpress.org/reference/functions/get_permalink/).
+
+```php
+@permalink
+```
+
+To echo the URL of a specific post, you can pass the post ID or a `WP_Post` instance as a parameter:
+
+```php
+@permalink(1)
+@permalink(get_post(1))
+```
+
+## @thumbnail 
+
+`@thumbnail` echo's the current posts featured image using [`get_the_post_thumbnail`](https://developer.wordpress.org/reference/functions/get_the_post_thumbnail/). By default, it passes `thumbnail` as the size.
+
+```php
+@thumbnail
+```
+
+To echo the featured image of a specific post, you can pass the post ID or a `WP_Post` instance as the first parameter:
+
+```php
+@thumbnail(1)
+@thumbnail(get_post(1))
+```
+
+To echo the featured image with a specific size, you can either pass it as a parameter by it's self, or as the second parameter when a post ID or `WP_Post` instance is present:
+
+```php
+@thumbnail('full')
+@thumbnail(1, 'full')
+@thumbnail(get_post(1), 'full')
+```
+
+To echo the featured image URL (without img markup), you can pass `false` as the last parameter on any of the above options:
+
+```php
+<img src="@thumbnail(false)" alt="My Image" />
+<img src="@thumbnail(1, false)" alt="Post 1" />
+<img src="@thumbnail(get_post(1), false)" alt="Post 1" />
+<img src="@thumbnail('full', false)" alt="Full Image" />
+<img src="@thumbnail(1, 'full', false)" alt="Post 1's Full Image" />
+<img src="@thumbnail(get_post(1), 'full', false)" alt="Post 1's Full Image" />
+```
+
 ## @author
 
 `@author` echo's the author of the current posts display name.
@@ -116,7 +165,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 @author
 ```
 
-To echo the display name of a specific author, you can pass the author's ID as a second parameter:
+To echo the display name of a specific author, you can pass the author's ID as a parameter:
 
 ```php
 @author(1)
@@ -134,10 +183,10 @@ To echo the display name of a specific author, you can pass the author's ID as a
 </span>
 ```
 
-To echo the URL of a specific author, you can pass the author's ID as a second parameter:
+To echo the URL of a specific author, you can pass the author's ID as a parameter:
 
 ```php
-<a href="@authorurl">@author</a>
+<a href="@authorurl(2)">@author</a>
 ```
 
 ## @published
@@ -201,6 +250,85 @@ To format the modified date of a specific post, you can pass the format as the f
 ```php
 @modified('F j, Y', 1)
 @modified('F j, Y', get_post(1))
+```
+
+## @category
+
+`@category` echo's the first category of the current post.
+
+```php
+@category
+```
+
+To echo the category as a link, pass `true` as a parameter:
+
+```php
+@category(true)
+```
+
+To echo the category of a specific post, pass the post ID as a parameter:
+
+```php
+@category(1)
+```
+
+To echo the category of a specific post as a link, pass the post ID as the first parameter, and `true` as the second parameter:
+
+```php
+@category(1, true)
+```
+
+## @categories
+
+`@categories` echo's a comma seperated list of the current post's categories.
+
+```php
+@categories
+```
+
+To echo the categories of a specific post, pass the post ID as the first parameter:
+
+```php
+@categories(1)
+```
+
+Similar to `@category`, if you would like to return the categories as links, pass `true` as the first parameter when by it's self, or as the second parameter when a post ID is present:
+
+```php
+@categories(true)
+@categories(1, true)
+```
+
+## @term
+
+`@term` echo's the taxonomy term of the current post. If multiple terms are present, it will echo the first term returned in the array.
+
+```php
+@term('genre')
+```
+
+Similar to `@category`, if you would like to return the terms of a specific post or as links, you can follow the same syntax, except keeping the taxonomy name as the first parameter:
+
+```php
+@term('genre', 1)
+@term('genre', 1, false)
+@term('genre', false)
+```
+
+## @terms
+
+`@terms` echo's a comma seperated list of the taxonomy terms of the current post.
+
+```php
+@terms('genre')
+```
+
+It accepts the same parameters as `@term`:
+
+```php
+@terms('genre', 1)
+@terms('genre', 1, false)
+@terms('genre', false)
 ```
 
 ## @shortcode

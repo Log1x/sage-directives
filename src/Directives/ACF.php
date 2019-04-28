@@ -127,6 +127,13 @@ return [
         return "<?php if (get_sub_field({$expression})) : ?>";
     },
 
+    // TODO:
+    // 'hassubs' => function ($expression) {
+    //     if (str_contains($expression, ',')) {
+    //         $expression = Util::parse($expression);
+    //     }
+    // },
+
     'issub' => function ($expression) {
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
