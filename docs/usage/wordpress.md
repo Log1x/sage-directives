@@ -6,7 +6,7 @@ The following directives are specific to WordPress core functionality.
 
 `@query` initializes a standard `WP_Query` as `$query` and accepts the usual `WP_Query` [parameters](https://codex.wordpress.org/Class_Reference/WP_Query#Parameters) as an array.
 
-```py
+```php
 @query([
   'post_type' => 'post'
 ])
@@ -18,7 +18,7 @@ The following directives are specific to WordPress core functionality.
 
 `@endposts` is available to end your loop and `have_posts()` conditional as well as resetting your loop with [`wp_reset_postdata()`](https://codex.wordpress.org/Function_Reference/wp_reset_postdata).
 
-```py
+```php
 @query([
   'post_type' => 'post'
 ])
@@ -33,7 +33,7 @@ The following directives are specific to WordPress core functionality.
 
 If an instance of `WP_Query` is passed to `@posts`, it will use that instead:
 
-```py
+```phpp
 @php
   $query = new WP_Query([
     'post_type' => 'post'
@@ -50,7 +50,7 @@ If an instance of `WP_Query` is passed to `@posts`, it will use that instead:
 
 Additionally, you can pass a single post ID, post object, or an array containing a mixture of the two:
 
-```py
+```phpp
 @posts(12)
   <h2 class="entry-title">@title</h2>
   <div class="entry-content">
@@ -81,13 +81,13 @@ If `@query` is not used and an argument is not passed to `@posts`, it will use t
 
 `@title` echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
 
-```py
+```php
 @title
 ```
 
 To echo the title of a specific post, you can pass the post ID or a `WP_Post` instance as a parameter:
 
-```py
+```php
 @title(1)
 @title(get_post(1))
 ```
@@ -96,7 +96,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 `@content` echo's the current posts content using [`the_content()`](https://developer.wordpress.org/reference/functions/the_content/).
 
-```py
+```php
 @content
 ```
 
@@ -104,7 +104,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 `@excerpt` echo's the current posts excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
 
-```py 
+```php 
 @excerpt
 ```
 
@@ -112,13 +112,13 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 `@permalink` echo's the current posts URL using [`get_permalink()`](https://developer.wordpress.org/reference/functions/get_permalink/).
 
-```py
+```php
 @permalink
 ```
 
 To echo the URL of a specific post, you can pass the post ID or a `WP_Post` instance as a parameter:
 
-```py
+```php
 @permalink(1)
 @permalink(get_post(1))
 ```
@@ -127,20 +127,20 @@ To echo the URL of a specific post, you can pass the post ID or a `WP_Post` inst
 
 `@thumbnail` echo's the current posts featured image using [`get_the_post_thumbnail`](https://developer.wordpress.org/reference/functions/get_the_post_thumbnail/). By default, it passes `thumbnail` as the size.
 
-```py
+```php
 @thumbnail
 ```
 
 To echo the featured image of a specific post, you can pass the post ID or a `WP_Post` instance as the first parameter:
 
-```py
+```php
 @thumbnail(1)
 @thumbnail(get_post(1))
 ```
 
 To echo the featured image with a specific size, you can either pass it as a parameter by it's self, or as the second parameter when a post ID or `WP_Post` instance is present:
 
-```py
+```php
 @thumbnail('full')
 @thumbnail(1, 'full')
 @thumbnail(get_post(1), 'full')
@@ -148,7 +148,7 @@ To echo the featured image with a specific size, you can either pass it as a par
 
 To echo the featured image URL (without img markup), you can pass `false` as the last parameter on any of the above options:
 
-```py
+```php
 <img src="@thumbnail(false)" alt="My Image" />
 <img src="@thumbnail(1, false)" alt="Post 1" />
 <img src="@thumbnail(get_post(1), false)" alt="Post 1" />
@@ -161,13 +161,13 @@ To echo the featured image URL (without img markup), you can pass `false` as the
 
 `@author` echo's the author of the current posts display name.
 
-```py
+```php
 @author
 ```
 
 To echo the display name of a specific author, you can pass the author's ID as a parameter:
 
-```py
+```php
 @author(1)
 ```
 
@@ -175,7 +175,7 @@ To echo the display name of a specific author, you can pass the author's ID as a
 
 `@authorurl` echo's the author of the current posts archive URL.
 
-```py
+```php
 <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <a href="@authorurl" itemprop="url">
     <span class="fn" itemprop="name" rel="author">@author</span>
@@ -185,7 +185,7 @@ To echo the display name of a specific author, you can pass the author's ID as a
 
 To echo the URL of a specific author, you can pass the author's ID as a parameter:
 
-```py
+```php
 <a href="@authorurl(2)">@author</a>
 ```
 
@@ -193,13 +193,13 @@ To echo the URL of a specific author, you can pass the author's ID as a paramete
 
 `@published` echo's the current posts published date. By default, it uses the date format set in `Settings > General`.
 
-```py
+```php
 @published
 ```
 
 To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
 
-```py
+```php
 <time class="entry-time">
   <span>@published('F j, Y')</span>
   <span itemprop="datePublished" content="@published('c')"></span>
@@ -208,14 +208,14 @@ To change the [formatting of the date](https://codex.wordpress.org/Formatting_Da
 
 To echo the published date of a specific post, you can pass a post ID or an instance of `WP_Post` as the first parameter:
 
-```py
+```php
 @published(1)
 @published(get_post(1))
 ```
 
 To format the published date of a specific post, you can pass the format as the first parameter, and the post ID or instance of `WP_Post` as the second parameter:
 
-```py
+```php
 @published('F j, Y', 1)
 @published('F j, Y', get_post(1))
 ```
@@ -224,13 +224,13 @@ To format the published date of a specific post, you can pass the format as the 
 
 `@modified` is similar to `@published`, but instead echo's the current posts last modified date. By default, it uses the date format set in `Settings > General`.
 
-```py
+```php
 @modified
 ```
 
 To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
 
-```py
+```php
 <time class="entry-time">
   <span>@published('F j, Y')</span>
   <span itemprop="datePublished" content="@published('c')"></span>
@@ -240,14 +240,14 @@ To change the [formatting of the date](https://codex.wordpress.org/Formatting_Da
 
 To echo the modified date of a specific post, you can pass a post ID or an instance of `WP_Post` as the first parameter:
 
-```py
+```php
 @modified(1)
 @modified(get_post(1))
 ```
 
 To format the modified date of a specific post, you can pass the format as the first parameter, and the post ID or instance of `WP_Post` as the second parameter:
 
-```py
+```php
 @modified('F j, Y', 1)
 @modified('F j, Y', get_post(1))
 ```
@@ -256,25 +256,25 @@ To format the modified date of a specific post, you can pass the format as the f
 
 `@category` echo's the first category of the current post.
 
-```py
+```php
 @category
 ```
 
 To echo the category as a link, pass `true` as a parameter:
 
-```py
+```php
 @category(true)
 ```
 
 To echo the category of a specific post, pass the post ID as a parameter:
 
-```py
+```php
 @category(1)
 ```
 
 To echo the category of a specific post as a link, pass the post ID as the first parameter, and `true` as the second parameter:
 
-```py
+```php
 @category(1, true)
 ```
 
@@ -282,19 +282,19 @@ To echo the category of a specific post as a link, pass the post ID as the first
 
 `@categories` echo's a comma seperated list of the current post's categories.
 
-```py
+```php
 @categories
 ```
 
 To echo the categories of a specific post, pass the post ID as the first parameter:
 
-```py
+```php
 @categories(1)
 ```
 
 Similar to `@category`, if you would like to return the categories as links, pass `true` as the first parameter when by it's self, or as the second parameter when a post ID is present:
 
-```py
+```php
 @categories(true)
 @categories(1, true)
 ```
@@ -303,13 +303,13 @@ Similar to `@category`, if you would like to return the categories as links, pas
 
 `@term` echo's the taxonomy term of the current post. If multiple terms are present, it will echo the first term returned in the array.
 
-```py
+```php
 @term('genre')
 ```
 
 Similar to `@category`, if you would like to return the terms of a specific post or as links, you can follow the same syntax, except keeping the taxonomy name as the first parameter:
 
-```py
+```php
 @term('genre', 1)
 @term('genre', 1, false)
 @term('genre', false)
@@ -319,13 +319,13 @@ Similar to `@category`, if you would like to return the terms of a specific post
 
 `@terms` echo's a comma seperated list of the taxonomy terms of the current post.
 
-```py
+```php
 @terms('genre')
 ```
 
 It accepts the same parameters as `@term`:
 
-```py
+```php
 @terms('genre', 1)
 @terms('genre', 1, false)
 @terms('genre', false)
@@ -335,7 +335,7 @@ It accepts the same parameters as `@term`:
 
 `@shortcode` echo's the specified shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).
 
-```py
+```php
 @shortcode('[my-shortcode]')
 ```
 
@@ -343,7 +343,7 @@ It accepts the same parameters as `@term`:
 
 `@role` is a simple conditional that allows you to display specific content only to users who are logged in and have a specific role. With [`wp_get_current_user()->roles`](https://codex.wordpress.org/Function_Reference/wp_get_current_user) returning an array of roles in all lowercase, the passed role is automatically lowercased using `strtolower`. It can be closed using `@endrole`.
 
-```py
+```php
 @role('author')
   This content is only displayed to Authors.
 @endrole
@@ -353,7 +353,7 @@ It accepts the same parameters as `@term`:
 
 `@user` is a simple `is_user_logged_in()` conditional to display specific content only when a user is logged in. It can be closed using `@enduser`.
 
-```py
+```php
 @user
   You are logged in!
 @enduser
@@ -363,7 +363,7 @@ It accepts the same parameters as `@term`:
 
 `@guest` is a simple `! is_user_logged_in()` conditional to display specific content only when a user is not logged in. It can be closed using `@endguest`.
 
-```py
+```php
 @guest
   You must be <a href="/wp-login.php">logged in</a> to view this content.
 @endguest
@@ -373,7 +373,7 @@ It accepts the same parameters as `@term`:
 
 `@wpautop` runs a passed string through [`wpautop()`](https://codex.wordpress.org/Function_Reference/wpautop) and echo's the output.
 
-```py
+```php
 @wpautop($content)
 ```
 
@@ -381,6 +381,6 @@ It accepts the same parameters as `@term`:
 
 `@wpautokp` does the same as `@wpautop` but also sanitizes the string with [`wp_kses_post()`](https://codex.wordpress.org/Function_Reference/wp_kses_post).
 
-```py
+```php
 @wpautokp($content)
 ```

@@ -6,7 +6,7 @@ The following directives are generalized helpers in an attempt to avoid using `@
 
 `@istrue` is a simple conditional that displays the specified output if the parameter passed exists and returns true. It can be closed using `@endistrue`.
 
-```py
+```php
 @istrue($variable)
   Hello World
 @endistrue
@@ -14,7 +14,7 @@ The following directives are generalized helpers in an attempt to avoid using `@
 
 Alternatively, you can pass the output as a second parameter:
 
-```py
+```php
 @istrue($variable, 'Hello World')
 ```
 
@@ -22,7 +22,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@isfalse` is a simple conditional that displays the specified output if the parameter passed exists but returns false. It can be closed using `@endisfalse`.
 
-```py
+```php
 @isfalse($variable)
   Goodbye World
 @endistrue
@@ -30,7 +30,7 @@ Alternatively, you can pass the output as a second parameter:
 
 Alternatively, you can pass the output as a second parameter:
 
-```py
+```php
 @isfalse($variable, 'Goodbye World')
 ```
 
@@ -38,7 +38,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@isnull` is a simple conditional that displays the specified output if the parameter passed is null. It can be closed using `@endisnull`.
 
-```py
+```php
 @isnull($variable)
   There is nothing here.
 @endisnull
@@ -46,7 +46,7 @@ Alternatively, you can pass the output as a second parameter:
 
 Alternatively, you can pass the output as a second parameter:
 
-```py
+```php
 @isnull($variable, 'There is nothing here.')
 ```
 
@@ -54,7 +54,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@isnotnull` is a simple conditional that displays the specified output if the parameter passed exists and is not null. It can be closed using `@endisnotnull`.
 
-```py
+```php
 @isnotnull($variable)
   There is something here.
 @endisnull
@@ -62,7 +62,7 @@ Alternatively, you can pass the output as a second parameter:
 
 Alternatively, you can pass the output as a second parameter:
 
-```py
+```php
 @isnotnull($variable, 'There is something here.')
 ```
 
@@ -70,7 +70,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@instanceof` checks if the first parameter is an instance of the second parameter. It can be closed using `@endinstanceof`.
 
-```py
+```php
 @instanceof($post, 'WP_Post')
   The post ID is {{ $post->ID }}.
 @endinstanceof
@@ -80,7 +80,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@typeof` checks if the first parameter is of a specified type. It can be closed using `@endtypeof`.
 
-```py
+```php
 @typeof(14, 'integer')
   This is a whole number.
 @endtypeof
@@ -90,7 +90,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@global` globals the specified variable.
 
-```py
+```php
 @global($post)
 ```
 
@@ -98,7 +98,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@set` sets the specifed variable to a specified value.
 
-```py
+```php
 @set($hello, 'world')
 ```
 
@@ -106,7 +106,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@unset` unsets the specified variable.
 
-```py
+```php
 @unset($hello)
 ```
 
@@ -114,7 +114,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@extract` extracts the passed array into variables. This can be useful for making views customizable when passing parameters to `@include` but also having default values set within' the view.
 
-```py
+```php
 // single.blade.php
 @include('components.entry-meta', [
   'author' => false,
@@ -140,7 +140,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@implode` echo's a string containing a representation of each element within' the array passed to it with a glue string between each element.
 
-```py
+```php
 @implode(', ' ['dog', 'cat', 'mouse', 'snake'])
 // dog, cat, mouse, snake
 ```
@@ -149,7 +149,7 @@ Alternatively, you can pass the output as a second parameter:
 
 `@repeat` repeats its contents a specified number of times. It can be closed using `@endrepeat`.
 
-```py
+```php
 <ul>
   @repeat(5)
     <li>{{ $loop->iteration }}</li>
@@ -159,7 +159,7 @@ Alternatively, you can pass the output as a second parameter:
 
 Similar to Laravel's native looping, a `$loop` variable is available inside of `@repeat`:
 
-```py
+```php
 @repeat(5)
   @if ($loop->first)
     This is the first iteration.
@@ -179,7 +179,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 `@style` allows you to quickly inline a block of CSS or define a path to a stylesheet. When being used for inline CSS, it can be closed using `@endstyle`.
 
-```py
+```php
 @style
   .button {
     background-color: LightGreen;
@@ -195,7 +195,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 `@script` allows you to quickly inline a block of Javascript or define a path to a script. When being used for inline JS, it can be closed using `@endscript`.
 
-```py
+```php
 @script
   console.log('Hello World')
 @endscript
@@ -207,7 +207,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 `@js` allows you to declare inline Javascript variables similar to [wp_add_inline_script()](https://developer.wordpress.org/reference/functions/wp_add_inline_script/). The passed value can be in the form of a string or an array.
 
-```py
+```php
 @js('hello', 'world')
   
 // <script>
@@ -219,7 +219,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 `@inline` loads the contents of a CSS, JS, or HTML file inline into your view and wraps the content with the proper HTML tag depending on the file extension. By default, the path is set to your current theme directory.
 
-```py
+```php
 @inline('dist/styles/critical.css')
 ```
 
@@ -227,7 +227,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 `@fa` and its related directives serve as helpers for quickly outputting Font Awesome icons. `@fa` is for Font Awesome 4, while `@fas`, `@far`, `@fal`, and `@fab` are for their corrosponding Font Awesome 5 variation.
 
-```py
+```php
 @fa('arrow-up', 'optional-css-classes')
 @fas('arrow-down', 'optional-css-classes')
 @far('arrow-left', 'optional-css-classes')
