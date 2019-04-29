@@ -278,9 +278,19 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @user / @enduser / @guest / @endguest
+    | @role / @endrole / @user / @enduser / @guest / @endguest
     |---------------------------------------------------------------------
     */
+
+    'role' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        return "<?php if (is_user_logged_in() && in_array(strtolower({$expression->get(0)}), (array) wp_get_current_user()->roles)) : ?>";
+    },
+
+    'endrole' => function () {
+        return "<?php endif; ?>";
+    },
 
     'user' => function () {
         return "<?php if (is_user_logged_in()) : ?>";

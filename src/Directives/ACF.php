@@ -111,6 +111,10 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
+            if (! empty($expression->get(2))) {
+                return "<?= get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]; ?>";
+            }
+
             return "<?= get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
         }
 
@@ -121,18 +125,15 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
+            if (! empty($expression->get(2))) {
+                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>";
+            }
+
             return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
         }
 
         return "<?php if (get_sub_field({$expression})) : ?>";
     },
-
-    // TODO:
-    // 'hassubs' => function ($expression) {
-    //     if (str_contains($expression, ',')) {
-    //         $expression = Util::parse($expression);
-    //     }
-    // },
 
     'issub' => function ($expression) {
         if (str_contains($expression, ',')) {

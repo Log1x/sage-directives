@@ -6,25 +6,25 @@ The following directives are for use with Advanced Custom Fields. If ACF is not 
 
 `@field` echo's the specified field using `get_field()`.
 
-```php
+```py
 @field('text')
 ```
 
 To echo a field for a specific post, you can pass a post ID as a second parameter:
 
-```php
+```py
 @field('text', 1)
 ```
 
 If the field you are echoing is an array, you can pass the array key as a second parameter:
 
-```php
+```py
 @field('image', 'url')
 ```
 
 To echo a field for a specific post that is also an array, you can pass the post ID as a third parameter:
 
-```php
+```py
 @field('image', 'url', 1)
 ```
 
@@ -32,19 +32,19 @@ To echo a field for a specific post that is also an array, you can pass the post
 
 `@hasfield` is a simple conditional checking if the specified field exists and is not empty. It can be closed using `@endfield`.
 
-```php
+```py
 @hasfield('list')
   <ul>
     @fields('list')
       <li>@sub('item')</li>
-    @fields
+    @endfields
   </ul>
 @endfield
 ```
 
 To check the existance of a field for a specific post, you can pass a post ID as a second parameter:
 
-```php
+```py
 @hasfield('list', 5)
   <ul>
     @fields('list', 5)
@@ -56,7 +56,7 @@ To check the existance of a field for a specific post, you can pass a post ID as
 
 If the field you are checking against is an array, you can pass the array key as a second parameter:
 
-```php
+```py
 @hasfield('image', 'url')
   <figure class="image">
     <img src="@field('image', 'url')" alt="@field('image', 'alt')" />
@@ -66,7 +66,7 @@ If the field you are checking against is an array, you can pass the array key as
 
 To check the existance of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
 
-```php
+```py
 @hasfield('image', 'url', 1)
   <figure class="image">
     <img src="@field('image', 'url', 1)" alt="@field('image', 'alt', 1)" />
@@ -78,7 +78,7 @@ To check the existance of a field that is an array for a specific post, you can 
 
 `@isfield` is a simple conditional for checking if your field value equals a specified value. It can be closed using `@endfield`.
 
-```php
+```py
 @isfield('cta_type', 'phone')
   <i class="fas fa-phone"></i>
 @endfield
@@ -86,7 +86,7 @@ To check the existance of a field that is an array for a specific post, you can 
 
 To check the field value of a specific post, you can pass a post ID as a third parameter:
 
-```php
+```py
 @isfield('cta_type', 'phone', 1)
   <i class="fas fa-phone"></i>
 @endfield
@@ -94,7 +94,7 @@ To check the field value of a specific post, you can pass a post ID as a third p
 
 If the field you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
 
-```php
+```py
 @isfield('cta', 'type', 'phone')
   <i class="fas fa-phone"></i>
 @endfield
@@ -102,7 +102,7 @@ If the field you are checking against is an array, you can pass the array key as
 
 To check the field value of a field that is an array for a specific post, you can pass the array key as a second parameter, the value you are checking against as a third parameter, and the post ID as a fourth parameter:
 
-```php
+```py
 @isfield('cta', 'type', 'phone', 1)
   <i class="fas fa-phone"></i>
 @endfield
@@ -112,7 +112,7 @@ To check the field value of a field that is an array for a specific post, you ca
 
 `@fields` acts as a helper for handling repeater fields. It is wrapped with a [`have_rows()`](https://www.advancedcustomfields.com/resources/have_rows/) conditional, and if it exists and is not empty, begins the while loop followed by `the_row()`. It can be closed using `@endfields`.
 
-```php
+```py
 <ul>
   @fields('list')
     <li>@sub('item')</li>
@@ -122,7 +122,7 @@ To check the field value of a field that is an array for a specific post, you ca
 
 To retrieve fields for a specific post, you can pass a post ID as a second parameter:
 
-```php
+```py
 <ul>
   @fields('list', 1)
     <li>@sub('item')</li>
@@ -134,7 +134,7 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 
 `@sub` echo's the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
 
-```php
+```py
 <ul>
   @fields('list')
     <li>@sub('item')</li>
@@ -142,13 +142,23 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 </ul>
 ```
 
-If the sub field is an array, you can pass the key as a second parameter:
+If the sub field is an array, you can pass the key(s) as additional parameters:
 
-```php
+```py
 <ul class="slider">
   @fields('slides')
     <li class="slide">
       <img src="@sub('image', 'url')" alt="@sub('image', 'alt')" />
+    </li>
+  @endfields
+</ul>
+```
+
+```py
+<ul class="slider">
+  @fields('slides')
+    <li class="slide">
+      <img src="@sub('image', 'sizes', 'thumbnail')" alt="@sub('image', 'alt')" />
     </li>
   @endfields
 </ul>
@@ -160,17 +170,23 @@ More usage of `@sub` can be found alongside the examples of the repeatable field
 
 `@hassub` is a simple conditional checking if the specified field exists and is not empty. It can be closed using `@endsub`.
 
-```php
+```py
 @hassub('icon')
   <i class="fas fa-@sub('icon')"></i>
 @endsub
 ```
 
-If the sub field you are checking against is an array, you can pass the array key as a second parameter:
+If the sub field you are checking against is an array, you can pass the key(s) as additional parameters:
 
-```php
+```py
 @hassub('image', 'url')
   <img src="@sub('image', 'url')" alt="@sub('image', 'alt')" />
+@endsub
+```
+
+```py
+@hassub('image', 'sizes', 'thumbnail')
+  <img src="@sub('image', 'sizes', 'thumbnail')" alt="@sub('image', 'alt')" />
 @endsub
 ```
 
@@ -178,7 +194,7 @@ If the sub field you are checking against is an array, you can pass the array ke
 
 `@issub` is a simple conditional for checking if your sub field equals a specified value. It can be closed using `@endsub`.
 
-```php
+```py
 @issub('icon', 'arrow')
   <i class="fas fa-arrow-up fa-rotate-90"></i>
 @endsub
@@ -186,7 +202,7 @@ If the sub field you are checking against is an array, you can pass the array ke
 
 If the sub field you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
 
-```php
+```py
 @issub('icon', 'name', 'arrow')
   <i class="fas fa-@sub('icon', 'value') fa-rotate-90"></i>
 @endsub
@@ -196,7 +212,7 @@ If the sub field you are checking against is an array, you can pass the array ke
 
 `@layouts` acts as a helper for handling flexible content fields. Under the hood, it is essentially the exact same as `@fields`, but is provided to allow for a more clean, readable code-base in conjunction with `@layout` which calls `get_row_layout()`. It can be closed using `@endlayouts`.
 
-```php
+```py
 @layouts('components')
   [...]
 @endlayouts
@@ -204,7 +220,7 @@ If the sub field you are checking against is an array, you can pass the array ke
 
 To retrieve layouts for a specific post, you can pass a post ID as a second parameter:
 
-```php
+```py
 @layouts('components', 1)
   [...]
 @endlayouts
@@ -216,7 +232,7 @@ To retrieve layouts for a specific post, you can pass a post ID as a second para
 
 Using `@layouts`, this allows you to have a rather clean view when displaying your flexible content components. It can be closed using `@endlayout`.
 
-```php
+```py
 @layouts('components')
   @layout('card')
     <div class="card">
@@ -258,7 +274,7 @@ Using `@layouts`, this allows you to have a rather clean view when displaying yo
 
 `@group` acts as a helper for handling grouped fields. Under the hood, it is essentially the exact same as `@fields` and thus serves as a simple alias for code readability purposes. Which one you prefer is entirely up to you. It can be closed using `@endgroup`.
 
-```php
+```py
 @group('button')
   @hassub('url')
     <a href="@sub('url')" class="button button--@sub('color')">
@@ -270,7 +286,7 @@ Using `@layouts`, this allows you to have a rather clean view when displaying yo
 
 To retrieve a group for a specific post, you can pass a post ID as a second parameter:
 
-```php
+```py
 @group('button', 1)
   @hassub('url')
     <a href="@sub('url')" class="button button--@sub('color')">
@@ -284,13 +300,13 @@ To retrieve a group for a specific post, you can pass a post ID as a second para
 
 `@option` echo's the specified theme options field using `get_field($field, 'option')`.
 
-```php
+```py
 Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
 ```
 
 If the option is an array, you can pass the key as a second parameter:
 
-```php
+```py
 <div class="navbar-brand">
   <a class="navbar-item" href="{{ home_url() }}">
     <img src="@option('logo', 'url')" alt="{{ get_bloginfo('name', 'display') }}" />
@@ -302,7 +318,7 @@ If the option is an array, you can pass the key as a second parameter:
 
 `@hasoption` is a simple conditional checking if the specified theme option field exists and is not empty. It can be closed using `@endoption`.
 
-```php
+```py
 @hasoption('facebook_url')
   Find us on <a href="@option('facebook_url')" target="_blank">Facebook</a>
 @endoption
@@ -310,7 +326,7 @@ If the option is an array, you can pass the key as a second parameter:
 
 If the option you are checking against is an array, you can pass the array key as a second parameter:
 
-```php
+```py
 @hasoption('facebook', 'url')
   <a href="@option('facebook', 'url')" target="_blank">
     @hasoption('facebook', 'icon')
@@ -328,7 +344,7 @@ If the option you are checking against is an array, you can pass the array key a
 
 `@isoption` is a simple conditional for checking if your theme option field equals a specified value. It can be closed using `@endoption`.
 
-```php
+```py
 @isoption('logo_type', 'image')
   <img src="@option('logo')" alt="{{ get_bloginfo('name', 'display') }}" />
 @endoption
@@ -336,7 +352,7 @@ If the option you are checking against is an array, you can pass the array key a
 
 If the option you are checking against is an array, you can pass the array key as a second parameter and the value you are checking against as a third parameter:
 
-```php
+```py
 @isoption('logo', 'type', 'image')
   <img src="@option('logo', 'url')" alt="{{ get_bloginfo('name', 'display') }}" />
 @endoption
@@ -346,7 +362,7 @@ If the option you are checking against is an array, you can pass the array key a
 
 `@options` acts as a helper for handling repeater and group fields within' your theme options. Under the hood, it is essentially the exact same as `@fields` and `@group` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
 
-```php
+```py
 @hasoption('social')
   <ul class="social">
     @options('social')
