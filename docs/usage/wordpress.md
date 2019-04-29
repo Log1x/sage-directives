@@ -33,7 +33,7 @@ The following directives are specific to WordPress core functionality.
 
 If an instance of `WP_Query` is passed to `@posts`, it will use that instead:
 
-```phpp
+```php
 @php
   $query = new WP_Query([
     'post_type' => 'post'
@@ -50,7 +50,7 @@ If an instance of `WP_Query` is passed to `@posts`, it will use that instead:
 
 Additionally, you can pass a single post ID, post object, or an array containing a mixture of the two:
 
-```phpp
+```php
 @posts(12)
   <h2 class="entry-title">@title</h2>
   <div class="entry-content">
