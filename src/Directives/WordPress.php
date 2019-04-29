@@ -63,7 +63,7 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @title / @content / @excerpt
+    | @title / @content / @excerpt / @permalink / @thumbnail
     |---------------------------------------------------------------------
     */
 
@@ -81,6 +81,46 @@ return [
 
     'excerpt' => function () {
         return "<?php the_excerpt(); ?>";
+    },
+
+    'permalink' => function ($expression) {
+        return "<?= get_permalink({$expression}); ?>";
+    },
+
+    'thumbnail' => function ($expression) {
+        if (! empty($expression)) {
+            $expression = Util::parse($expression);
+
+            if (! empty($expression->get(2))) {
+                if ($expression->get(2) === 'false') {
+                    return "<?= get_the_post_thumbnail_url({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+                }
+
+                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+            }
+
+            if (! empty($expression->get(1))) {
+                if ($expression->get(1) === 'false') {
+                    return "<?= get_the_post_thumbnail_url({$expression->get(0)}, 'thumbnail'); ?>";
+                }
+
+                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+            }
+
+            if (! empty($expression->get(0))) {
+                if ($expression->get(0) === 'false') {
+                    return "<?= get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>";
+                }
+
+                if (is_numeric($expression->get(0))) {
+                    return "<?= get_the_post_thumbnail({$expression->get(0)}, 'thumbnail'); ?>";
+                }
+
+                return "<?= get_the_post_thumbnail(get_the_ID(), {$expression->get(0)}); ?>";
+            }
+        }
+
+        return "<?= get_the_post_thumbnail(get_the_ID(), 'thumbnail'); ?>";
     },
 
     /*
@@ -107,11 +147,11 @@ return [
 
     'published' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
+            return "<?php if (is_a({$expression}, 'WP_Post') || is_int({$expression})) : ?>".
                    "<?= get_the_date('', {$expression}); ?>".
-                   "<?php endif; ?>".
-
-                   "<?= get_the_date({$expression}); ?>";
+                   "<?php else : ?>".
+                   "<?= get_the_date({$expression}); ?>".
+                   "<?php endif; ?>";
         }
 
         return "<?= get_the_date(); ?>";
@@ -121,9 +161,9 @@ return [
         if (! empty($expression)) {
             return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
                    "<?= get_the_modified_date('', {$expression}); ?>".
-                   "<?php endif; ?>".
-
-                   "<?= get_the_modified_date({$expression}); ?>";
+                   "<?php else : ?>".
+                   "<?= get_the_modified_date({$expression}); ?>".
+                   "<?php endif; ?>";
         }
 
         return "<?= get_the_modified_date(); ?>";
@@ -131,9 +171,126 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @user / @enduser / @guest / @endguest
+    | @category / @categories / @term / @terms
     |---------------------------------------------------------------------
     */
+
+    'category' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if ($expression->get(1) === 'true') {
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<a href=\"<?= get_category_link(collect(get_the_category({$expression->get(0)}))->shift()->cat_ID); ?>\">".
+                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>".
+                   "</a>".
+                   "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(0))) {
+            if ($expression->get(0) === 'true') {
+                return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
+                       "<a href=\"<?= get_category_link(collect(get_the_category())->shift()->cat_ID); ?>\">".
+                       "<?= collect(get_the_category())->shift()->name; ?>".
+                       "</a>".
+                       "<?php endif; ?>";
+            }
+
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>".
+                   "<?php endif; ?>";
+        }
+
+        return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
+               "<?= collect(get_the_category())->shift()->name; ?>".
+               "<?php endif; ?>";
+    },
+
+    'categories' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if ($expression->get(1) === 'true') {
+            return "<?= get_the_category_list(', ', '', {$expression->get(0)}); ?>";
+        }
+
+        if ($expression->get(0) === 'true') {
+            return "<?= get_the_category_list(', ', '', get_the_ID()); ?>";
+        }
+
+
+        if (is_numeric($expression->get(0))) {
+            return "<?= strip_tags(get_the_category_list(', ', '', {$expression->get(0)})); ?>";
+        }
+
+        return "<?= strip_tags(get_the_category_list(', ', '', get_the_ID())); ?>";
+    },
+
+    'term' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if (! empty($expression->get(2))) {
+            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->term_ID); ?>\">".
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>".
+                   "</a>".
+                   "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(1))) {
+            if ($expression->get(1) === 'true') {
+                return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
+                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->term_ID); ?>\">".
+                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name(); ?>".
+                       "</a>".
+                       "<?php endif; ?>";
+            }
+
+            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>".
+                   "<?php endif; ?>";
+        }
+
+        if (! empty($expression->get(0))) {
+            return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
+                   "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name; ?>".
+                   "<?php endif; ?>";
+        }
+    },
+
+    'terms' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if ($expression->get(2) === 'true') {
+            return "<?= get_the_term_list({$expression->get(1)}, {$expression->get(0)}, '', ', '); ?>";
+        }
+
+        if (! empty($expression->get(1))) {
+            if ($expression->get(1) === 'true') {
+                return "<?= get_the_term_list(get_the_ID(), {$expression->get(0)}, '', ', '); ?>";
+            }
+
+            return "<?= strip_tags(get_the_term_list({$expression->get(1)}, {$expression->get(0)}, '', ', ')); ?>";
+        }
+
+        if (! empty($expression->get(0))) {
+            return "<?= strip_tags(get_the_term_list(get_the_ID(), {$expression->get(0)}, '', ', ')); ?>";
+        }
+    },
+
+    /*
+    |---------------------------------------------------------------------
+    | @role / @endrole / @user / @enduser / @guest / @endguest
+    |---------------------------------------------------------------------
+    */
+
+    'role' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        return "<?php if (is_user_logged_in() && in_array(strtolower({$expression->get(0)}), (array) wp_get_current_user()->roles)) : ?>";
+    },
+
+    'endrole' => function () {
+        return "<?php endif; ?>";
+    },
 
     'user' => function () {
         return "<?php if (is_user_logged_in()) : ?>";

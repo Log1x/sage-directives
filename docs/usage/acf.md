@@ -37,7 +37,7 @@ To echo a field for a specific post that is also an array, you can pass the post
   <ul>
     @fields('list')
       <li>@sub('item')</li>
-    @fields
+    @endfields
   </ul>
 @endfield
 ```
@@ -142,13 +142,23 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 </ul>
 ```
 
-If the sub field is an array, you can pass the key as a second parameter:
+If the sub field is an array, you can pass the key(s) as additional parameters:
 
 ```php
 <ul class="slider">
   @fields('slides')
     <li class="slide">
       <img src="@sub('image', 'url')" alt="@sub('image', 'alt')" />
+    </li>
+  @endfields
+</ul>
+```
+
+```php
+<ul class="slider">
+  @fields('slides')
+    <li class="slide">
+      <img src="@sub('image', 'sizes', 'thumbnail')" alt="@sub('image', 'alt')" />
     </li>
   @endfields
 </ul>
@@ -166,11 +176,17 @@ More usage of `@sub` can be found alongside the examples of the repeatable field
 @endsub
 ```
 
-If the sub field you are checking against is an array, you can pass the array key as a second parameter:
+If the sub field you are checking against is an array, you can pass the key(s) as additional parameters:
 
 ```php
 @hassub('image', 'url')
   <img src="@sub('image', 'url')" alt="@sub('image', 'alt')" />
+@endsub
+```
+
+```php
+@hassub('image', 'sizes', 'thumbnail')
+  <img src="@sub('image', 'sizes', 'thumbnail')" alt="@sub('image', 'alt')" />
 @endsub
 ```
 

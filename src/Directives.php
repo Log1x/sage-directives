@@ -30,28 +30,13 @@ class Directives
      */
     public function __construct()
     {
-        /**
-         * Collect Directives into a flattened array.
-         */
-        $directives = collect($this->directives)
-            ->flatMap(function ($directive) {
-                if ($directive === 'ACF' && ! function_exists('acf')) {
-                    return;
-                }
-
-                return $this->get($directive);
-            });
-
-        /**
-         * Register Directives with Blade
-         */
-        add_action('after_setup_theme', function () use ($directives) {
-            if (! function_exists('App\sage')) {
+        add_action('after_setup_theme', function () {
+            if (! function_exists('App\sage') && ! function_exists('Roots\app')) {
                 return;
             }
 
-            collect($directives)->each(function ($directive, $function) {
-                \App\sage('blade')->compiler()->directive($function, $directive);
+            collect($this->directives())->each(function ($directive, $function) {
+                $this->blade()->directive($function, $directive);
             });
         }, 20);
     }
@@ -62,10 +47,43 @@ class Directives
      * @param  string $name
      * @return array
      */
-    public function get($name)
+    protected function get($name)
     {
         if (file_exists($directives = __DIR__.'/Directives/'.$name.'.php')) {
             return require_once($directives);
+        }
+    }
+
+    /**
+     * Returns a collection of directives.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function directives()
+    {
+        return collect($this->directives)
+            ->flatMap(function ($directive) {
+                if ($directive === 'ACF' && ! function_exists('acf')) {
+                    return;
+                }
+
+                return $this->get($directive);
+            });
+    }
+
+    /**
+     * Returns the Blade compiler.
+     *
+     * @return \Illuminate\Support\Facades\Blade
+     */
+    protected function blade()
+    {
+        if (function_exists('App\sage')) {
+            return \App\sage('blade')->compiler();
+        }
+
+        if (function_exists('Roots\app')) {
+            return \Roots\app()['view']->getEngineResolver()->resolve('blade')->getCompiler();
         }
     }
 }
