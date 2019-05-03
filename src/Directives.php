@@ -83,7 +83,7 @@ class Directives
         }
 
         if (function_exists('Roots\app')) {
-            return \Roots\app()['view']->getEngineResolver()->resolve('blade')->getCompiler();
+            return \Roots\app('blade.compiler');
         }
     }
 }
