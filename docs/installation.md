@@ -1,8 +1,4 @@
-# Sage Directives
-
-[![Latest Stable Version](https://poser.pugx.org/log1x/sage-directives/v/stable)](https://packagist.org/packages/log1x/sage-directives) [![Total Downloads](https://poser.pugx.org/log1x/sage-directives/downloads)](https://packagist.org/packages/log1x/sage-directives)
-
-Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9 including directives for WordPress, ACF, and various miscellaneous helpers.
+# Installation
 
 ## Requirements
 
@@ -10,18 +6,13 @@ Sage Directives is a simple Composer package adding a variety of useful Blade di
 - [PHP](https://secure.php.net/manual/en/install.php) >= 7.1.3
 - [Composer](https://getcomposer.org/download/)
 
-## Installation
+## Installing Sage Directives
 
 Install via Composer:
 
 ```bash
 $ composer require log1x/sage-directives
 ```
-
-## Support
-
-- [Documentation](https://log1x.github.io/sage-directives-docs/)
-- [Discourse](https://discourse.roots.io/t/blade-directives-for-sage/14301)
 
 ## Bug Reports
 

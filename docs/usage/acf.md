@@ -49,7 +49,7 @@ To check the existance of a field for a specific post, you can pass a post ID as
   <ul>
     @fields('list', 5)
       <li>@sub('item')</li>
-    @fields
+    @endfield
   </ul>
 @endfield
 ```

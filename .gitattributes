@@ -1,5 +1,4 @@
 /.gitattributes export-ignore
 /docs export-ignore
 /package.json export-ignore
-/webpack.mix.js export-ignore
 /yarn.lock export-ignore
