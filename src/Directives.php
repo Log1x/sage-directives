@@ -31,13 +31,14 @@ class Directives
     public function __construct()
     {
         add_action('after_setup_theme', function () {
-            if (! function_exists('App\sage') && ! function_exists('Roots\app')) {
+            if (! $this->blade()) {
                 return;
             }
 
-            collect($this->directives())->each(function ($directive, $function) {
-                $this->blade()->directive($function, $directive);
-            });
+            collect($this->directives())
+                ->each(function ($directive, $function) {
+                    $this->blade()->directive($function, $directive);
+                });
         }, 20);
     }
 

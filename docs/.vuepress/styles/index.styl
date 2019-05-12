@@ -1,0 +1,119 @@
+@require './palette'
+
+body
+  font-family: Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+
+h1, h2, h3, h4, h5, h6
+  font-weight 300
+
+h1
+  padding-bottom 16px
+  border-bottom 2px solid rgba(0, 0, 0, 0.05)
+
+.navbar
+  box-shadow 0 2px 4px 0 rgba(0, 0, 0, 0.05)
+  border-bottom none
+
+  .site-name
+    color: $accentColor !important
+    font-weight: 500
+    font-size: 1.1em
+
+    &::after
+      content: ' Documentation'
+      color: #999999
+
+@media (min-width 720px)
+  .page
+    padding-left: 13rem
+
+  .sidebar
+    width: 13rem
+
+.sidebar
+  .sidebar-group:not(.collapsable) .sidebar-heading,
+  .sidebar-heading
+    color: #999999
+    font-size: 0.7em
+    font-weight: 600
+    text-transform: uppercase
+    letter-spacing 0.1rem
+
+  .sidebar-links
+    > li
+      margin 0
+      margin-bottom: 0.2rem
+
+  .sidebar-group
+    .sidebar-link
+      font-size 0.9em
+      color: #555555
+      border-left 0.125rem solid transparent
+
+    .sidebar-link:hover,
+    .sidebar-link:active,
+    .sidebar-link.active
+      color $accentColor
+      border-left-color $accentColor
+
+.content:not(.custom)
+  padding 4rem 2.5rem 1rem
+
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6
+    margin-top: -1.5rem
+    padding-bottom: 1rem
+
+div[class*="language-"]
+  background-color #ffffff
+  -webkit-font-smoothing subpixel-antialiased
+  -moz-osx-font-smoothing subpixel-antialiased
+  box-shadow 0 2px 4px 0 rgba(0, 0, 0, 0.05)
+  border 1px solid rgba(0, 0, 0, 0.05)
+
+  &::before
+    color: rgba(0, 0, 0, 0.2)
+
+.content pre,
+.content pre code,
+.content pre[class*="language-"],
+.content pre[class*="language-"] code
+  line-height 1.7
+  color #888
+
+  .token.property,
+  .token.class-name,
+  .token.function,
+  .token.keyword,
+  .token.constant
+    color $accentColor
+
+  .token.operator,
+  .token.symbol,
+  .token.punctuation,
+  .token.boolean,
+  .token.number {
+    color #888
+  }
+
+  .token.string,
+  .token.char,
+  .token.attr-value,
+  .token.regex,
+  .token.variable,
+  .token.selector,
+  .token.important,
+  .token.atrule,
+  .token.builtin
+    color lighten($accentColor, 33%)
+
+  .token.comment,
+  .token.block-comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata
+    color #bbb

@@ -3,6 +3,8 @@ module.exports = {
   description: 'Empower your Roots Sage workflow',
   base: '/sage-directives-docs/',
 
+  plugins: ['@vuepress/back-to-top'],
+
   head: [
     [
       "link",
