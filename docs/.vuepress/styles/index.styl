@@ -1,7 +1,10 @@
 @require './palette'
 
 body
-  font-family: Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+  font-family Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+
+a
+  transition color ease-in-out 86ms, border-color ease-in-out 86ms
 
 h1, h2, h3, h4, h5, h6
   font-weight 300
@@ -14,40 +17,46 @@ h1
   box-shadow 0 2px 4px 0 rgba(0, 0, 0, 0.05)
   border-bottom none
 
-  .site-name
-    color: $accentColor !important
-    font-weight: 500
-    font-size: 1.1em
+  a > .site-name
+    color $accentColor
+    font-weight 500
+    font-size 1.1em
 
     &::after
-      content: ' Documentation'
-      color: #999999
+      content ' Documentation'
+      color #999999
+
+  .nav-links
+    font-size 0.8rem
+
+    a:hover
+      color $accentColor
 
 @media (min-width 720px)
   .page
-    padding-left: 13rem
+    padding-left 13rem
 
   .sidebar
-    width: 13rem
+    width 13rem
 
 .sidebar
   .sidebar-group:not(.collapsable) .sidebar-heading,
   .sidebar-heading
-    color: #999999
-    font-size: 0.7em
-    font-weight: 600
-    text-transform: uppercase
+    color #999999
+    font-size 0.7em
+    font-weight 600
+    text-transform uppercase
     letter-spacing 0.1rem
 
   .sidebar-links
     > li
       margin 0
-      margin-bottom: 0.2rem
+      margin-bottom 0.2rem
 
   .sidebar-group
     .sidebar-link
       font-size 0.9em
-      color: #555555
+      color #555555
       border-left 0.125rem solid transparent
 
     .sidebar-link:hover,
@@ -65,8 +74,8 @@ h1
   > h4,
   > h5,
   > h6
-    margin-top: -1.5rem
-    padding-bottom: 1rem
+    margin-top -1.5rem
+    padding-bottom 1rem
 
 div[class*="language-"]
   background-color #ffffff
@@ -76,44 +85,49 @@ div[class*="language-"]
   border 1px solid rgba(0, 0, 0, 0.05)
 
   &::before
-    color: rgba(0, 0, 0, 0.2)
+    color rgba(0, 0, 0, 0.2)
 
-.content pre,
-.content pre code,
-.content pre[class*="language-"],
-.content pre[class*="language-"] code
-  line-height 1.7
-  color #888
-
-  .token.property,
-  .token.class-name,
-  .token.function,
-  .token.keyword,
-  .token.constant
+.content
+  code
     color $accentColor
 
-  .token.operator,
-  .token.symbol,
-  .token.punctuation,
-  .token.boolean,
-  .token.number {
+  pre,
+  pre code,
+  pre[class*="language-"],
+  pre[class*="language-"] code
+    line-height 1.7
     color #888
-  }
 
-  .token.string,
-  .token.char,
-  .token.attr-value,
-  .token.regex,
-  .token.variable,
-  .token.selector,
-  .token.important,
-  .token.atrule,
-  .token.builtin
-    color lighten($accentColor, 33%)
+    .token
+      &.property,
+      &.class-name,
+      &.function,
+      &.keyword,
+      &.constant,
+      &.double-quoted-string,
+      &.string
+        color $accentColor
 
-  .token.comment,
-  .token.block-comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata
-    color #bbb
+      &.char,
+      &.attr-value,
+      &.regex,
+      &.variable,
+      &.selector,
+      &.important,
+      &.atrule,
+      &.builtin
+        color lighten($accentColor, 40%)
+
+      &.operator,
+      &.symbol,
+      &.punctuation,
+      &.boolean,
+      &.number
+        color #888
+
+      &.comment,
+      &.block-comment,
+      &.prolog,
+      &.doctype,
+      &.cdata
+        color #bbb
