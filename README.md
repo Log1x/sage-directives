@@ -31,8 +31,6 @@ If you discover a bug in Sage Directives, please [open an issue](https://github.
 
 Contributing whether it be through PRs, reporting an issue, or suggesting an idea is encouraged and appreciated. When contributing code, please follow the existing directive format.
 
-If you're feeling generous, I also take contributions in the form of [coffee & energy drinks](https://www.buymeacoffee.com/log1x).
-
 ## License
 
-Sage Directives is provided under the [MIT License](https://github.com/log1x/sage-directives/blob/master/LICENSE).
+Sage Directives is provided under the [MIT License](https://github.com/log1x/sage-directives/blob/master/LICENSE.md).
