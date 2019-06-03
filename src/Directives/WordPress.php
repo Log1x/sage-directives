@@ -332,4 +332,43 @@ return [
         return "<?= wpautop(wp_kses_post({$expression})); ?>";
     },
 
+
+    /*
+    |---------------------------------------------------------------------
+    | @action / @filter
+    |---------------------------------------------------------------------
+    */
+
+    'action' => function ($expression) {
+        return "<?php do_action({$expression}); ?>";
+    },
+
+    'filter' => function ($expression) {
+        return "<?= apply_filters({$expression}); ?>";
+    },
+
+    /*
+    |---------------------------------------------------------------------
+    | @wphead / @wpfoot
+    |---------------------------------------------------------------------
+    */
+
+    'wphead' => function () {
+        return "<?php wp_head(); ?>";
+    },
+
+    'wpfoot' => function () {
+        return "<?php wp_footer(); ?>";
+    },
+
+    /*
+    |---------------------------------------------------------------------
+    | @bodyclass
+    |---------------------------------------------------------------------
+    */
+
+    'bodyclass' => function ($expression) {
+        return "<?php body_class({$expression}); ?>";
+    },
+
 ];

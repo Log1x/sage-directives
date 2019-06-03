@@ -384,3 +384,35 @@ It accepts the same parameters as `@term`:
 ```php
 @wpautokp($content)
 ```
+
+## @action
+
+`@action` allows you to trigger a WordPress action through the use of [`do_action`](https://codex.wordpress.org/Function_Reference/do_action).
+
+```php
+@action('get_footer')
+```
+
+## @filter
+
+`@filter` echoes the result of what its been passed through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
+
+```php
+@filter('the_content', 'some string')
+```
+
+## @wphead
+
+This is just a directive version of [`wp_head`](https://codex.wordpress.org/Function_Reference/wp_head).
+
+## @wpfoot
+
+This is just a directive version of [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer).
+
+## @bodyclass
+
+`@bodyclass` behaves just as [`body_class`](https://codex.wordpress.org/Function_Reference/body_class) does. You can pass strings to it to have them added to the body class. Has the same limitations on passing arrays as any other directive.
+
+```php
+@bodyclass('add-me')
+```
