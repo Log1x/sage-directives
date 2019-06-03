@@ -353,11 +353,11 @@ return [
     |---------------------------------------------------------------------
     */
 
-    'wp_head' => function () {
+    'wphead' => function () {
         return "<?php wp_head(); ?>";
     },
 
-    'wp_foot' => function () {
+    'wpfoot' => function () {
         return "<?php wp_footer(); ?>";
     },
 
@@ -367,7 +367,7 @@ return [
     |---------------------------------------------------------------------
     */
 
-    'body_class' => function ($expression) {
+    'bodyclass' => function ($expression) {
         return "<?php body_class({$expression}); ?>";
     },
 

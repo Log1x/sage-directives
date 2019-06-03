@@ -395,7 +395,7 @@ It accepts the same parameters as `@term`:
 
 ## @filter
 
-`@action` echos the result of what it's been passed, through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
+`@action` echoes the result of what its been passed through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
 
 ```php
 @filter('the_content', 'some string')
@@ -403,11 +403,11 @@ It accepts the same parameters as `@term`:
 
 ## @wphead
 
-This is just a directive version of [`wp_head`](https://codex.wordpress.org/Function_Reference/wp_head)
+This is just a directive version of [`wp_head`](https://codex.wordpress.org/Function_Reference/wp_head).
 
-## @wphead
+## @wpfoot
 
-This is just a directive version of [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer)
+This is just a directive version of [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer).
 
 ## @bodyclass
 
