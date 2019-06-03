@@ -395,7 +395,7 @@ It accepts the same parameters as `@term`:
 
 ## @filter
 
-`@action` echoes the result of what its been passed through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
+`@filter` echoes the result of what its been passed through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
 
 ```php
 @filter('the_content', 'some string')
