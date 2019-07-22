@@ -26,6 +26,6 @@ class Util
      */
     public static function strip($expression)
     {
-        return str_replace("'", '', $expression);
+        return str_replace(["'", "\""], '', $expression);
     }
 }
