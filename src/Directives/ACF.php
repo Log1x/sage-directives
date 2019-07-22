@@ -23,11 +23,11 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>".
+        return "<?php if (have_rows({$expression})) : ?>" .
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
@@ -82,15 +82,15 @@ return [
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(3)) && ! is_string($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>";
+                return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
             if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>";
+                return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>"; // phpcs:ignore
             }
 
             if (! empty($expression->get(2)) && is_string($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)})[{$expression->get(2)}] === {$expression->get(1)}) : ?>";
+                return "<?php if (get_field({$expression->get(0)})[{$expression->get(2)}] === {$expression->get(1)}) : ?>"; // phpcs:ignore
             }
 
             return "<?php if (get_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
@@ -126,7 +126,7 @@ return [
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>";
+                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>"; // phpcs:ignore
             }
 
             return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
@@ -140,7 +140,7 @@ return [
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>";
+                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
             return "<?php if (get_sub_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
@@ -161,11 +161,11 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>".
+        return "<?php if (have_rows({$expression})) : ?>" .
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
@@ -197,11 +197,11 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>".
+        return "<?php if (have_rows({$expression})) : ?>" .
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
@@ -216,7 +216,7 @@ return [
     */
 
     'options' => function ($expression) {
-        return "<?php if (have_rows({$expression}, 'option')) : ?>".
+        return "<?php if (have_rows({$expression}, 'option')) : ?>" .
                "<?php while (have_rows({$expression}, 'option')) : the_row(); ?>";
     },
 
@@ -255,7 +255,7 @@ return [
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}] === {$expression->get(2)}) : ?>";
+                return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
             return "<?php if (get_field({$expression->get(0)}, 'option') === {$expression->get(1)}) : ?>";

@@ -3,13 +3,6 @@
 namespace Log1x\SageDirectives;
 
 /**
- * Return if Directives already exists.
- */
-if (class_exists('Directives')) {
-    return;
-}
-
-/**
  * Directives
  */
 class Directives
@@ -50,7 +43,7 @@ class Directives
      */
     protected function get($name)
     {
-        if (file_exists($directives = __DIR__.'/Directives/'.$name.'.php')) {
+        if (file_exists($directives = __DIR__ . '/Directives/' . $name . '.php')) {
             return require_once($directives);
         }
     }
@@ -89,6 +82,8 @@ class Directives
     }
 }
 
+// phpcs:disable
 if (function_exists('add_action')) {
     new Directives();
 }
+// phpcs:enable

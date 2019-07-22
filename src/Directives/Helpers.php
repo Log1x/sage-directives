@@ -23,8 +23,8 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>".
-                   "<?php echo {$expression->get(1)}; ?>".
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>" .
+                   "<?php echo {$expression->get(1)}; ?>" .
                    "<?php endif; ?>";
         }
 
@@ -39,8 +39,8 @@ return [
         if (str_contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>".
-                   "<?php echo {$expression->get(1)}; ?>".
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>" .
+                   "<?php echo {$expression->get(1)}; ?>" .
                    "<?php endif; ?>";
         }
 
@@ -178,7 +178,7 @@ return [
     */
 
     'repeat' => function ($expression) {
-        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>".
+        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>" .
                "<?php \$loop = (object) [
                    'index' => \$iteration,
                    'iteration' => \$iteration + 1,
@@ -201,7 +201,7 @@ return [
 
     'style' => function ($expression) {
         if (! empty($expression)) {
-            return '<link rel="stylesheet" href="'.Util::strip($expression).'">';
+            return '<link rel="stylesheet" href="' . Util::strip($expression) . '">';
         }
 
         return '<style>';
@@ -219,7 +219,7 @@ return [
 
     'script' => function ($expression) {
         if (! empty($expression)) {
-            return '<script src="'.Util::strip($expression).'"></script>';
+            return '<script src="' . Util::strip($expression) . '"></script>';
         }
 
         return '<script>';
@@ -239,8 +239,8 @@ return [
         $expression = Util::parse($expression);
         $variable = Util::strip($expression->get(0));
 
-        return "<script>\n".
-               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\''.{$expression->get(1)}.'\''; ?>;\n".
+        return "<script>\n" .
+               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n" . // phpcs:ignore
                "</script>";
     },
 
@@ -251,7 +251,7 @@ return [
     */
 
     'inline' => function ($expression) {
-        $output = "/* {$expression} */\n".
+        $output = "/* {$expression} */\n" .
                   "<?php include get_theme_file_path({$expression}) ?>\n";
 
         if (ends_with($expression, ".html'")) {
@@ -259,11 +259,11 @@ return [
         }
 
         if (ends_with($expression, ".css'")) {
-            return "<style>\n". $output .'</style>';
+            return "<style>\n" . $output . '</style>';
         }
 
         if (ends_with($expression, ".js'")) {
-            return "<script>\n". $output .'</script>';
+            return "<script>\n" . $output . '</script>';
         }
     },
 
@@ -276,31 +276,31 @@ return [
     'fa' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return '<i class="fa fa-'.Util::strip($expression->get(0)).' '.Util::strip($expression->get(1)).'"></i>';
+        return '<i class="fa fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
     },
 
     'fas' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return '<i class="fas fa-'.Util::strip($expression->get(0)).' '.Util::strip($expression->get(1)).'"></i>';
+        return '<i class="fas fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
     },
 
     'far' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return '<i class="far fa-'.Util::strip($expression->get(0)).' '.Util::strip($expression->get(1)).'"></i>';
+        return '<i class="far fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
     },
 
     'fal' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return '<i class="fal fa-'.Util::strip($expression->get(0)).' '.Util::strip($expression->get(1)).'"></i>';
+        return '<i class="fal fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
     },
 
     'fab' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return '<i class="fab fa-'.Util::strip($expression->get(0)).' '.Util::strip($expression->get(1)).'"></i>';
+        return '<i class="fab fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
     },
 
 ];

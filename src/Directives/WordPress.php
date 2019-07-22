@@ -20,19 +20,19 @@ return [
     */
 
     'query' => function ($expression) {
-        return "<?php global \$query; ?>".
+        return "<?php global \$query; ?>" .
                "<?php \$query = new WP_Query({$expression}); ?>";
     },
 
     'posts' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php \$posts = collect(); ?>".
+            return "<?php \$posts = collect(); ?>" .
 
-                   "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
-                   "<?php \$posts->put('p', is_a({$expression}, 'WP_Post') ? ({$expression})->ID : {$expression}); ?>".
-                   "<?php endif; ?>".
+                   "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>" .
+                   "<?php \$posts->put('p', is_a({$expression}, 'WP_Post') ? ({$expression})->ID : {$expression}); ?>" .
+                   "<?php endif; ?>" .
 
-                   "<?php if (is_array({$expression})) : ?>".
+                   "<?php if (is_array({$expression})) : ?>" .
                    "<?php \$posts
                        ->put('ignore_sticky_posts', true)
                        ->put('posts_per_page', -1)
@@ -41,19 +41,19 @@ return [
                                return is_a(\$post, 'WP_Post') ? \$post->ID : \$post;
                            })->all())
                        ->put('orderby', 'post__in');
-                   ?>".
-                   "<?php endif; ?>".
+                   ?>" .
+                   "<?php endif; ?>" .
 
                    "<?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : {$expression}; ?>" .
                    "<?php if (\$query->have_posts()) : while (\$query->have_posts()) : \$query->the_post(); ?>";
         }
 
-        return "<?php if (empty(\$query)) : ?>".
-               "<?php global \$wp_query; ?>".
-               "<?php \$query = \$wp_query; ?>".
-               "<?php endif; ?>".
+        return "<?php if (empty(\$query)) : ?>" .
+               "<?php global \$wp_query; ?>" .
+               "<?php \$query = \$wp_query; ?>" .
+               "<?php endif; ?>" .
 
-               "<?php if (\$query->have_posts()) : ?>".
+               "<?php if (\$query->have_posts()) : ?>" .
                "<?php while (\$query->have_posts()) : \$query->the_post(); ?>";
     },
 
@@ -93,10 +93,10 @@ return [
 
             if (! empty($expression->get(2))) {
                 if ($expression->get(2) === 'false') {
-                    return "<?= get_the_post_thumbnail_url({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+                    return "<?= get_the_post_thumbnail_url({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>"; // phpcs:ignore
                 }
 
-                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>"; // phpcs:ignore
             }
 
             if (! empty($expression->get(1))) {
@@ -104,7 +104,7 @@ return [
                     return "<?= get_the_post_thumbnail_url({$expression->get(0)}, 'thumbnail'); ?>";
                 }
 
-                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>";
+                return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>"; // phpcs:ignore
             }
 
             if (! empty($expression->get(0))) {
@@ -147,10 +147,10 @@ return [
 
     'published' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_int({$expression})) : ?>".
-                   "<?= get_the_date('', {$expression}); ?>".
-                   "<?php else : ?>".
-                   "<?= get_the_date({$expression}); ?>".
+            return "<?php if (is_a({$expression}, 'WP_Post') || is_int({$expression})) : ?>" .
+                   "<?= get_the_date('', {$expression}); ?>" .
+                   "<?php else : ?>" .
+                   "<?= get_the_date({$expression}); ?>" .
                    "<?php endif; ?>";
         }
 
@@ -159,10 +159,10 @@ return [
 
     'modified' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
-                   "<?= get_the_modified_date('', {$expression}); ?>".
-                   "<?php else : ?>".
-                   "<?= get_the_modified_date({$expression}); ?>".
+            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>" .
+                   "<?= get_the_modified_date('', {$expression}); ?>" .
+                   "<?php else : ?>" .
+                   "<?= get_the_modified_date({$expression}); ?>" .
                    "<?php endif; ?>";
         }
 
@@ -179,29 +179,29 @@ return [
         $expression = Util::parse($expression);
 
         if ($expression->get(1) === 'true') {
-            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
-                   "<a href=\"<?= get_category_link(collect(get_the_category({$expression->get(0)}))->shift()->cat_ID); ?>\">".
-                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>".
-                   "</a>".
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>" .
+                   "<a href=\"<?= get_category_link(collect(get_the_category({$expression->get(0)}))->shift()->cat_ID); ?>\">" . // phpcs:ignore
+                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>" .
+                   "</a>" .
                    "<?php endif; ?>";
         }
 
         if (! empty($expression->get(0))) {
             if ($expression->get(0) === 'true') {
-                return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
-                       "<a href=\"<?= get_category_link(collect(get_the_category())->shift()->cat_ID); ?>\">".
-                       "<?= collect(get_the_category())->shift()->name; ?>".
-                       "</a>".
+                return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>" .
+                       "<a href=\"<?= get_category_link(collect(get_the_category())->shift()->cat_ID); ?>\">" .
+                       "<?= collect(get_the_category())->shift()->name; ?>" .
+                       "</a>" .
                        "<?php endif; ?>";
             }
 
-            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>".
-                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>".
+            return "<?php if (collect(get_the_category({$expression->get(0)}))->isNotEmpty()) : ?>" .
+                   "<?= collect(get_the_category({$expression->get(0)}))->shift()->name; ?>" .
                    "<?php endif; ?>";
         }
 
-        return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>".
-               "<?= collect(get_the_category())->shift()->name; ?>".
+        return "<?php if (collect(get_the_category())->isNotEmpty()) : ?>" .
+               "<?= collect(get_the_category())->shift()->name; ?>" .
                "<?php endif; ?>";
     },
 
@@ -228,30 +228,30 @@ return [
         $expression = Util::parse($expression);
 
         if (! empty($expression->get(2))) {
-            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>".
-                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->term_ID); ?>\">".
-                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>".
-                   "</a>".
+            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>" . // phpcs:ignore
+                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->term_ID); ?>\">" . // phpcs:ignore
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>" .
+                   "</a>" .
                    "<?php endif; ?>";
         }
 
         if (! empty($expression->get(1))) {
             if ($expression->get(1) === 'true') {
-                return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
-                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->term_ID); ?>\">".
-                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name(); ?>".
-                       "</a>".
+                return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>" .
+                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->term_ID); ?>\">" . // phpcs:ignore
+                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name(); ?>" .
+                       "</a>" .
                        "<?php endif; ?>";
             }
 
-            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>".
-                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>".
+            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>" . // phpcs:ignore
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>" .
                    "<?php endif; ?>";
         }
 
         if (! empty($expression->get(0))) {
-            return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>".
-                   "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name; ?>".
+            return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>" .
+                   "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name; ?>" .
                    "<?php endif; ?>";
         }
     },
@@ -285,7 +285,7 @@ return [
     'role' => function ($expression) {
         $expression = Util::parse($expression);
 
-        return "<?php if (is_user_logged_in() && in_array(strtolower({$expression->get(0)}), (array) wp_get_current_user()->roles)) : ?>";
+        return "<?php if (is_user_logged_in() && in_array(strtolower({$expression->get(0)}), (array) wp_get_current_user()->roles)) : ?>"; // phpcs:ignore
     },
 
     'endrole' => function () {

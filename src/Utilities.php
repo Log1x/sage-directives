@@ -13,7 +13,7 @@ class Util
     public static function parse($expression)
     {
         return collect(explode(',', $expression))
-            ->map(function($item) {
+            ->map(function ($item) {
                 return trim($item);
             });
     }
