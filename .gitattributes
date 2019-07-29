@@ -1,5 +1,6 @@
 /.gitattributes export-ignore
 /.github export-ignore
+/.circleci export-ignore
 /docs export-ignore
 /package.json export-ignore
 /yarn.lock export-ignore
