@@ -1,3 +1,8 @@
+## v1.1.2 (08-07-2019)
+
+### Bug fixes
+- Use `Collection::put()` instead of `Collection::replace()` to maintain backwards compatibility.
+
 ## v1.1.1 (08-07-2019)
 
 ### Enhancements

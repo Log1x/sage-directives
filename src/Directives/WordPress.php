@@ -290,21 +290,15 @@ return [
             ! is_numeric($image) &&
             $image = Util::field($image)
         ) {
-            $expression = $expression->replace([
-                0 => is_array($image) && ! empty($image['id']) ? $image['id'] : $image
-            ]);
+            $expression = $expression->put(0, is_array($image) && ! empty($image['id']) ? $image['id'] : $image);
         }
 
         if (! empty($expression->get(3))) {
-            $expression = $expression->replace([
-                2 => Util::clean($expression->slice(2)->all())
-            ]);
+            $expression = $expression->put(2, Util::clean($expression->slice(2)->all()));
         }
 
         if (! empty($expression->get(2)) && ! Util::isArray($expression->get(2))) {
-            $expression = $expression->replace([
-                2 => Util::toString(['alt' => $expression->get(2)])
-            ]);
+            $expression = $expression->put(2, Util::toString(['alt' => $expression->get(2)]));
         }
 
         if ($expression->get(1)) {
