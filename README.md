@@ -40,7 +40,7 @@ If you discover a bug in Sage Directives, please [open an issue](https://github.
 
 Contributing whether it be through PRs, reporting an issue, or suggesting an idea is encouraged and appreciated. When contributing code, please follow the existing directive format.
 
-If Sage Directives has helped you immensely and you would like to support me working on it in the future– feel free to leave a contribution using the `Sponsor` button above.
+I work on Sage Directives entirely in my free time. If Sage Directives has helped you immensely and you would like to support me working on it in the future– feel free to leave a contribution using the :heart: **Sponsor** button above.
 
 ## License
 

@@ -32,6 +32,20 @@ class Util
     }
 
     /**
+     * Wraps the passed string in single quotes if they are not already present.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public static function wrap($value)
+    {
+        $value = Str::start($value, "'");
+        $value = Str::finish($value, "'");
+
+        return $value;
+    }
+
+    /**
      * Dives for an ACF field or sub field and returns the value if it exists.
      *
      * @param  string  $field
@@ -60,9 +74,40 @@ class Util
     }
 
     /**
+     * Convert expression to a string.
+     *
+     * @param  mixed  $expression
+     * @param  string $keys
+     * @return string
+     */
+    public static function toString($expression, $keys = '')
+    {
+        if (! is_array($expression)) {
+            return self::wrap($expression);
+        }
+
+        foreach ($expression as $key => $value) {
+            $keys .= self::wrap($key) . ' => ' . self::wrap($value) .  ',';
+        }
+
+        $keys = trim(Str::replaceLast(',', '', $keys));
+
+        return "[{$keys}]";
+    }
+
+    /**
      * A sad attempt to check if an expression passed is actually an array.
-     * The only other way to approach this would be a clever `preg_replace()`
-     * or `eval()` which isn't happening.
+     * Unfortunately, ANY expression passed to Blade is a string until it is
+     * returned and parsed through the compiler. Even attempting to manually
+     * convert the string to an array will then cause a string to array exception
+     * during compiled time– so regardless, it must then be converted back to a
+     * string.
+     *
+     * @see Utilities::toString()
+     *
+     * The only other way to approach this would be a clever `preg_match_all()`
+     * or `eval()` which isn't happening. I've poached every other Blade directives
+     * library and none have a viable solution.
      *
      * @param  mixed $expression
      * @return boolean

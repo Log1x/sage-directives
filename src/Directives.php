@@ -85,4 +85,3 @@ class Directives
 if (function_exists('add_action')) {
     new Directives();
 }
-// phpcs:enable

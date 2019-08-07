@@ -284,10 +284,11 @@ return [
 
     'image' => function ($expression) {
         $expression = Util::parse($expression);
+        $image = Util::strip($expression->get(0));
 
-        if (is_string(Util::strip($expression->get(0))) &&
-            ! is_numeric(Util::strip($expression->get(0))) &&
-            $image = Util::field(Util::strip($expression->get(0)))
+        if (is_string($image) &&
+            ! is_numeric($image) &&
+            $image = Util::field($image)
         ) {
             $expression = $expression->replace([
                 0 => is_array($image) && ! empty($image['id']) ? $image['id'] : $image
@@ -296,16 +297,7 @@ return [
 
         if (! empty($expression->get(2)) && ! Util::isArray($expression->get(2))) {
             $expression = $expression->replace([
-                2 => ['alt' => Util::strip($expression->get(2))]
-            ]);
-        }
-
-        if (! empty($field) && is_array($field) && ! empty($field['alt'])) {
-            $expression = $expression->replace([
-                2 => array_merge(
-                    $expression->get(2) ?? [],
-                    ['alt' => $field['alt']]
-                )
+                2 => Util::wrap(['alt' => $expression->get(2)])
             ]);
         }
 

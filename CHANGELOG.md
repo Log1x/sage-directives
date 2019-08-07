@@ -1,3 +1,21 @@
+## v1.1.0 (08-07-2019)
+
+### Enhancements
+- Added `@image` directive which echos attachment images as well as ACF field images responsively using `wp_get_attachment_image()`
+- Added `Util::field()` which if ACF is present, attempts to get and return a field value from `get_field()`, `get_sub_field()`, or `get_field($field, 'option')` (in that order).
+- Added `Util::toString()` which attempts to convert expressions such as arrays back to strings before passing them to Blade to avoid array to string exceptions after modifying arrays passed as a Blade expression.
+- Added `Util::wrap()` which simply wraps the passed value in single quotes.
+- Added `Util::isArray()` in a simple but effective attempt to detect when an expression is an array in a conditional outside of the compiled Blade scope.
+- Bump dependencies.
+- Clean up `README.md`.
+- Update `docs/installation.md` to match recent changes to the `README`.
+- Change `Discourse` to `Support` in the documentation header navigation.
+- Other small clean up.
+
+### Bug fixes
+- Fix documentation styles with the new VuePress.
+- Only pull the Google font weights we're actually using on the documentation.
+
 ## v1.0.9 (05-12-2019)
 
 ### Enhancements
