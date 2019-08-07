@@ -1,3 +1,13 @@
+## v1.1.1 (08-07-2019)
+
+### Enhancements
+- Added `Util::unwrap()` which simply unwraps the passed string from the passed delimiter.
+- Added `Util::clean()` to combine and clean malformed arrays formed from a parsed expressions.
+- `Util::toString()` now accepts a second parameter `$single` for working with flattened or malformed arrays.
+
+### Bug fixes
+- Fix passing an array as the third parameter to `@image`
+
 ## v1.1.0 (08-07-2019)
 
 ### Enhancements

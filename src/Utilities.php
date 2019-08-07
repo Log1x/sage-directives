@@ -46,6 +46,39 @@ class Util
     }
 
     /**
+     * Unwraps the passed string from the passed delimiter.
+     *
+     * @param  string $value
+     * @param  string $delimiter
+     * @return string
+     */
+    public static function unwrap($value, $delimiter = "'")
+    {
+        if (Str::startsWith($value, $delimiter)) {
+            $value = Str::replaceFirst($delimiter, '', $value);
+        }
+
+        if (Str::endsWith($value, $delimiter)) {
+            $value = Str::replaceLast($delimiter, '', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Combine and clean a malformed array formed from a parsed expression.
+     *
+     * @param  array $expression
+     * @return string
+     */
+    public static function clean($expression)
+    {
+        return Util::unwrap(
+            Util::toString($expression, true)
+        );
+    }
+
+    /**
      * Dives for an ACF field or sub field and returns the value if it exists.
      *
      * @param  string  $field
@@ -76,23 +109,34 @@ class Util
     /**
      * Convert expression to a string.
      *
-     * @param  mixed  $expression
-     * @param  string $keys
+     * @param  mixed   $expression
+     * @param  boolean $single
      * @return string
      */
-    public static function toString($expression, $keys = '')
+    public static function toString($expression, $single = false)
     {
         if (! is_array($expression)) {
             return self::wrap($expression);
         }
 
+        $keys = '';
+
         foreach ($expression as $key => $value) {
-            $keys .= self::wrap($key) . ' => ' . self::wrap($value) .  ',';
+            if ($single) {
+                $keys .= self::wrap($value) . ',';
+            } else {
+                $keys .= self::wrap($key) . ' => ' . self::wrap($value) .  ', ';
+            }
         }
 
         $keys = trim(Str::replaceLast(',', '', $keys));
 
-        return "[{$keys}]";
+        if (! $single) {
+            $keys = Str::start($keys, '[');
+            $keys = Str::finish($keys, ']');
+        }
+
+        return $keys;
     }
 
     /**

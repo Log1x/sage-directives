@@ -295,9 +295,15 @@ return [
             ]);
         }
 
+        if (! empty($expression->get(3))) {
+            $expression = $expression->replace([
+                2 => Util::clean($expression->slice(2)->all())
+            ]);
+        }
+
         if (! empty($expression->get(2)) && ! Util::isArray($expression->get(2))) {
             $expression = $expression->replace([
-                2 => Util::wrap(['alt' => $expression->get(2)])
+                2 => Util::toString(['alt' => $expression->get(2)])
             ]);
         }
 
