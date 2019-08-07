@@ -4,9 +4,14 @@ body
   font-family Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
 
 a
-  transition color ease-in-out 86ms, border-color ease-in-out 86ms
+  transition color ease-in-out 86ms, background-color ease-in-out 86ms, border-color ease-in-out 86ms
 
-h1, h2, h3, h4, h5, h6
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
   font-weight 300
 
 h1
@@ -65,7 +70,7 @@ h1
       color $accentColor
       border-left-color $accentColor
 
-.content:not(.custom)
+.theme-default-content
   padding 4rem 2.5rem 1rem
 
   > h1,
@@ -87,7 +92,7 @@ div[class*="language-"]
   &::before
     color rgba(0, 0, 0, 0.2)
 
-.content
+.theme-default-content
   code
     color $accentColor
 

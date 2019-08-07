@@ -2,9 +2,6 @@
 
 namespace Log1x\SageDirectives;
 
-/**
- * Directives
- */
 class Directives
 {
     /**
@@ -19,7 +16,9 @@ class Directives
     ];
 
     /**
-     * Constructor
+     * Create a new Directives instance.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -86,4 +85,3 @@ class Directives
 if (function_exists('add_action')) {
     new Directives();
 }
-// phpcs:enable

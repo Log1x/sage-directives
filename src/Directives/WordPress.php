@@ -278,6 +278,48 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @image
+    |---------------------------------------------------------------------
+    */
+
+    'image' => function ($expression) {
+        $expression = Util::parse($expression);
+        $image = Util::strip($expression->get(0));
+
+        if (is_string($image) &&
+            ! is_numeric($image) &&
+            $image = Util::field($image)
+        ) {
+            $expression = $expression->replace([
+                0 => is_array($image) && ! empty($image['id']) ? $image['id'] : $image
+            ]);
+        }
+
+        if (! empty($expression->get(2)) && ! Util::isArray($expression->get(2))) {
+            $expression = $expression->replace([
+                2 => Util::wrap(['alt' => $expression->get(2)])
+            ]);
+        }
+
+        if ($expression->get(1)) {
+            return "<?php echo wp_get_attachment_image(
+                {$expression->get(0)},
+                {$expression->get(1)},
+                false,
+                {$expression->get(2)}
+            ); ?>";
+        }
+
+        return "<?php echo wp_get_attachment_image(
+            {$expression->get(0)},
+            'thumbnail',
+            false,
+            {$expression->get(2)}
+        ); ?>";
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @role / @endrole / @user / @enduser / @guest / @endguest
     |---------------------------------------------------------------------
     */

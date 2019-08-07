@@ -9,8 +9,7 @@ module.exports = {
     [
       "link",
       {
-        href:
-          "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i",
+        href: "https://fonts.googleapis.com/css?family=Nunito:300,400,400i,500,600,800",
         rel: "stylesheet",
         type: "text/css"
       }
@@ -21,7 +20,7 @@ module.exports = {
     sidebarDepth: 2,
 
     nav: [
-      { text: 'Discourse', link: 'https://discourse.roots.io/' },
+      { text: 'Support', link: 'https://discourse.roots.io/t/blade-directives-for-sage/14301' },
       { text: 'Changelog', link: 'https://github.com/log1x/sage-directives/blob/master/CHANGELOG.md' },
       { text: 'GitHub', link: 'https://github.com/log1x/sage-directives' }
     ],
@@ -30,7 +29,7 @@ module.exports = {
       {
         title: 'Getting Started',
         collapsable: false,
-        children: ['installation'],
+        children: ['/'],
       },
       {
         title: 'Usage',
