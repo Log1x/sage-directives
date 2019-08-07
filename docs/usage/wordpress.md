@@ -331,6 +331,19 @@ It accepts the same parameters as `@term`:
 @terms('genre', false)
 ```
 
+## @image 
+
+`@image` echo's an image using [`wp_get_attachment_image()`](https://developer.wordpress.org/reference/functions/wp_get_attachment_image/). 
+
+Since I find this mostly useful with ACF fields (being that it automatically handles responsive image sizes), if ACF is present and a field name in the form of a `string` is passed as the first parameter, `@image` will attempt to use the built in `Util::getField()` utility to deep-dive `get_field()` and `get_sub_field()` to retrieve your image field, and if it returns as an array instead of `id`, automatically check for the existance of `$image['id']` and pass that value to `wp_get_attachment_image()`.
+
+```php
+@image(1)
+@image(1, 'full', ['alt' => 'My image'])
+
+@image('my_image_field', 'full')
+```
+
 ## @shortcode
 
 `@shortcode` echo's the specified shortcode using [`do_shortcode()`](https://developer.wordpress.org/reference/functions/do_shortcode/).

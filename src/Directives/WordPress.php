@@ -278,6 +278,56 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @image
+    |---------------------------------------------------------------------
+    */
+
+    'image' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        if (is_string(Util::strip($expression->get(0))) &&
+            ! is_numeric(Util::strip($expression->get(0))) &&
+            $image = Util::field(Util::strip($expression->get(0)))
+        ) {
+            $expression = $expression->replace([
+                0 => is_array($image) && ! empty($image['id']) ? $image['id'] : $image
+            ]);
+        }
+
+        if (! empty($expression->get(2)) && ! Util::isArray($expression->get(2))) {
+            $expression = $expression->replace([
+                2 => ['alt' => Util::strip($expression->get(2))]
+            ]);
+        }
+
+        if (! empty($field) && is_array($field) && ! empty($field['alt'])) {
+            $expression = $expression->replace([
+                2 => array_merge(
+                    $expression->get(2) ?? [],
+                    ['alt' => $field['alt']]
+                )
+            ]);
+        }
+
+        if ($expression->get(1)) {
+            return "<?php echo wp_get_attachment_image(
+                {$expression->get(0)},
+                {$expression->get(1)},
+                false,
+                {$expression->get(2)}
+            ); ?>";
+        }
+
+        return "<?php echo wp_get_attachment_image(
+            {$expression->get(0)},
+            'thumbnail',
+            false,
+            {$expression->get(2)}
+        ); ?>";
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @role / @endrole / @user / @enduser / @guest / @endguest
     |---------------------------------------------------------------------
     */
