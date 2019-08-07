@@ -335,7 +335,7 @@ It accepts the same parameters as `@term`:
 
 `@image` echo's an image using [`wp_get_attachment_image()`](https://developer.wordpress.org/reference/functions/wp_get_attachment_image/). 
 
-Since I find this mostly useful with ACF fields (being that it automatically handles responsive image sizes), if ACF is present and a field name in the form of a `string` is passed as the first parameter, `@image` will attempt to use the built in `Util::getField()` utility to deep-dive `get_field()` and `get_sub_field()` to retrieve your image field, and if it returns as an array instead of `id`, automatically check for the existance of `$image['id']` and pass that value to `wp_get_attachment_image()`.
+Since I find this mostly useful with ACF fields (being that it automatically handles responsive image sizes), if ACF is present and a field name in the form of a `string` is passed as the first parameter, `@image` will attempt to use the built in [`Util::field()`](https://github.com/Log1x/sage-directives/blob/master/src/Utilities.php#L48-L74) utility to deep-dive `get_field()` and `get_sub_field()` to retrieve your image field, and if it returns as an array instead of `id`, automatically check for the existance of `$image['id']` and pass that value to `wp_get_attachment_image()`.
 
 By default, `@image` uses the `thumbnail` image size and the default media library attachment `alt` tag.
 
