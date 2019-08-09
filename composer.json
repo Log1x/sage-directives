@@ -14,6 +14,7 @@
     "roots",
     "sage",
     "wordpress",
+    "blade-directives",
     "blade",
     "directives"
   ],
@@ -36,5 +37,8 @@
     "lint": [
       "phpcs --ignore=vendor,tests --extensions=php --standard=PSR12 ."
     ]
+  },
+  "suggest": {
+    "log1x/sage-svg": "Required to use the @svg directive (Sage 10)."
   }
 }
