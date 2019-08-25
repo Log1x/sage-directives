@@ -63,6 +63,84 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @hasposts / @endhasposts / @noposts / @endnoposts
+    |---------------------------------------------------------------------
+    */
+
+    'hasposts' => function ($expression) {
+        if (! empty($expression)) {
+            return "<?php \$posts = collect(); ?>" .
+
+                   "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>" .
+                   "<?php \$posts->put('p', is_a({$expression}, 'WP_Post') ? ({$expression})->ID : {$expression}); ?>" .
+                   "<?php endif; ?>" .
+
+                   "<?php if (is_array({$expression})) : ?>" .
+                   "<?php \$posts
+                       ->put('ignore_sticky_posts', true)
+                       ->put('posts_per_page', -1)
+                       ->put('post__in', collect({$expression})
+                           ->map(function (\$post) {
+                               return is_a(\$post, 'WP_Post') ? \$post->ID : \$post;
+                           })->all())
+                       ->put('orderby', 'post__in');
+                   ?>" .
+                   "<?php endif; ?>" .
+
+                   "<?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : {$expression}; ?>" .
+                   "<?php if (\$query->have_posts()) :";
+        }
+
+        return "<?php if (empty(\$query)) : ?>" .
+               "<?php global \$wp_query; ?>" .
+               "<?php \$query = \$wp_query; ?>" .
+               "<?php endif; ?>" .
+
+               "<?php if (\$query->have_posts()) : ?>";
+    },
+
+    'endhasposts' => function () {
+        return "<?php wp_reset_postdata(); endif; ?>";
+    },
+
+    'noposts' => function ($expression) {
+        if (! empty($expression)) {
+            return "<?php \$posts = collect(); ?>" .
+
+                   "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>" .
+                   "<?php \$posts->put('p', is_a({$expression}, 'WP_Post') ? ({$expression})->ID : {$expression}); ?>" .
+                   "<?php endif; ?>" .
+
+                   "<?php if (is_array({$expression})) : ?>" .
+                   "<?php \$posts
+                       ->put('ignore_sticky_posts', true)
+                       ->put('posts_per_page', -1)
+                       ->put('post__in', collect({$expression})
+                           ->map(function (\$post) {
+                               return is_a(\$post, 'WP_Post') ? \$post->ID : \$post;
+                           })->all())
+                       ->put('orderby', 'post__in');
+                   ?>" .
+                   "<?php endif; ?>" .
+
+                   "<?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : {$expression}; ?>" .
+                   "<?php if (! \$query->have_posts()) :";
+        }
+
+        return "<?php if (empty(\$query)) : ?>" .
+               "<?php global \$wp_query; ?>" .
+               "<?php \$query = \$wp_query; ?>" .
+               "<?php endif; ?>" .
+
+               "<?php if (! \$query->have_posts()) : ?>";
+    },
+
+    'endnoposts' => function () {
+        return "<?php wp_reset_postdata(); endif; ?>";
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @title / @content / @excerpt / @permalink / @thumbnail
     |---------------------------------------------------------------------
     */

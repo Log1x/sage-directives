@@ -1,3 +1,9 @@
+## v1.1.3 (08-25-2019)
+
+### Enhancements
+- Added `@hasposts` and `@endhasposts` directives.
+- Added `@noposts` and `@endnoposts` directives. (#18)
+
 ## v1.1.2 (08-07-2019)
 
 ### Bug fixes

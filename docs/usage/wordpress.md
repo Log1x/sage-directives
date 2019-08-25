@@ -77,6 +77,32 @@ When passing an array of ID's / objects, the posts will be sorted by the order o
 
 If `@query` is not used and an argument is not passed to `@posts`, it will use the main loop from the `$wp_query` global.
 
+## @hasposts
+
+`@hasposts` accepts the same exact arguments as `@posts`, but simply runs a conditional without the while loop. It can be closed using `@endhasposts`.
+
+```php
+@hasposts
+  <ul>
+    @posts
+      <li>@title</li>
+    @endposts
+  </ul>
+@endhasposts
+```
+
+## @noposts
+
+`@noposts` again has the exact same arguments as `@posts`, but runs a `!` conditional without the while loop. It can be closed using `@endnoposts`.
+
+```php
+@noposts
+  <div class="py-2 px-4 bg-red-500 text-white">
+    🏜️
+  </div>
+@endnoposts
+```
+
 ## @title
 
 `@title` echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
