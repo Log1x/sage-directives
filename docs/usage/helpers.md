@@ -25,7 +25,7 @@ Alternatively, you can pass the output as a second parameter:
 ```php
 @isfalse($variable)
   Goodbye World
-@endistrue
+@endisfalse
 ```
 
 Alternatively, you can pass the output as a second parameter:
@@ -57,7 +57,7 @@ Alternatively, you can pass the output as a second parameter:
 ```php
 @isnotnull($variable)
   There is something here.
-@endisnull
+@endisnotnull
 ```
 
 Alternatively, you can pass the output as a second parameter:
