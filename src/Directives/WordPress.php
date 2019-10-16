@@ -203,7 +203,7 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @author / @authorurl / @published / @modified
+    | @author / @authorname / @authorurl / @published / @modified
     |---------------------------------------------------------------------
     */
 
@@ -213,6 +213,14 @@ return [
         }
 
         return "<?= get_the_author_meta('user_nicename'); ?>";
+    },
+
+    'authorname' => function ($expression) {
+        if (! empty($expression)) {
+            return "<?= get_the_author_meta('display_name', {$expression}); ?>";
+        }
+
+        return "<?= get_the_author_meta('display_name'); ?>";
     },
 
     'authorurl' => function ($expression) {
