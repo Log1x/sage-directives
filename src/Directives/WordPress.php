@@ -209,10 +209,10 @@ return [
 
     'author' => function ($expression) {
         if (! empty($expression)) {
-            return "<?= get_the_author_meta('user_nicename', {$expression}); ?>";
+            return "<?= get_the_author_meta('display_name', {$expression}); ?>";
         }
 
-        return "<?= get_the_author_meta('user_nicename'); ?>";
+        return "<?= get_the_author_meta('display_name'); ?>";
     },
 
     'authorurl' => function ($expression) {
