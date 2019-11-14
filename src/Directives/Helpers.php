@@ -2,6 +2,8 @@
 
 namespace Log1x\SageDirectives;
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -20,7 +22,7 @@ return [
     */
 
     'istrue' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>" .
@@ -36,7 +38,7 @@ return [
     },
 
     'isfalse' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>" .
@@ -58,7 +60,7 @@ return [
     */
 
     'isnull' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (is_null({$expression->get(0)})) : ?>" .
@@ -74,7 +76,7 @@ return [
     },
 
     'isnotnull' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (! is_null({$expression->get(0)})) : ?>" .
@@ -96,7 +98,7 @@ return [
     */
 
     'instanceof' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if ({$expression->get(0)} instanceof {$expression->get(1)}) : ?>";
@@ -114,7 +116,7 @@ return [
     */
 
     'typeof' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (gettype({$expression->get(0)}) == {$expression->get(1)}) : ?>";
@@ -142,7 +144,7 @@ return [
     */
 
     'set' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php {$expression->get(0)} = {$expression->get(1)}; ?>";
@@ -164,7 +166,7 @@ return [
     },
 
     'implode' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?= implode({$expression->get(0)}, {$expression->get(1)}); ?>";

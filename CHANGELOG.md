@@ -1,3 +1,8 @@
+## v1.1.4 (11-13-2019)
+
+### Bug fixes
+- Use `Illuminate\Support\Str` instead of `str_`
+
 ## v1.1.3 (08-25-2019)
 
 ### Enhancements

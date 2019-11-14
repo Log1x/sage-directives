@@ -2,6 +2,8 @@
 
 namespace Log1x\SageDirectives;
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -20,7 +22,7 @@ return [
     */
 
     'fields' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
@@ -42,7 +44,7 @@ return [
     */
 
     'field' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
@@ -60,7 +62,7 @@ return [
     },
 
     'hasfield' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
@@ -78,7 +80,7 @@ return [
     },
 
     'isfield' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(3)) && ! is_string($expression->get(2))) {
@@ -108,7 +110,7 @@ return [
     */
 
     'sub' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
@@ -122,7 +124,7 @@ return [
     },
 
     'hassub' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
@@ -136,7 +138,7 @@ return [
     },
 
     'issub' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
@@ -158,7 +160,7 @@ return [
     */
 
     'layouts' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
@@ -194,7 +196,7 @@ return [
     */
 
     'group' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
@@ -231,7 +233,7 @@ return [
     */
 
     'option' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?= get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
@@ -241,7 +243,7 @@ return [
     },
 
     'hasoption' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]) : ?>";
@@ -251,7 +253,7 @@ return [
     },
 
     'isoption' => function ($expression) {
-        if (str_contains($expression, ',')) {
+        if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
