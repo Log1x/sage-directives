@@ -93,6 +93,45 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @isempty / @endisempty / @isnotempty / @endisnotempty
+    |---------------------------------------------------------------------
+    */
+
+    'isempty' => function ($expression) {
+        if (Str::contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?php if (empty({$expression->get(0)})) : ?>" .
+                "<?php echo {$expression->get(1)}; ?>" .
+                "<?php endif; ?>";
+        }
+
+        return "<?php if (empty({$expression})) : ?>";
+    },
+
+    'endisempty' => function ($expression) {
+        return '<?php endif; ?>';
+    },
+
+    'isnotempty' => function ($expression) {
+        if (Str::contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?php if (! empty({$expression->get(0)})) : ?>" .
+                "<?php echo {$expression->get(1)}; ?>" .
+                "<?php endif; ?>";
+        }
+
+        return "<?php if (! empty({$expression})) : ?>";
+    },
+
+    'endisnotempty' => function ($expression) {
+        return "<?php endif; ?>";
+    },
+
+
+    /*
+    |---------------------------------------------------------------------
     | @instanceof / @endinstanceof
     |---------------------------------------------------------------------
     */
