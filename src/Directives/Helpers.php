@@ -26,8 +26,8 @@ return [
             $expression = Util::parse($expression);
 
             return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>" .
-                "<?php echo {$expression->get(1)}; ?>" .
-                "<?php endif; ?>";
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === true) : ?>";
@@ -42,8 +42,8 @@ return [
             $expression = Util::parse($expression);
 
             return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>" .
-                "<?php echo {$expression->get(1)}; ?>" .
-                "<?php endif; ?>";
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === false) : ?>";
@@ -64,8 +64,8 @@ return [
             $expression = Util::parse($expression);
 
             return "<?php if (is_null({$expression->get(0)})) : ?>" .
-                "<?php echo {$expression->get(1)}; ?>" .
-                "<?php endif; ?>";
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
         }
 
         return "<?php if (is_null({$expression})) : ?>";
@@ -80,8 +80,8 @@ return [
             $expression = Util::parse($expression);
 
             return "<?php if (! is_null({$expression->get(0)})) : ?>" .
-                "<?php echo {$expression->get(1)}; ?>" .
-                "<?php endif; ?>";
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
         }
 
         return "<?php if (! is_null({$expression})) : ?>";
@@ -97,13 +97,14 @@ return [
     |---------------------------------------------------------------------
     */
 
+
     'notempty' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
             return "<?php if (! empty({$expression->get(0)})) : ?>" .
-                "<?php echo {$expression->get(1)}; ?>" .
-                "<?php endif; ?>";
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
         }
 
         return "<?php if (! empty({$expression})) : ?>";
@@ -204,7 +205,7 @@ return [
 
     'repeat' => function ($expression) {
         return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>" .
-            "<?php \$loop = (object) [
+               "<?php \$loop = (object) [
                    'index' => \$iteration,
                    'iteration' => \$iteration + 1,
                    'remaining' =>  (int) {$expression} - \$iteration,
@@ -225,7 +226,7 @@ return [
     */
 
     'style' => function ($expression) {
-        if (!empty($expression)) {
+        if (! empty($expression)) {
             return '<link rel="stylesheet" href="' . Util::strip($expression) . '">';
         }
 
@@ -243,7 +244,7 @@ return [
     */
 
     'script' => function ($expression) {
-        if (!empty($expression)) {
+        if (! empty($expression)) {
             return '<script src="' . Util::strip($expression) . '"></script>';
         }
 
@@ -265,8 +266,8 @@ return [
         $variable = Util::strip($expression->get(0));
 
         return "<script>\n" .
-            "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n" . // phpcs:ignore
-            "</script>";
+               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n" . // phpcs:ignore
+               "</script>";
     },
 
     /*
@@ -277,7 +278,7 @@ return [
 
     'inline' => function ($expression) {
         $output = "/* {$expression} */\n" .
-            "<?php include get_theme_file_path({$expression}) ?>\n";
+                  "<?php include get_theme_file_path({$expression}) ?>\n";
 
         if (ends_with($expression, ".html'")) {
             return $output;
