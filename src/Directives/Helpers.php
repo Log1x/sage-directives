@@ -71,7 +71,7 @@ return [
         return "<?php if (is_null({$expression})) : ?>";
     },
 
-    'endisnull' => function ($expression) {
+    'endisnull' => function () {
         return '<?php endif; ?>';
     },
 
@@ -87,7 +87,7 @@ return [
         return "<?php if (! is_null({$expression})) : ?>";
     },
 
-    'endisnotnull' => function ($expression) {
+    'endisnotnull' => function () {
         return "<?php endif; ?>";
     },
 
@@ -110,7 +110,7 @@ return [
         return "<?php if (! empty({$expression})) : ?>";
     },
 
-    'endnotempty' => function ($expression) {
+    'endnotempty' => function () {
         return "<?php endif; ?>";
     },
 
@@ -215,7 +215,7 @@ return [
                ]; ?>";
     },
 
-    'endrepeat' => function ($expression) {
+    'endrepeat' => function () {
         return '<?php endfor; ?>';
     },
 

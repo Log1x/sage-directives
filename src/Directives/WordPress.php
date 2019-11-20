@@ -364,7 +364,8 @@ return [
         $expression = Util::parse($expression);
         $image = Util::strip($expression->get(0));
 
-        if (is_string($image) &&
+        if (
+            is_string($image) &&
             ! is_numeric($image) &&
             $image = Util::field($image)
         ) {
