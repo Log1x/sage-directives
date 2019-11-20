@@ -93,6 +93,30 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @notempty / @endnotempty
+    |---------------------------------------------------------------------
+    */
+
+
+    'notempty' => function ($expression) {
+        if (Str::contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?php if (! empty({$expression->get(0)})) : ?>" .
+                   "<?php echo {$expression->get(1)}; ?>" .
+                   "<?php endif; ?>";
+        }
+
+        return "<?php if (! empty({$expression})) : ?>";
+    },
+
+    'endnotempty' => function ($expression) {
+        return "<?php endif; ?>";
+    },
+
+
+    /*
+    |---------------------------------------------------------------------
     | @instanceof / @endinstanceof
     |---------------------------------------------------------------------
     */

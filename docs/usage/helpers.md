@@ -66,6 +66,22 @@ Alternatively, you can pass the output as a second parameter:
 @isnotnull($variable, 'There is something here.')
 ```
 
+## @notempty
+
+`@notempty` is a simple conditional that displays the specified output if the parameter passed exists and is not empty. It can be closed using `@endnotempty`.
+
+```php
+@notempty($variable)
+  There is something here.
+@endnotempty
+```
+
+Alternatively, you can pass the output as a second parameter:
+
+```php
+@notempty($variable, 'There is something here.')
+```
+
 ## @instanceof
 
 `@instanceof` checks if the first parameter is an instance of the second parameter. It can be closed using `@endinstanceof`.
