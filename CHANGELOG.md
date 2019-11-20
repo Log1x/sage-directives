@@ -1,3 +1,11 @@
+## v1.1.5 (11-19-2019)
+
+### Enhancements
+- Add `@notempty` / `@endnotempty` (#27, @shanejones)
+- Bump dependencies
+- Remove unused `$expression` from `@end` directives
+- Fix linting for 3.5
+
 ## v1.1.4 (11-13-2019)
 
 ### Bug fixes
