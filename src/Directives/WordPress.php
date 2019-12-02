@@ -372,6 +372,10 @@ return [
             $expression = $expression->put(0, is_array($image) && ! empty($image['id']) ? $image['id'] : $image);
         }
 
+        if (Util::strip($expression->get(1)) == 'raw') {
+            return "<?php echo wp_get_attachment_url({$expression->get(0)}); ?>";
+        }
+
         if (! empty($expression->get(3))) {
             $expression = $expression->put(2, Util::clean($expression->slice(2)->all()));
         }

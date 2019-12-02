@@ -359,7 +359,7 @@ It accepts the same parameters as `@term`:
 
 ## @image 
 
-`@image` echo's an image using [`wp_get_attachment_image()`](https://developer.wordpress.org/reference/functions/wp_get_attachment_image/). 
+`@image` echo's an image using [`wp_get_attachment_image()`](https://developer.wordpress.org/reference/functions/wp_get_attachment_image/).
 
 Since I find this mostly useful with ACF fields (being that it automatically handles responsive image sizes), if ACF is present and a field name in the form of a `string` is passed as the first parameter, `@image` will attempt to use the built in [`Util::field()`](https://github.com/Log1x/sage-directives/blob/master/src/Utilities.php#L48-L74) utility to deep-dive `get_field()` and `get_sub_field()` to retrieve your image field, and if it returns as an array instead of `id`, automatically check for the existance of `$image['id']` and pass that value to `wp_get_attachment_image()`.
 
@@ -375,7 +375,15 @@ Optionally, pass it an image size and an alt tag:
 @image(1, 'full', 'My alt tag')
 ```
 
-If you need access to the `<img>` tag attributes, use an array as the third parameter instead:
+If you require an image without a set `width`, `height`, or `srcset`, our friends at WordPress core [don't agree](https://core.trac.wordpress.org/ticket/14110) with you and their word is law.
+
+But since we do what we want, you can pass `raw` as an image size to return the attachment URL and build the image markup yourself.
+
+```php
+<img src="@image(1, 'raw')" alt="Take that, WordPress." />
+```
+
+Outside of a `raw` image, if you need access to the `<img>` tag attributes directly, use an array as the third parameter instead:
 
 ```php
 @image(1, 'thumbnail', ['alt' => 'My alt tag', 'class' => 'block w-32 h-32'])
@@ -387,6 +395,8 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 @image('my_image_field')
 @image('my_image_field', 'full', 'My alt tag')
 @image('my_image_field', 'thumbnail', ['alt' => 'My alt tag', 'class' => 'block w-32 h-32'])
+
+<img src="@image('my_image_field', 'raw')" alt="My alt tag" />
 ```
 
 ## @shortcode

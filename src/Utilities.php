@@ -10,11 +10,12 @@ class Util
      * Parse expression passed to directive.
      *
      * @param  string $expression
+     * @param  int    $limit
      * @return \Illuminate\Support\Collection
      */
-    public static function parse($expression)
+    public static function parse($expression, $limit = PHP_INT_MAX)
     {
-        return collect(explode(',', $expression))
+        return collect(explode(',', $expression, $limit))
             ->map(function ($item) {
                 return trim($item);
             });
@@ -82,7 +83,7 @@ class Util
      * Dives for an ACF field or sub field and returns the value if it exists.
      *
      * @param  string  $field
-     * @param  integer $id
+     * @param  int     $id
      * @return mixed
      */
     public static function field($field, $id = null)

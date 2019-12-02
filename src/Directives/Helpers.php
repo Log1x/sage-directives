@@ -169,7 +169,7 @@ return [
 
     'set' => function ($expression) {
         if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+            $expression = Util::parse($expression, 2);
 
             return "<?php {$expression->get(0)} = {$expression->get(1)}; ?>";
         }
