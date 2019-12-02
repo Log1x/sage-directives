@@ -1,3 +1,16 @@
+## v1.1.6 (12-02-2019)
+
+### Bug fixes
+- Allow the second parameter of `@set` to accept a value containing commas (e.g. an array) (Fixes #28)
+
+### Enhancements
+- Allow passing `raw` as the second parameter of `@image` to return an attachment URL (Fixes #24)
+- Add the `$limit` parameter to the `parse` method to allow passing a limit to `explode()` (#28)
+- Bump lock files
+
+### Documentation
+- Add `@image` example for `raw` 
+
 ## v1.1.5 (11-19-2019)
 
 ### Enhancements
