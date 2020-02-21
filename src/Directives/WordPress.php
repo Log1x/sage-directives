@@ -179,7 +179,7 @@ return [
 
             if (! empty($expression->get(1))) {
                 if ($expression->get(1) === 'false') {
-                    return "<?= get_the_post_thumbnail_url({$expression->get(0)}, 'thumbnail'); ?>";
+                    return "<?= get_the_post_thumbnail_url(get_the_ID(), {$expression->get(0)}); ?>";
                 }
 
                 return "<?= get_the_post_thumbnail({$expression->get(0)}, is_numeric({$expression->get(1)}) ? [{$expression->get(1)}, {$expression->get(1)}] : {$expression->get(1)}); ?>"; // phpcs:ignore
