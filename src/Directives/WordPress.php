@@ -88,7 +88,7 @@ return [
                    "<?php endif; ?>" .
 
                    "<?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : {$expression}; ?>" .
-                   "<?php if (\$query->have_posts()) :";
+                   "<?php if (\$query->have_posts()) : ?>";
         }
 
         return "<?php if (empty(\$query)) : ?>" .
