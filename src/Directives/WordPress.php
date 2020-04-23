@@ -496,4 +496,15 @@ return [
         return "<?php body_class({$expression}); ?>";
     },
 
+    /*
+    |---------------------------------------------------------------------
+    | @__
+    |---------------------------------------------------------------------
+    */
+
+    '__' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        return "<?php _e({$expression[0]}, {$expression[1]}); ?>";
+    },
 ];
