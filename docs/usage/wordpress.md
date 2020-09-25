@@ -484,3 +484,7 @@ This is just a directive version of [`wp_footer`](https://codex.wordpress.org/Fu
 ```php
 @bodyclass('add-me')
 ```
+
+## @wpbodyopen
+
+This is a directive version of [`wp_body_open`](https://developer.wordpress.org/reference/functions/wp_body_open/) except that it will work on WordPress versions below 5.2.
