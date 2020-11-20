@@ -4,7 +4,7 @@ The following directives are specific to WordPress core functionality.
 
 ## @query
 
-`@query` initializes a standard `WP_Query` as `$query` and accepts the usual `WP_Query` [parameters](https://codex.wordpress.org/Class_Reference/WP_Query#Parameters) as an array.
+`@query` initializes a standard `WP_Query` as `$query` and accepts the usual `WP_Query` [parameters](https://developer.wordpress.org/reference/classes/wp_query/#parameters) as an array.
 
 ```php
 @query([
@@ -16,7 +16,7 @@ The following directives are specific to WordPress core functionality.
 
 `@posts` begins the post loop and by default, assumes that `WP_Query` is set to `$query` (which is the case when using `@query`). It is wrapped in a `have_posts()` conditional and thus will return `null` if no posts are found.
 
-`@endposts` is available to end your loop and `have_posts()` conditional as well as resetting your loop with [`wp_reset_postdata()`](https://codex.wordpress.org/Function_Reference/wp_reset_postdata).
+`@endposts` is available to end your loop and `have_posts()` conditional as well as resetting your loop with [`wp_reset_postdata()`](https://developer.wordpress.org/reference/functions/wp_reset_postdata/).
 
 ```php
 @query([
@@ -223,7 +223,7 @@ To echo the URL of a specific author, you can pass the author's ID as a paramete
 @published
 ```
 
-To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
+To change the [formatting of the date](https://wordpress.org/support/article/formatting-date-and-time/), you can pass it as the first parameter:
 
 ```php
 <time class="entry-time">
@@ -254,7 +254,7 @@ To format the published date of a specific post, you can pass the format as the 
 @modified
 ```
 
-To change the [formatting of the date](https://codex.wordpress.org/Formatting_Date_and_Time), you can pass it as the first parameter:
+To change the [formatting of the date](https://wordpress.org/support/article/formatting-date-and-time/), you can pass it as the first parameter:
 
 ```php
 <time class="entry-time">
@@ -409,7 +409,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @role
 
-`@role` is a simple conditional that allows you to display specific content only to users who are logged in and have a specific role. With [`wp_get_current_user()->roles`](https://codex.wordpress.org/Function_Reference/wp_get_current_user) returning an array of roles in all lowercase, the passed role is automatically lowercased using `strtolower`. It can be closed using `@endrole`.
+`@role` is a simple conditional that allows you to display specific content only to users who are logged in and have a specific role. With [`wp_get_current_user()->roles`](https://developer.wordpress.org/reference/functions/wp_get_current_user/) returning an array of roles in all lowercase, the passed role is automatically lowercased using `strtolower`. It can be closed using `@endrole`.
 
 ```php
 @role('author')
@@ -439,7 +439,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @wpautop
 
-`@wpautop` runs a passed string through [`wpautop()`](https://codex.wordpress.org/Function_Reference/wpautop) and echo's the output.
+`@wpautop` runs a passed string through [`wpautop()`](https://developer.wordpress.org/reference/functions/wpautop/) and echo's the output.
 
 ```php
 @wpautop($content)
@@ -447,7 +447,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @wpautokp
 
-`@wpautokp` does the same as `@wpautop` but also sanitizes the string with [`wp_kses_post()`](https://codex.wordpress.org/Function_Reference/wp_kses_post).
+`@wpautokp` does the same as `@wpautop` but also sanitizes the string with [`wp_kses_post()`](https://developer.wordpress.org/reference/functions/wp_kses_post/).
 
 ```php
 @wpautokp($content)
@@ -455,7 +455,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @action
 
-`@action` allows you to trigger a WordPress action through the use of [`do_action`](https://codex.wordpress.org/Function_Reference/do_action).
+`@action` allows you to trigger a WordPress action through the use of [`do_action`](https://developer.wordpress.org/reference/functions/do_action/).
 
 ```php
 @action('get_footer')
@@ -463,7 +463,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @filter
 
-`@filter` echoes the result of what its been passed through the use of [`apply_filters`](https://codex.wordpress.org/Function_Reference/apply_filters).
+`@filter` echoes the result of what its been passed through the use of [`apply_filters`](https://developer.wordpress.org/reference/functions/apply_filters/).
 
 ```php
 @filter('the_content', 'some string')
@@ -471,15 +471,15 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @wphead
 
-This is just a directive version of [`wp_head`](https://codex.wordpress.org/Function_Reference/wp_head).
+This is just a directive version of [`wp_head`](https://developer.wordpress.org/reference/functions/wp_head/).
 
 ## @wpfoot
 
-This is just a directive version of [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer).
+This is just a directive version of [`wp_footer`](https://developer.wordpress.org/reference/functions/wp_footer/).
 
 ## @bodyclass
 
-`@bodyclass` behaves just as [`body_class`](https://codex.wordpress.org/Function_Reference/body_class) does. You can pass strings to it to have them added to the body class. Has the same limitations on passing arrays as any other directive.
+`@bodyclass` behaves just as [`body_class`](https://developer.wordpress.org/reference/functions/body_class/) does. You can pass strings to it to have them added to the body class. Has the same limitations on passing arrays as any other directive.
 
 ```php
 @bodyclass('add-me')
