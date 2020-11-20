@@ -16,6 +16,13 @@ class Directives
     ];
 
     /**
+     * Namespace
+     *
+     * @var string
+     */
+    protected $namespace = 'App';
+
+    /**
      * Create a new Directives instance.
      *
      * @return void
@@ -23,6 +30,8 @@ class Directives
     public function __construct()
     {
         add_action('after_setup_theme', function () {
+            $this->namespace = apply_filters('log1x/sage-directives/namespace', $this->namespace);
+
             if (! $this->blade()) {
                 return;
             }
@@ -71,8 +80,10 @@ class Directives
      */
     protected function blade()
     {
-        if (function_exists('App\sage')) {
-            return \App\sage('blade')->compiler();
+        $sage = "\\{$this->namespace}\\sage";
+
+        if (function_exists($sage)) {
+            return $sage('blade')->compiler();
         }
 
         if (function_exists('Roots\app')) {
