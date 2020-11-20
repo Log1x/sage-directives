@@ -488,12 +488,16 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @bodyclass
+    | @bodyclass / @wpbodyopen
     |---------------------------------------------------------------------
     */
 
     'bodyclass' => function ($expression) {
         return "<?php body_class({$expression}); ?>";
+    },
+
+    'wpbodyopen' => function () {
+        return "<?php if (function_exists('wp_body_open')) { wp_body_open(); } else { do_action('wp_body_open'); } ?>";
     },
 
     /*
