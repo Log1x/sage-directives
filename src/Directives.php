@@ -20,7 +20,7 @@ class Directives
      *
      * @var string
      */
-    private $namespace;
+    protected $namespace = 'App';
 
     /**
      * Create a new Directives instance.
@@ -30,8 +30,7 @@ class Directives
     public function __construct()
     {
         add_action('after_setup_theme', function () {
-            // Allow themes to override 'App' namespace, default: App;
-            $this->namespace = apply_filters('log1x/sage-directives/namespace', 'App');
+            $this->namespace = apply_filters('log1x/sage-directives/namespace', $this->namespace);
 
             if (! $this->blade()) {
                 return;
