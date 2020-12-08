@@ -17,7 +17,7 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @fields / @endfields
+    | @fields / @endfields / @hasfields / @endhasfields
     |---------------------------------------------------------------------
     */
 
@@ -35,6 +35,20 @@ return [
 
     'endfields' => function () {
         return "<?php endwhile; endif; ?>";
+    },
+
+    'hasfields' => function ($expression) {
+        if (Str::contains($expression, ',')) {
+            $expression = Util::parse($expression);
+
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>";
+        }
+
+        return "<?php if (have_rows({$expression})) : ?>";
+    },
+
+    'endhasfields' => function () {
+        return "<?php endif; ?>";
     },
 
     /*
