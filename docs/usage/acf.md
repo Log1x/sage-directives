@@ -130,6 +130,32 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 </ul>
 ```
 
+## @hasfields
+
+`@hasfields` is a simple conditional checking if a parent field (such as Repeater or Flexible Content) has any rows of data to loop over. It can be closed using `@endhasfields`
+
+```php
+@hasfields('list')
+    <ul>
+        @fields('list')
+            <li>@sub('item')</li>
+        @endfields
+    </ul>
+@endhasfields
+```
+
+To check the existance of a parent field (such as Repeater or Flexible Content) for a specific post, you can pass a post ID as a second parameter:
+
+```php
+@hasfields('lists', 5)
+    <ul>
+        @fields('list', 5)
+            <li>@sub('item')</li>
+        @endfields
+    </ul>
+@endhasfields
+```
+
 ## @sub
 
 `@sub` echo's the specified sub field using [`get_sub_field()`](https://www.advancedcustomfields.com/resources/get_sub_field/). It is to be used inside of repeatable fields such as `@fields`, `@layout`, `@group`, and `@options`.
