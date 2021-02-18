@@ -306,29 +306,29 @@ return [
         $expression = Util::parse($expression);
 
         if (! empty($expression->get(2))) {
-            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>" . // phpcs:ignore
-                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->term_ID); ?>\">" . // phpcs:ignore
-                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>" .
+            return "<?php if (get_the_terms({$expression->get(1)}, {$expression->get(0)})) : ?>" . // phpcs:ignore
+                   "<a href=\"<?= get_term_link(collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->term_id); ?>\">" . // phpcs:ignore
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name; ?>" .
                    "</a>" .
                    "<?php endif; ?>";
         }
 
         if (! empty($expression->get(1))) {
             if ($expression->get(1) === 'true') {
-                return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>" .
-                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->term_ID); ?>\">" . // phpcs:ignore
-                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name(); ?>" .
+                return "<?php if (get_the_terms(get_the_ID(), {$expression->get(0)})) : ?>" .
+                       "<a href=\"<?= get_term_link(collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->term_id); ?>\">" . // phpcs:ignore
+                       "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name; ?>" .
                        "</a>" .
                        "<?php endif; ?>";
             }
 
-            return "<?php if (collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->isNotEmpty()) : ?>" . // phpcs:ignore
-                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name(); ?>" .
+            return "<?php if (get_the_terms({$expression->get(1)}, {$expression->get(0)})) : ?>" . // phpcs:ignore
+                   "<?= collect(get_the_terms({$expression->get(1)}, {$expression->get(0)}))->shift()->name; ?>" .
                    "<?php endif; ?>";
         }
 
         if (! empty($expression->get(0))) {
-            return "<?php if (collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->isNotEmpty()) : ?>" .
+            return "<?php if (get_the_terms(get_the_ID(), {$expression->get(0)})) : ?>" .
                    "<?= collect(get_the_terms(get_the_ID(), {$expression->get(0)}))->shift()->name; ?>" .
                    "<?php endif; ?>";
         }
