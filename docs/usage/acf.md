@@ -389,7 +389,7 @@ If the option you are checking against is an array, you can pass the array key a
 `@options` acts as a helper for handling repeater and group fields within' your theme options. Under the hood, it is essentially the exact same as `@fields` and `@group` except it automatically has the theme options ID `'option'` passed to it. It can be closed using `@endoptions`.
 
 ```php
-@hasoption('social')
+@hasoptions('social')
   <ul class="social">
     @options('social')
       <li>
@@ -404,5 +404,19 @@ If the option you are checking against is an array, you can pass the array key a
       </li>
     @endoptions
   </ul>
-@endoption
+@endhasoptions
+```
+
+## @hasoptions
+
+`@hasoptions` is a simple conditional checking if a parent field from your theme options (such as Repeater or Flexible Content) has any rows of data to loop over. It can be closed using `@endhasoptions`
+
+```php
+@hasoptions('socials')
+    <ul>
+        @options('socials')
+            <li>@sub('social')</li>
+        @endoptions
+    </ul>
+@endhasoptions
 ```

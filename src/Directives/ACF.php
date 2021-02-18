@@ -227,7 +227,7 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @options / @endoptions
+    | @options / @endoptions / @hasoptions / @endhasoptions
     |---------------------------------------------------------------------
     */
 
@@ -238,6 +238,14 @@ return [
 
     'endoptions' => function () {
         return "<?php endwhile; endif; ?>";
+    },
+    
+    'hasoptions' => function ($expression) {
+        return "<?php if (have_rows({$expression}, 'option')) : ?>";
+    },
+
+    'endhasoptions' => function () {
+        return "<?php endif; ?>";
     },
 
     /*
