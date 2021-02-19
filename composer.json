@@ -35,7 +35,7 @@
   },
   "scripts": {
     "lint": [
-      "phpcs --ignore=vendor,tests --extensions=php --standard=PSR12 ."
+      "phpcs --ignore=vendor,src/Directives --extensions=php --standard=PSR12 ."
     ]
   },
   "suggest": {
