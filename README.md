@@ -1,8 +1,8 @@
 # Sage Directives
 
-![Packagist Version](https://img.shields.io/packagist/v/log1x/sage-directives.svg?style=flat-square)
-![CircleCI](https://img.shields.io/circleci/build/gh/Log1x/sage-directives.svg?style=flat-square)
-![Packagist](https://img.shields.io/packagist/dt/log1x/sage-directives.svg?style=flat-square)
+![Latest Version](https://img.shields.io/packagist/v/log1x/sage-directives.svg?style=flat-square)
+![Total Downloads](https://img.shields.io/packagist/dt/log1x/sage-directives.svg?style=flat-square)
+![Build Status](https://img.shields.io/github/workflow/status/log1x/sage-directives/Main?style=flat-square)
 
 Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9 including directives for WordPress, ACF, and various miscellaneous helpers.
 
