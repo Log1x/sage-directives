@@ -40,7 +40,8 @@ return [
                            ->map(function (\$post) {
                                return is_a(\$post, 'WP_Post') ? \$post->ID : \$post;
                            })->all())
-                       ->put('orderby', 'post__in');
+                       ->put('orderby', 'post__in')
+                       ->put('post_type', 'any');
                    ?>" .
                    "<?php endif; ?>" .
 
