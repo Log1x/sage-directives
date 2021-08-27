@@ -65,7 +65,7 @@ return [
                 return "<?= get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
             }
 
-            if (! is_string($expression->get(1))) {
+            if (! is_string($expression->get(1)) || $expression->get(1) == 'option') {
                 return "<?= get_field({$expression->get(0)}, {$expression->get(1)}); ?>";
             }
 
