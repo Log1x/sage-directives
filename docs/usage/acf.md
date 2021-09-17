@@ -359,7 +359,7 @@ If the option you are checking against is an array, you can pass the array key a
       <span class="icon">
         <i class="fas @option('facebook', 'icon')"></i>
       </span>
-    @else 
+    @else
       <span class="label">Facebook</span>
     @endoption
   </a>
@@ -420,3 +420,30 @@ If the option you are checking against is an array, you can pass the array key a
     </ul>
 @endhasoptions
 ```
+
+
+## @block
+
+`@block` renders custom [ACF Blocks](https://www.advancedcustomfields.com/resources/blocks/). See [ACF Composer](https://github.com/Log1x/acf-composer) for a sage10 friendly way of creating ACF Blocks.
+
+Assuming you have generated the [ACF Composer Example block](https://github.com/Log1x/acf-composer#generating-a-block).
+
+```php
+@block('example')
+```
+
+We assume the block prefix is `acf`, ie. `acf/example` - you can change it if you've set it to something else
+
+```php
+@block('yourprefix/example')
+```
+
+Passing data
+
+```php
+// Example array of acf field data
+$data = ['items' => [['item' => 'Item one'], ['item' => 'Item two'], ['item' => 'Item three']]];
+
+@block('example', $data)
+```
+
