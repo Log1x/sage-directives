@@ -290,4 +290,19 @@ return [
         return "<?php endif; ?>";
     },
 
+    /*
+    |---------------------------------------------------------------------
+    | @block
+    |---------------------------------------------------------------------
+    */
+
+    'block' => function ($expression) {
+        $expression = Util::parse($expression);
+        $prefix = (strpos($expression->get(0), '/') === false) ? 'acf/' : '';
+        $name = $prefix . Util::unwrap($expression->get(0));
+        $data = ! empty($expression->get(1)) && Util::isArray($expression->get(1)) ? $expression->get(1) : '[]';
+
+        return "<?= acf_render_block(['id' => uniqid('block_'), 'name' => '{$name}', 'data' => {$data}]); ?>";
+    },
+
 ];
