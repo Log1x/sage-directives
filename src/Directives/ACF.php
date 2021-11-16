@@ -61,11 +61,11 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(2)) && is_numeric($expression->get(2))) {
+            if (! empty($expression->get(2)) && Util::isPostID($expression->get(2))) {
                 return "<?= get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
             }
 
-            if (is_numeric($expression->get(1))) {
+            if (Util::isPostID($expression->get(1))) {
                 return "<?= get_field({$expression->get(0)}, {$expression->get(1)}); ?>";
             }
 
@@ -79,11 +79,11 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(2)) && is_numeric($expression->get(2))) {
+            if (! empty($expression->get(2)) && Util::isPostID($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
             }
 
-            if (is_numeric($expression->get(1))) {
+            if (Util::isPostID($expression->get(1))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
             }
 
@@ -97,15 +97,15 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(3)) && is_numeric($expression->get(2))) {
+            if (! empty($expression->get(3)) && Util::isPostID($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
-            if (! empty($expression->get(2)) && is_numeric($expression->get(2))) {
+            if (! empty($expression->get(2)) && Util::isPostID($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>"; // phpcs:ignore
             }
 
-            if (! empty($expression->get(2)) && ! is_numeric($expression->get(2))) {
+            if (! empty($expression->get(2)) && ! Util::isPostID($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)})[{$expression->get(2)}] === {$expression->get(1)}) : ?>"; // phpcs:ignore
             }
 
