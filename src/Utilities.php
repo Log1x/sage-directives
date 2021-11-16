@@ -163,4 +163,17 @@ class Util
 
         return Str::startsWith($expression, '[') && Str::endsWith($expression, ']');
     }
+
+    /**
+     * An attempt to identify WP_POST or IDs that are passed into the directives.
+     *
+     * @param string $expression
+     * @return boolean
+     */
+    public static function isPostID($expression)
+    {
+        $expression = self::strip($expression);
+
+        return is_numeric($expression) || in_array($expression, ['get_the_ID()','$post->ID','get_queried_object_id()']);
+    }
 }
