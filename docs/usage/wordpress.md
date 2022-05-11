@@ -183,6 +183,12 @@ To echo the featured image URL (without img markup), you can pass `false` as the
 <img src="@thumbnail(get_post(1), 'full', false)" alt="Post 1's Full Image" />
 ```
 
+If you need access to the `<img>` tag attributes directly, use an array as the last parameter instead:
+
+```php
+@thumbnail(get_post(1), 'full', ['class' => 'w-full rounded-lg'])
+```
+
 ## @author
 
 `@author` echo's the author of the current posts display name.
