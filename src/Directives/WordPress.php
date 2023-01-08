@@ -190,11 +190,11 @@ return [
                     return "<?= get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>";
                 }
 
-                if (is_numeric($expression->get(0))) {
-                    return "<?= get_the_post_thumbnail({$expression->get(0)}, 'thumbnail'); ?>";
+                if (Util::isWpImageSize($expression->get(0))) {
+                    return "<?= get_the_post_thumbnail(get_the_ID(), {$expression->get(0)}); ?>";
                 }
 
-                return "<?= get_the_post_thumbnail(get_the_ID(), {$expression->get(0)}); ?>";
+                return "<?= get_the_post_thumbnail({$expression->get(0)}, 'thumbnail'); ?>";
             }
         }
 

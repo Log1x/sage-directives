@@ -163,4 +163,17 @@ class Util
 
         return Str::startsWith($expression, '[') && Str::endsWith($expression, ']');
     }
+
+    /**
+     * Check if a value matches an existing WordPress image size.
+     *
+     * @param string $value
+     * @return boolean
+     */
+    public static function isWpImageSize($value)
+    {
+        $trimmed = trim($value, "'");
+        $sizes = wp_get_registered_image_subsizes();
+        return isset($sizes[$trimmed]) || $trimmed === 'full';
+    }
 }
