@@ -2,7 +2,9 @@
 
 namespace Log1x\SageDirectives;
 
-class Directives
+use Illuminate\Support\ServiceProvider;
+
+class SageDirectivesServiceProvider extends ServiceProvider
 {
     /**
      * Directives
@@ -27,7 +29,7 @@ class Directives
      *
      * @return void
      */
-    public function __construct()
+    public function boot()
     {
         add_action('after_setup_theme', function () {
             $this->namespace = apply_filters('log1x/sage-directives/namespace', $this->namespace);
@@ -90,9 +92,4 @@ class Directives
             return \Roots\app('blade.compiler');
         }
     }
-}
-
-// phpcs:disable
-if (function_exists('add_action')) {
-    new Directives();
 }

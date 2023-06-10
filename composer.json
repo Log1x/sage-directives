@@ -22,10 +22,9 @@
     "issues": "https://github.com/log1x/sage-directives/issues"
   },
   "autoload": {
-    "files": [
-      "src/Directives.php",
-      "src/Utilities.php"
-    ]
+    "psr-4": {
+      "Log1x\\SageDirectives\\": "src/"
+    }
   },
   "require": {
     "php": ">=7.1.3"
@@ -40,5 +39,12 @@
   },
   "suggest": {
     "log1x/sage-svg": "Required to use the @svg directive (Sage 10)."
+  },
+  "extra": {
+    "acorn": {
+      "providers": [
+        "Log1x\\SageDirectives\\SageDirectivesServiceProvider"
+      ]
+    }
   }
 }
