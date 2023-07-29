@@ -738,6 +738,32 @@ describe('@wpbodyopen', function () {
     });
 });
 
+describe('@postclass', function () {
+    it('compiles correctly', function () {
+        $directive = '@postclass';
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe('<?php post_class(); ?>');
+    });
+
+    it('compiles correctly with a custom class', function () {
+        $directive = "@postclass('custom-class')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php post_class('custom-class'); ?>");
+    });
+
+    it('compiles correctly with a custom class and post', function () {
+        $directive = "@postclass('custom-class', \$post->ID)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php post_class('custom-class', \$post->ID); ?>");
+    });
+});
+
 describe('@__', function () {
     it('compiles correctly', function () {
         $directive = "@__('Hello World', 'sage')";
