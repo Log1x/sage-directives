@@ -16,6 +16,8 @@ The following directives are specific to WordPress core functionality.
 
 `@posts` begins the post loop and by default, assumes that `WP_Query` is set to `$query` (which is the case when using `@query`). It is wrapped in a `have_posts()` conditional and thus will return `null` if no posts are found.
 
+Inside of the `@posts` loop you have full access to the [Blade Loop Variable](https://laravel.com/docs/10.x/blade#the-loop-variable).
+
 `@endposts` is available to end your loop and `have_posts()` conditional as well as resetting your loop with [`wp_reset_postdata()`](https://developer.wordpress.org/reference/functions/wp_reset_postdata/).
 
 ```php
