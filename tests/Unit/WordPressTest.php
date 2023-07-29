@@ -282,7 +282,23 @@ describe('@published', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (is_a(1, 'WP_Post') || is_int(1)) : ?><?php echo get_the_date('', 1); ?><?php else : ?><?php echo get_the_date(1); ?><?php endif; ?>");
+        expect($compiled)->toBe("<?php echo get_the_date('', 1); ?>");
+    });
+
+    it('compiles correctly with format', function () {
+        $directive = "@published('F j, Y')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_the_date('F j, Y'); ?>");
+    });
+
+    it('compiles correctly with post and format', function () {
+        $directive = "@published('F j, Y', 1)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_the_date('F j, Y', 1); ?>");
     });
 });
 
@@ -300,7 +316,23 @@ describe('@modified', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (is_a(1, 'WP_Post') || is_numeric(1)) : ?><?php echo get_the_modified_date('', 1); ?><?php else : ?><?php echo get_the_modified_date(1); ?><?php endif; ?>");
+        expect($compiled)->toBe("<?php echo get_the_modified_date('', 1); ?>");
+    });
+
+    it('compiles correctly with format', function () {
+        $directive = "@modified('F j, Y')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_the_modified_date('F j, Y'); ?>");
+    });
+
+    it('compiles correctly with post and format', function () {
+        $directive = "@modified('F j, Y', 1)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_the_modified_date('F j, Y', 1); ?>");
     });
 });
 
