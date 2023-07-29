@@ -180,12 +180,12 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
   @if ($loop->first)
     This is the first iteration.
   @endif
-  
+
   @if ($loop->last)
     This is the last iteration.
   @endif
-  
-  This is iteration {{ $loop->iteration }} out of $loop->count. 
+
+  This is iteration {{ $loop->iteration }} out of $loop->count.
   There are {{ $loop->remaining }} iterations left.
   The current iteration index is {{ $loop->index }}
 @endrepeat
@@ -203,7 +203,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
     padding: 0.75rem 1rem;
   }
 @endstyle
-  
+
 @style('/path/to/style.css')
 ```
 
@@ -215,7 +215,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 @script
   console.log('Hello World')
 @endscript
-  
+
 @script('/path/to/script.js')
 ```
 
@@ -225,7 +225,7 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 ```php
 @js('hello', 'world')
-  
+
 // <script>
 //   window.hello = 'world';
 // </script>
@@ -237,16 +237,4 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 
 ```php
 @inline('dist/styles/critical.css')
-```
-
-## @fa
-
-`@fa` and its related directives serve as helpers for quickly outputting Font Awesome icons. `@fa` is for Font Awesome 4, while `@fas`, `@far`, `@fal`, and `@fab` are for their corrosponding Font Awesome 5 variation.
-
-```php
-@fa('arrow-up', 'optional-css-classes')
-@fas('arrow-down', 'optional-css-classes')
-@far('arrow-left', 'optional-css-classes')
-@fal('arrow-right', 'optional-css-classes')
-@fab('twitter', 'optional-css-classes')
 ```
