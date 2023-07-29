@@ -16,15 +16,23 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe('<?php if (empty($query)) : ?><?php global $wp_query; ?><?php $query = $wp_query; ?><?php endif; ?><?php if ($query->have_posts()) : ?><?php while ($query->have_posts()) : $query->the_post(); ?>');
+        expect($compiled)->toBe("<?php if (empty(\$query)) : ?><?php global \$wp_query; ?><?php \$query = \$wp_query; ?><?php endif; ?> <?php if (\$query->have_posts()) : ?><?php \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 
-    it('compiles correctly with options array', function () {
-        $directive = "@posts(['post_type' => 'post'])";
+    it('compiles correctly with post ID', function () {
+        $directive = "@posts(1)";
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(['post_type' => 'post'], 'WP_Post') || is_numeric(['post_type' => 'post'])) : ?><?php \$posts->put('p', is_a(['post_type' => 'post'], 'WP_Post') ? (['post_type' => 'post'])->ID : ['post_type' => 'post']); ?><?php endif; ?><?php if (is_array(['post_type' => 'post'])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(['post_type' => 'post']) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : ['post_type' => 'post']; ?><?php if (\$query->have_posts()) : while (\$query->have_posts()) : \$query->the_post(); ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(1, 'WP_Post') || is_numeric(1)) : ?><?php \$posts->put('p', is_a(1, 'WP_Post') ? (1)->ID : 1); ?><?php endif; ?><?php if (is_array(1)) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(1) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : 1; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+    });
+
+    it('compiles correctly with post ID array', function () {
+        $directive = "@posts([1, 2, 3])";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a([1, 2, 3], 'WP_Post') || is_numeric([1, 2, 3])) : ?><?php \$posts->put('p', is_a([1, 2, 3], 'WP_Post') ? ([1, 2, 3])->ID : [1, 2, 3]); ?><?php endif; ?><?php if (is_array([1, 2, 3])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect([1, 2, 3]) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : [1, 2, 3]; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 });
 
@@ -34,7 +42,7 @@ describe('@endposts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe('<?php endwhile; wp_reset_postdata(); endif; ?>');
+        expect($compiled)->toBe('<?php endwhile; wp_reset_postdata(); $__env->popLoop(); $loop = $__env->getLastLoop(); endif; ?>');
     });
 });
 
