@@ -1,15 +1,15 @@
 # Sage Directives
 
-![Package Version](https://img.shields.io/packagist/v/log1x/sage-directives.svg?style=flat-square)
-![Build Status](https://img.shields.io/circleci/build/gh/Log1x/sage-directives.svg?style=flat-square)
+![Latest Version](https://img.shields.io/packagist/v/log1x/sage-directives.svg?style=flat-square)
 ![Total Downloads](https://img.shields.io/packagist/dt/log1x/sage-directives.svg?style=flat-square)
+![Build Status](https://img.shields.io/github/actions/workflow/status/log1x/sage-directives/main.yml?branch=master&style=flat-square)
 
-Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 9 including directives for WordPress, ACF, and various miscellaneous helpers.
+Sage Directives is a simple Composer package adding a variety of useful Blade directives for use with Sage 10 including directives for WordPress, ACF, and various miscellaneous helpers.
 
 ## Requirements
 
-- [Sage](https://github.com/roots/sage) >= 9.0
-- [PHP](https://secure.php.net/manual/en/install.php) >= 7.1.3
+- [Sage](https://github.com/roots/sage) >= 10.0
+- [PHP](https://secure.php.net/manual/en/install.php) >= 8.1
 - [Composer](https://getcomposer.org/download/)
 
 ## Installation
@@ -25,7 +25,6 @@ $ composer require log1x/sage-directives
 ```bash
 $ yarn install
 $ yarn run docs:build
-$ yarn run docs:dev
 ```
 
 ## Support
@@ -45,4 +44,4 @@ I work on Sage Directives entirely in my free time. If Sage Directives has helpe
 
 ## License
 
-Sage Directives is provided under the [MIT License](https://github.com/log1x/sage-directives/blob/master/LICENSE).
+Sage Directives is provided under the [MIT License](https://github.com/log1x/sage-directives/blob/master/LICENSE.md).
