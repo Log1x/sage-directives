@@ -236,7 +236,7 @@ describe('@repeat', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php for (\$iteration = 0 ; \$iteration < (int) 5; \$iteration++) : ?><?php \$loop = (object) [ 'index' => \$iteration, 'iteration' => \$iteration + 1, 'remaining' =>(int) 5 - \$iteration, 'count' => (int) 5, 'first' => \$iteration === 0, 'last' => \$iteration + 1 === (int) 5 ]; ?>");
+        expect($compiled)->toBe("<?php \$__currentLoopData = range(1, 5); \$__env->addLoop(\$__currentLoopData); foreach(\$__currentLoopData as \$__i) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); ?>");
     });
 });
 
@@ -246,7 +246,7 @@ describe('@endrepeat', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe('<?php endfor; ?>');
+        expect($compiled)->toBe('<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>');
     });
 });
 
