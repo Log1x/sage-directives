@@ -57,14 +57,14 @@ Additionally, you can pass a single post ID, post object, or an array containing
     @content
   </div>
 @endposts
-  
+
 @posts(get_post(4))
   <h2 class="entry-title">@title</h2>
   <div class="entry-content">
     @content
   </div>
 @endposts
-  
+
 @posts([6, get_post(9), 3])
   <h2 class="entry-title">@title</h2>
   <div class="entry-content">
@@ -130,7 +130,7 @@ To echo the title of a specific post, you can pass the post ID or a `WP_Post` in
 
 `@excerpt` echo's the current posts excerpt using [`the_excerpt()`](https://developer.wordpress.org/reference/functions/the_excerpt/).
 
-```php 
+```php
 @excerpt
 ```
 
@@ -149,7 +149,7 @@ To echo the URL of a specific post, you can pass the post ID or a `WP_Post` inst
 @permalink(get_post(1))
 ```
 
-## @thumbnail 
+## @thumbnail
 
 `@thumbnail` echo's the current posts featured image using [`get_the_post_thumbnail`](https://developer.wordpress.org/reference/functions/get_the_post_thumbnail/). By default, it passes `thumbnail` as the size.
 
@@ -337,8 +337,8 @@ Similar to `@category`, if you would like to return the terms of a specific post
 
 ```php
 @term('genre', 1)
-@term('genre', 1, false)
-@term('genre', false)
+@term('genre', 1, true)
+@term('genre', true)
 ```
 
 ## @terms
@@ -353,11 +353,11 @@ It accepts the same parameters as `@term`:
 
 ```php
 @terms('genre', 1)
-@terms('genre', 1, false)
-@terms('genre', false)
+@terms('genre', 1, true)
+@terms('genre', true)
 ```
 
-## @image 
+## @image
 
 `@image` echo's an image using [`wp_get_attachment_image()`](https://developer.wordpress.org/reference/functions/wp_get_attachment_image/).
 
@@ -473,7 +473,7 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 This is just a directive version of [`wp_head`](https://developer.wordpress.org/reference/functions/wp_head/).
 
-## @wpfoot
+## @wpfooter
 
 This is just a directive version of [`wp_footer`](https://developer.wordpress.org/reference/functions/wp_footer/).
 
