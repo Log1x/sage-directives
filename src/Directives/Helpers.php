@@ -189,10 +189,7 @@ return [
 
     'implode' => function ($expression) {
         if (Str::contains($expression, ',')) {
-            $expression = str_replace(['\', \'', '\',\''], ['\'*\'', '\'* \''], $expression);
             $expression = Util::parse($expression);
-
-            $expression->put(0, str_replace(['\'*\'', '\'* \''], ['\', \'', '\',\''], $expression->get(0)));
 
             return "<?php echo implode({$expression->get(0)}, {$expression->get(1)}); ?>";
         }

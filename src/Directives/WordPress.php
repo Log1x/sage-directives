@@ -229,11 +229,17 @@ return [
 
     'published' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_int({$expression})) : ?>".
-                   "<?php echo get_the_date('', {$expression}); ?>".
-                   '<?php else : ?>'.
-                   "<?php echo get_the_date({$expression}); ?>".
-                   '<?php endif; ?>';
+            $expression = Util::parse($expression);
+
+            if (Util::isIdentifier($expression->get(0))) {
+                return "<?php echo get_the_date('', {$expression->get(0)}); ?>";
+            }
+
+            if (! Util::isIdentifier($expression->get(0)) && empty($expression->get(1))) {
+                return "<?php echo get_the_date({$expression->get(0)}); ?>";
+            }
+
+            return "<?php echo get_the_date({$expression->get(0)}, {$expression->get(1)}); ?>";
         }
 
         return '<?php echo get_the_date(); ?>';
@@ -241,11 +247,17 @@ return [
 
     'modified' => function ($expression) {
         if (! empty($expression)) {
-            return "<?php if (is_a({$expression}, 'WP_Post') || is_numeric({$expression})) : ?>".
-                   "<?php echo get_the_modified_date('', {$expression}); ?>".
-                   '<?php else : ?>'.
-                   "<?php echo get_the_modified_date({$expression}); ?>".
-                   '<?php endif; ?>';
+            $expression = Util::parse($expression);
+
+            if (Util::isIdentifier($expression->get(0))) {
+                return "<?php echo get_the_modified_date('', {$expression->get(0)}); ?>";
+            }
+
+            if (Util::isIdentifier($expression->get(1))) {
+                return "<?php echo get_the_modified_date({$expression->get(0)}, {$expression->get(1)}); ?>";
+            }
+
+            return "<?php echo get_the_modified_date({$expression->get(0)}); ?>";
         }
 
         return '<?php echo get_the_modified_date(); ?>';

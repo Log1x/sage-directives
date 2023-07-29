@@ -11,12 +11,18 @@ class Util
      *
      * @param  string  $expression
      * @param  int  $limit
+     * @param  string  $delimiter
      * @return \Illuminate\Support\Collection
      */
-    public static function parse($expression, $limit = PHP_INT_MAX)
+    public static function parse($expression, $limit = PHP_INT_MAX, $delimiter = '__comma__')
     {
+        $expression = preg_replace_callback('/\'(.*?)\'|"(.*?)"/', function ($matches) use ($delimiter) {
+            return str_replace(',', $delimiter, $matches[0]);
+        }, $expression);
+
         return collect(explode(',', $expression, $limit))
-            ->map(function ($item) {
+            ->map(function ($item) use ($delimiter) {
+                $item = str_replace($delimiter, ',', $item);
                 $item = trim($item);
 
                 if (is_numeric($item)) {
