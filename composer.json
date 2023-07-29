@@ -33,12 +33,11 @@
     }
   },
   "require": {
-    "php": "^8.0"
+    "php": ">=8.1"
   },
   "require-dev": {
     "roots/acorn": "*",
-    "pestphp/pest": "^2.8",
-    "laravel/pint": "^1.10"
+    "pestphp/pest": "^2.9"
   },
   "extra": {
     "acorn": {
