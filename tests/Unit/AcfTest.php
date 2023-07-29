@@ -86,7 +86,7 @@ describe('@field', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php echo get_field('item')['key']; ?>");
+        expect($compiled)->toEqual("<?php echo get_field('item', null, true)['key']; ?>");
     });
 
     it('compiles correctly with post ID', function () {
@@ -94,7 +94,7 @@ describe('@field', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php echo get_field('item', 1); ?>");
+        expect($compiled)->toEqual("<?php echo get_field('item', 1, true); ?>");
     });
 
     it('compiles correctly with key and post ID', function () {
@@ -102,7 +102,23 @@ describe('@field', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php echo get_field('item', 1)['key']; ?>");
+        expect($compiled)->toEqual("<?php echo get_field('item', 1, true)['key']; ?>");
+    });
+
+    it('compiles correctly with post ID and formatting', function () {
+        $directive = "@field('item', 1, false)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toEqual("<?php echo get_field('item', 1, false); ?>");
+    });
+
+    it('compiles correctly with key, post ID and formatting', function () {
+        $directive = "@field('item', 'key', 1, false)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toEqual("<?php echo get_field('item', 1, false)['key']; ?>");
     });
 
     it('compiles correctly with post object', function () {
@@ -110,7 +126,7 @@ describe('@field', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID); ?>");
+        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID, true); ?>");
     });
 
     it('compiles correctly with key and post object', function () {
@@ -118,7 +134,23 @@ describe('@field', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID)['key']; ?>");
+        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID, true)['key']; ?>");
+    });
+
+    it('compiles correctly with post object and formatting', function () {
+        $directive = "@field('item', \$post->ID, false)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID, false); ?>");
+    });
+
+    it('compiles correctly with key, post object and formatting', function () {
+        $directive = "@field('item', 'key', \$post->ID, false)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toEqual("<?php echo get_field('item', \$post->ID, false)['key']; ?>");
     });
 });
 
