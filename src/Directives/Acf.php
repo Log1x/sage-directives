@@ -63,14 +63,26 @@ return [
             $expression = Util::parse($expression);
 
             if (Util::isIdentifier($expression->get(2))) {
-                return "<?php echo get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
+                if (empty($expression->get(3))) {
+                    $expression->put(3, 'true');
+                }
+
+                return "<?php echo get_field({$expression->get(0)}, {$expression->get(2)}, {$expression->get(3)})[{$expression->get(1)}]; ?>";
             }
 
             if (Util::isIdentifier($expression->get(1))) {
-                return "<?php echo get_field({$expression->get(0)}, {$expression->get(1)}); ?>";
+                if (empty($expression->get(2))) {
+                    $expression->put(2, 'true');
+                }
+
+                return "<?php echo get_field({$expression->get(0)}, {$expression->get(1)}, {$expression->get(2)}); ?>";
             }
 
-            return "<?php echo get_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
+            if (empty($expression->get(2))) {
+                $expression->put(2, 'true');
+            }
+
+            return "<?php echo get_field({$expression->get(0)}, null, {$expression->get(2)})[{$expression->get(1)}]; ?>";
         }
 
         return "<?php echo get_field({$expression}); ?>";
