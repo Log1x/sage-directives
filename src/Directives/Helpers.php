@@ -25,32 +25,32 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === true) : ?>";
     },
 
     'endistrue' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     'isfalse' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === false) : ?>";
     },
 
     'endisfalse' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -63,9 +63,9 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (is_null({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (is_null({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (is_null({$expression})) : ?>";
@@ -79,16 +79,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (! is_null({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (! is_null({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (! is_null({$expression})) : ?>";
     },
 
     'endisnotnull' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -97,23 +97,21 @@ return [
     |---------------------------------------------------------------------
     */
 
-
     'notempty' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (! empty({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (! empty({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (! empty({$expression})) : ?>";
     },
 
     'endnotempty' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
-
 
     /*
     |---------------------------------------------------------------------
@@ -125,12 +123,12 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if ({$expression->get(0)} instanceof {$expression->get(1)}) : ?>";
+            return "<?php if (is_a({$expression->get(0)}, {$expression->get(1)})) : ?>";
         }
     },
 
     'endinstanceof' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -143,12 +141,12 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (gettype({$expression->get(0)}) == {$expression->get(1)}) : ?>";
+            return "<?php if (gettype({$expression->get(0)}) === {$expression->get(1)}) : ?>";
         }
     },
 
     'endtypeof' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -191,9 +189,12 @@ return [
 
     'implode' => function ($expression) {
         if (Str::contains($expression, ',')) {
+            $expression = str_replace(['\', \'', '\',\''], ['\'*\'', '\'* \''], $expression);
             $expression = Util::parse($expression);
 
-            return "<?= implode({$expression->get(0)}, {$expression->get(1)}); ?>";
+            $expression->put(0, str_replace(['\'*\'', '\'* \''], ['\', \'', '\',\''], $expression->get(0)));
+
+            return "<?php echo implode({$expression->get(0)}, {$expression->get(1)}); ?>";
         }
     },
 
@@ -204,7 +205,7 @@ return [
     */
 
     'repeat' => function ($expression) {
-        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>" .
+        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>".
                "<?php \$loop = (object) [
                    'index' => \$iteration,
                    'iteration' => \$iteration + 1,
@@ -227,7 +228,7 @@ return [
 
     'style' => function ($expression) {
         if (! empty($expression)) {
-            return '<link rel="stylesheet" href="' . Util::strip($expression) . '">';
+            return '<link rel="stylesheet" href="'.Util::strip($expression).'">';
         }
 
         return '<style>';
@@ -245,7 +246,7 @@ return [
 
     'script' => function ($expression) {
         if (! empty($expression)) {
-            return '<script src="' . Util::strip($expression) . '"></script>';
+            return '<script src="'.Util::strip($expression).'"></script>';
         }
 
         return '<script>';
@@ -265,9 +266,9 @@ return [
         $expression = Util::parse($expression);
         $variable = Util::strip($expression->get(0));
 
-        return "<script>\n" .
-               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n" . // phpcs:ignore
-               "</script>";
+        return "<script>\n".
+               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n". // phpcs:ignore
+               '</script>';
     },
 
     /*
@@ -277,56 +278,19 @@ return [
     */
 
     'inline' => function ($expression) {
-        $output = "/* {$expression} */\n" .
-                  "<?php include get_theme_file_path({$expression}) ?>\n";
+        $path = Util::strip($expression);
 
-        if (ends_with($expression, ".html'")) {
-            return $output;
+        $output = "<?php include get_theme_file_path({$expression}) ?>";
+
+        if (Str::endsWith($path, '.css')) {
+            return "<style>{$output}</style>";
         }
 
-        if (ends_with($expression, ".css'")) {
-            return "<style>\n" . $output . '</style>';
+        if (Str::endsWith($path, '.js')) {
+            return "<script>{$output}</script>";
         }
 
-        if (ends_with($expression, ".js'")) {
-            return "<script>\n" . $output . '</script>';
-        }
-    },
-
-    /*
-    |---------------------------------------------------------------------
-    | @fa / @fas / @far / @fal / @fab
-    |---------------------------------------------------------------------
-    */
-
-    'fa' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fa fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fas' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fas fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'far' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="far fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fal' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fal fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fab' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fab fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
+        return $output;
     },
 
 ];

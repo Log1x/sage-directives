@@ -9,33 +9,50 @@ class Util
     /**
      * Parse expression passed to directive.
      *
-     * @param  string $expression
-     * @param  int    $limit
+     * @param  string  $expression
+     * @param  int  $limit
      * @return \Illuminate\Support\Collection
      */
     public static function parse($expression, $limit = PHP_INT_MAX)
     {
         return collect(explode(',', $expression, $limit))
             ->map(function ($item) {
-                return trim($item);
+                $item = trim($item);
+
+                if (is_numeric($item)) {
+                    return (int) $item;
+                }
+
+                return $item;
             });
+    }
+
+    /**
+     * Determine if the string is a valid identifier.
+     *
+     * @param  string  $expression
+     * @return bool
+     */
+    public static function isIdentifier($expression = null)
+    {
+        return ! empty($expression) && (is_numeric($expression) || Str::startsWith($expression, '$') || Str::startsWith($expression, 'get_'));
     }
 
     /**
      * Strip single quotes from expression.
      *
-     * @param  string $expression
+     * @param  string  $expression
      * @return string
      */
-    public static function strip($expression)
+    public static function strip($expression = null)
     {
-        return str_replace(["'", "\""], '', $expression);
+        return ! empty($expression) ? str_replace(["'", '"'], '', $expression) : $expression;
     }
 
     /**
      * Wraps the passed string in single quotes if they are not already present.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return string
      */
     public static function wrap($value)
@@ -49,8 +66,8 @@ class Util
     /**
      * Unwraps the passed string from the passed delimiter.
      *
-     * @param  string $value
-     * @param  string $delimiter
+     * @param  string  $value
+     * @param  string  $delimiter
      * @return string
      */
     public static function unwrap($value, $delimiter = "'")
@@ -69,7 +86,7 @@ class Util
     /**
      * Combine and clean a malformed array formed from a parsed expression.
      *
-     * @param  array $expression
+     * @param  array  $expression
      * @return string
      */
     public static function clean($expression)
@@ -83,7 +100,7 @@ class Util
      * Dives for an ACF field or sub field and returns the value if it exists.
      *
      * @param  string  $field
-     * @param  int     $id
+     * @param  int  $id
      * @return mixed
      */
     public static function field($field, $id = null)
@@ -110,8 +127,8 @@ class Util
     /**
      * Convert expression to a string.
      *
-     * @param  mixed   $expression
-     * @param  boolean $single
+     * @param  mixed  $expression
+     * @param  bool  $single
      * @return string
      */
     public static function toString($expression, $single = false)
@@ -124,9 +141,9 @@ class Util
 
         foreach ($expression as $key => $value) {
             if ($single) {
-                $keys .= self::wrap($value) . ',';
+                $keys .= self::wrap($value).',';
             } else {
-                $keys .= self::wrap($key) . ' => ' . self::wrap($value) .  ', ';
+                $keys .= self::wrap($key).' => '.self::wrap($value).', ';
             }
         }
 
@@ -154,8 +171,8 @@ class Util
      * or `eval()` which isn't happening. I've poached every other Blade directives
      * library and none have a viable solution.
      *
-     * @param  mixed $expression
-     * @return boolean
+     * @param  mixed  $expression
+     * @return bool
      */
     public static function isArray($expression)
     {
