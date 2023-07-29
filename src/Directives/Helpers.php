@@ -203,19 +203,14 @@ return [
     */
 
     'repeat' => function ($expression) {
-        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>".
-               "<?php \$loop = (object) [
-                   'index' => \$iteration,
-                   'iteration' => \$iteration + 1,
-                   'remaining' =>  (int) {$expression} - \$iteration,
-                   'count' => (int) {$expression},
-                   'first' => \$iteration === 0,
-                   'last' => \$iteration + 1 === (int) {$expression}
-               ]; ?>";
+        $initLoop = "\$__currentLoopData = range(1, {$expression}); \$__env->addLoop(\$__currentLoopData);";
+        $iterateLoop = '$__env->incrementLoopIndices(); $loop = $__env->getLastLoop();';
+
+        return "<?php {$initLoop} foreach(\$__currentLoopData as \$__i) : {$iterateLoop} ?>";
     },
 
     'endrepeat' => function () {
-        return '<?php endfor; ?>';
+        return '<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>';
     },
 
     /*
