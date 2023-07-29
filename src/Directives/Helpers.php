@@ -1,8 +1,9 @@
 <?php
 
-namespace Log1x\SageDirectives;
+namespace Log1x\SageDirectives\Directives;
 
 use Illuminate\Support\Str;
+use Log1x\SageDirectives\Util;
 
 return [
 

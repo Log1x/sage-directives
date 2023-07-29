@@ -1,6 +1,8 @@
 <?php
 
-namespace Log1x\SageDirectives;
+namespace Log1x\SageDirectives\Directives;
+
+use Log1x\SageDirectives\Util;
 
 return [
 

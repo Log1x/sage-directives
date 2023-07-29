@@ -27,7 +27,7 @@ class SageDirectivesServiceProvider extends ServiceProvider
      */
     public function directives()
     {
-        return collect(['ACF', 'Helpers', 'WordPress'])
+        return collect(['Acf', 'Helpers', 'WordPress'])
             ->flatMap(function ($directive) {
                 if (file_exists($directives = __DIR__.'/Directives/'.$directive.'.php')) {
                     return require_once $directives;
