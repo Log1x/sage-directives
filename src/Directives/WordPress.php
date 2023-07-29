@@ -141,6 +141,50 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @postmeta
+    |---------------------------------------------------------------------
+    */
+
+    'postmeta' => function ($expression) {
+        if (! empty($expression)) {
+            $expression = Util::parse($expression);
+
+            if (Util::isIdentifier($expression->get(0))) {
+                if (empty($expression->get(1))) {
+                    return "<?php echo get_post_meta({$expression->get(0)}); ?>";
+                }
+
+                if (empty($expression->get(2))) {
+                    $expression->put(2, 'false');
+                }
+
+                return "<?php echo get_post_meta({$expression->get(0)}, {$expression->get(1)}, {$expression->get(2)}); ?>";
+            }
+
+            if (Util::isIdentifier($expression->get(1))) {
+                if (empty($expression->get(2))) {
+                    $expression->put(2, 'false');
+                }
+
+                return "<?php echo get_post_meta({$expression->get(1)}, {$expression->get(0)}, {$expression->get(2)}); ?>";
+            }
+
+            if (empty($expression->get(1))) {
+                $expression->put(1, 'false');
+            }
+
+            if (! Util::isIdentifier($expression->get(0))) {
+                return "<?php echo get_post_meta(get_the_ID(), {$expression->get(0)}, {$expression->get(1)}); ?>";
+            }
+
+            return "<?php echo get_post_meta(get_the_ID(), {$expression->get(0)}, {$expression->get(1)}); ?>";
+        }
+
+        return '<?php echo get_post_meta(get_the_ID()); ?>';
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @title / @content / @excerpt / @permalink / @thumbnail
     |---------------------------------------------------------------------
     */
