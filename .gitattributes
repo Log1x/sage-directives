@@ -3,3 +3,4 @@
 /docs export-ignore
 /package.json export-ignore
 /yarn.lock export-ignore
+/tests export-ignore
