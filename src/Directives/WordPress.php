@@ -27,6 +27,8 @@ return [
     },
 
     'posts' => function ($expression) {
+        $iterateLoop = '$__env->incrementLoopIndices(); $loop = $__env->getLastLoop();';
+
         if (! empty($expression)) {
             return '<?php $posts = collect(); ?>'.
 
@@ -47,20 +49,20 @@ return [
                    '<?php endif; ?>'.
 
                    "<?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : {$expression}; ?>".
-                   '<?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>';
+                   "<?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : {$iterateLoop} \$query->the_post(); ?>";
         }
 
-        return '<?php if (empty($query)) : ?>'.
+        $handleQuery = '<?php if (empty($query)) : ?>'.
                '<?php global $wp_query; ?>'.
                '<?php $query = $wp_query; ?>'.
-               '<?php endif; ?>'.
+               '<?php endif; ?>';
 
-               '<?php if ($query->have_posts()) : ?>'.
-               '<?php while ($query->have_posts()) : $query->the_post(); ?>';
+        return "{$handleQuery} <?php if (\$query->have_posts()) : ?>".
+            "<?php \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : {$iterateLoop} \$query->the_post(); ?>";
     },
 
     'endposts' => function () {
-        return '<?php endwhile; wp_reset_postdata(); endif; ?>';
+        return '<?php endwhile; wp_reset_postdata(); $__env->popLoop(); $loop = $__env->getLastLoop(); endif; ?>';
     },
 
     /*
