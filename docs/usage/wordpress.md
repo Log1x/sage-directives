@@ -509,3 +509,13 @@ This is just a directive version of [`wp_footer`](https://developer.wordpress.or
 ## @wpbodyopen
 
 This is a directive version of [`wp_body_open`](https://developer.wordpress.org/reference/functions/wp_body_open/) except that it will work on WordPress versions below 5.2.
+
+## @postclass
+
+`@postclass` functions the same as `[post_class](https://developer.wordpress.org/reference/functions/post_class/)` accepting an optional class and post ID.
+
+```php
+@postclass
+@postclass('bg-white')
+@postclass('bg-white', $post->ID)
+```
