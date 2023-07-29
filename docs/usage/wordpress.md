@@ -409,11 +409,17 @@ Accessing an ACF field, sub field, or even option field is just as easy:
 
 ## @role
 
-`@role` is a simple conditional that allows you to display specific content only to users who are logged in and have a specific role. With [`wp_get_current_user()->roles`](https://developer.wordpress.org/reference/functions/wp_get_current_user/) returning an array of roles in all lowercase, the passed role is automatically lowercased using `strtolower`. It can be closed using `@endrole`.
+`@role` allows you to display specific content only to users who are logged in and have a specific role. With [`wp_get_current_user()->roles`](https://developer.wordpress.org/reference/functions/wp_get_current_user/) returning an array of roles in all lowercase, the passed role is automatically lowercased using `strtolower`. It can be closed using `@endrole`.
 
 ```php
 @role('author')
   This content is only displayed to Authors.
+@endrole
+```
+
+```php
+@role('author', 'contributor')
+  This content is only displayed to Authors and Contributors.
 @endrole
 ```
 
