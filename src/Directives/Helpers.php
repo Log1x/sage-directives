@@ -125,7 +125,7 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if ({$expression->get(0)} instanceof {$expression->get(1)}) : ?>";
+            return "<?php if (is_a({$expression->get(0)}, {$expression->get(1)})) : ?>";
         }
     },
 
@@ -143,7 +143,7 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (gettype({$expression->get(0)}) == {$expression->get(1)}) : ?>";
+            return "<?php if (gettype({$expression->get(0)}) === {$expression->get(1)}) : ?>";
         }
     },
 
@@ -191,9 +191,12 @@ return [
 
     'implode' => function ($expression) {
         if (Str::contains($expression, ',')) {
+            $expression = str_replace(['\', \'', '\',\''], ['\'*\'', '\'* \''], $expression);
             $expression = Util::parse($expression);
 
-            return "<?= implode({$expression->get(0)}, {$expression->get(1)}); ?>";
+            $expression->put(0, str_replace(['\'*\'', '\'* \''], ['\', \'', '\',\''], $expression->get(0)));
+
+            return "<?php echo implode({$expression->get(0)}, {$expression->get(1)}); ?>";
         }
     },
 
@@ -277,56 +280,19 @@ return [
     */
 
     'inline' => function ($expression) {
-        $output = "/* {$expression} */\n" .
-                  "<?php include get_theme_file_path({$expression}) ?>\n";
+        $path = Util::strip($expression);
 
-        if (ends_with($expression, ".html'")) {
-            return $output;
+        $output = "<?php include get_theme_file_path({$expression}) ?>";
+
+        if (Str::endsWith($path, '.css')) {
+            return "<style>{$output}</style>";
         }
 
-        if (ends_with($expression, ".css'")) {
-            return "<style>\n" . $output . '</style>';
+        if (Str::endsWith($path, '.js')) {
+            return "<script>{$output}</script>";
         }
 
-        if (ends_with($expression, ".js'")) {
-            return "<script>\n" . $output . '</script>';
-        }
-    },
-
-    /*
-    |---------------------------------------------------------------------
-    | @fa / @fas / @far / @fal / @fab
-    |---------------------------------------------------------------------
-    */
-
-    'fa' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fa fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fas' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fas fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'far' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="far fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fal' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fal fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
-    },
-
-    'fab' => function ($expression) {
-        $expression = Util::parse($expression);
-
-        return '<i class="fab fa-' . Util::strip($expression->get(0)) . ' ' . Util::strip($expression->get(1)) . '"></i>'; // phpcs:ignore
+        return $output;
     },
 
 ];

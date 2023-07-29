@@ -61,29 +61,29 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
-                return "<?= get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
+            if (Util::isIdentifier($expression->get(2))) {
+                return "<?php echo get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]; ?>";
             }
 
-            if (! is_string($expression->get(1))) {
-                return "<?= get_field({$expression->get(0)}, {$expression->get(1)}); ?>";
+            if (Util::isIdentifier($expression->get(1))) {
+                return "<?php echo get_field({$expression->get(0)}, {$expression->get(1)}); ?>";
             }
 
-            return "<?= get_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
+            return "<?php echo get_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
         }
 
-        return "<?= get_field({$expression}); ?>";
+        return "<?php echo get_field({$expression}); ?>";
     },
 
     'hasfield' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
+            if (Util::isIdentifier($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
             }
 
-            if (! is_string($expression->get(1))) {
+            if (Util::isIdentifier($expression->get(1))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
             }
 
@@ -97,16 +97,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            if (! empty($expression->get(3)) && ! is_string($expression->get(2))) {
+            if (Util::isIdentifier($expression->get(3))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
-            if (! empty($expression->get(2)) && ! is_string($expression->get(2))) {
+            if (Util::isIdentifier($expression->get(2))) {
                 return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>"; // phpcs:ignore
             }
 
-            if (! empty($expression->get(2)) && is_string($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)})[{$expression->get(2)}] === {$expression->get(1)}) : ?>"; // phpcs:ignore
+            if (! empty($expression->get(2)) && ! Util::isIdentifier($expression->get(2))) {
+                return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
             }
 
             return "<?php if (get_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
@@ -128,13 +128,13 @@ return [
             $expression = Util::parse($expression);
 
             if (! empty($expression->get(2))) {
-                return "<?= get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]; ?>";
+                return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]; ?>";
             }
 
-            return "<?= get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
+            return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
         }
 
-        return "<?= get_sub_field({$expression}); ?>";
+        return "<?php echo get_sub_field({$expression}); ?>";
     },
 
     'hassub' => function ($expression) {
@@ -258,10 +258,10 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?= get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
+            return "<?php echo get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
         }
 
-        return "<?= get_field({$expression}, 'option'); ?>";
+        return "<?php echo get_field({$expression}, 'option'); ?>";
     },
 
     'hasoption' => function ($expression) {
