@@ -94,6 +94,40 @@ describe('@endnoposts', function () {
     });
 });
 
+describe('@postmeta', function () {
+    it('compiles correctly', function () {
+        $directive = "@postmeta('foo')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_post_meta(get_the_ID(), 'foo', false); ?>");
+    });
+
+    it('compiles correctly with object', function () {
+        $directive = "@postmeta('foo', \$post->ID)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_post_meta(\$post->ID, 'foo', false); ?>");
+    });
+
+    it('compiles correctly with post', function () {
+        $directive = "@postmeta('foo', 1)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_post_meta(1, 'foo', false); ?>");
+    });
+
+    it('compiles correctly with post and single', function () {
+        $directive = "@postmeta('foo', 1, true)";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_post_meta(1, 'foo', true); ?>");
+    });
+});
+
 describe('@title', function () {
     it('compiles correctly', function () {
         $directive = '@title';

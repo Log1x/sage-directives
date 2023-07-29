@@ -103,6 +103,21 @@ If `@query` is not used and an argument is not passed to `@posts`, it will use t
 @endnoposts
 ```
 
+## @postmeta
+
+`@postmeta` allows you to get the post meta for a post using [`get_post_meta`](https://developer.wordpress.org/reference/functions/get_post_meta/).
+
+`@postmeta` will always expect a `key` as the first argument with an optional `post_id` for the second.
+
+The third argument is optional and allows you to control the `$single` bool to only return a single value.
+
+```php
+@postmeta('key')
+@postmeta('key', 1)
+@postmeta(1)
+@postmeta('key', 1, true)
+```
+
 ## @title
 
 `@title` echo's the current posts title using [`get_the_title()`](https://developer.wordpress.org/reference/functions/get_the_title/).
