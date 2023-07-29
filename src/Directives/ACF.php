@@ -25,16 +25,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>" .
+        return "<?php if (have_rows({$expression})) : ?>".
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
     'endfields' => function () {
-        return "<?php endwhile; endif; ?>";
+        return '<?php endwhile; endif; ?>';
     },
 
     'hasfields' => function ($expression) {
@@ -48,7 +48,7 @@ return [
     },
 
     'endhasfields' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -114,7 +114,7 @@ return [
     },
 
     'endfield' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -164,7 +164,7 @@ return [
     },
 
     'endsub' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -177,16 +177,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>" .
+        return "<?php if (have_rows({$expression})) : ?>".
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
     'endlayouts' => function () {
-        return "<?php endwhile; endif; ?>";
+        return '<?php endwhile; endif; ?>';
     },
 
     /*
@@ -200,7 +200,7 @@ return [
     },
 
     'endlayout' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -213,16 +213,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>" .
+            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
                    "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
         }
 
-        return "<?php if (have_rows({$expression})) : ?>" .
+        return "<?php if (have_rows({$expression})) : ?>".
                "<?php while (have_rows({$expression})) : the_row(); ?>";
     },
 
     'endgroup' => function () {
-        return "<?php endwhile; endif; ?>";
+        return '<?php endwhile; endif; ?>';
     },
 
     /*
@@ -232,12 +232,12 @@ return [
     */
 
     'options' => function ($expression) {
-        return "<?php if (have_rows({$expression}, 'option')) : ?>" .
+        return "<?php if (have_rows({$expression}, 'option')) : ?>".
                "<?php while (have_rows({$expression}, 'option')) : the_row(); ?>";
     },
 
     'endoptions' => function () {
-        return "<?php endwhile; endif; ?>";
+        return '<?php endwhile; endif; ?>';
     },
 
     'hasoptions' => function ($expression) {
@@ -245,7 +245,7 @@ return [
     },
 
     'endhasoptions' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -287,7 +287,7 @@ return [
     },
 
     'endoption' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
 ];

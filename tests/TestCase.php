@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Fluent;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Roots\Acorn\Application;
-use Illuminate\Support\Fluent;
-use Illuminate\Support\Facades\Facade;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -29,8 +29,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Setup the test environment.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -62,21 +60,19 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Create the application.
-     *
-     * @return \Roots\Acorn\Application
      */
     protected function createApplication(): Application
     {
         $app = new Application(__DIR__, [
-            'bootstrap' => __DIR__ . '/.acorn/bootstrap',
+            'bootstrap' => __DIR__.'/.acorn/bootstrap',
         ]);
 
         $app['env'] = 'testing';
 
         $app->bind('config', function () {
             return new Fluent([
-                'view.compiled' => __DIR__ . '/.acorn/cache',
-                'view.paths' => [__DIR__ . '/.acorn/views'],
+                'view.compiled' => __DIR__.'/.acorn/cache',
+                'view.paths' => [__DIR__.'/.acorn/views'],
             ]);
         });
 
@@ -97,7 +93,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Compile the Blade directive.
      *
-     * @param  string $directive
+     * @param  string  $directive
      * @return string
      */
     public function compile($directive)

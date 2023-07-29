@@ -28,11 +28,11 @@ describe('@fields', function () {
 
 describe('@endfields', function () {
     it('compiles correctly', function () {
-        $directive = "@endfields";
+        $directive = '@endfields';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endwhile; endif; ?>");
+        expect($compiled)->toEqual('<?php endwhile; endif; ?>');
     });
 });
 
@@ -64,11 +64,11 @@ describe('@hasfields', function () {
 
 describe('@endhasfields', function () {
     it('compiles correctly', function () {
-        $directive = "@endhasfields";
+        $directive = '@endhasfields';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endif; ?>");
+        expect($compiled)->toEqual('<?php endif; ?>');
     });
 });
 
@@ -200,11 +200,11 @@ describe('@isfield', function () {
 
 describe('@endfield', function () {
     it('compiles correctly', function () {
-        $directive = "@endfield";
+        $directive = '@endfield';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endif; ?>");
+        expect($compiled)->toEqual('<?php endif; ?>');
     });
 });
 
@@ -306,11 +306,11 @@ describe('@layouts', function () {
 
 describe('@endlayouts', function () {
     it('compiles correctly', function () {
-        $directive = "@endlayouts";
+        $directive = '@endlayouts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endwhile; endif; ?>");
+        expect($compiled)->toEqual('<?php endwhile; endif; ?>');
     });
 });
 
@@ -326,11 +326,11 @@ describe('@layout', function () {
 
 describe('@endlayout', function () {
     it('compiles correctly', function () {
-        $directive = "@endlayout";
+        $directive = '@endlayout';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endif; ?>");
+        expect($compiled)->toEqual('<?php endif; ?>');
     });
 });
 
@@ -362,11 +362,11 @@ describe('@group', function () {
 
 describe('@endgroup', function () {
     it('compiles correctly', function () {
-        $directive = "@endgroup";
+        $directive = '@endgroup';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endwhile; endif; ?>");
+        expect($compiled)->toEqual('<?php endwhile; endif; ?>');
     });
 });
 
@@ -382,11 +382,11 @@ describe('@options', function () {
 
 describe('@endoptions', function () {
     it('compiles correctly', function () {
-        $directive = "@endoptions";
+        $directive = '@endoptions';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endwhile; endif; ?>");
+        expect($compiled)->toEqual('<?php endwhile; endif; ?>');
     });
 });
 
@@ -402,11 +402,11 @@ describe('@hasoptions', function () {
 
 describe('@endhasoptions', function () {
     it('compiles correctly', function () {
-        $directive = "@endhasoptions";
+        $directive = '@endhasoptions';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endif; ?>");
+        expect($compiled)->toEqual('<?php endif; ?>');
     });
 });
 
@@ -466,10 +466,10 @@ describe('@isoption', function () {
 
 describe('@endoption', function () {
     it('compiles correctly', function () {
-        $directive = "@endoption";
+        $directive = '@endoption';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php endif; ?>");
+        expect($compiled)->toEqual('<?php endif; ?>');
     });
 });

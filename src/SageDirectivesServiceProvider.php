@@ -2,8 +2,8 @@
 
 namespace Log1x\SageDirectives;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class SageDirectivesServiceProvider extends ServiceProvider
 {
@@ -29,8 +29,8 @@ class SageDirectivesServiceProvider extends ServiceProvider
     {
         return collect(['ACF', 'Helpers', 'WordPress'])
             ->flatMap(function ($directive) {
-                if (file_exists($directives = __DIR__ . '/Directives/' . $directive . '.php')) {
-                    return require_once($directives);
+                if (file_exists($directives = __DIR__.'/Directives/'.$directive.'.php')) {
+                    return require_once $directives;
                 }
             });
     }

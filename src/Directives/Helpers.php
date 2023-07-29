@@ -25,32 +25,32 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === true) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === true) : ?>";
     },
 
     'endistrue' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     'isfalse' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (isset({$expression->get(0)}) && (bool) {$expression->get(0)} === false) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (isset({$expression}) && (bool) {$expression} === false) : ?>";
     },
 
     'endisfalse' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -63,9 +63,9 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (is_null({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (is_null({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (is_null({$expression})) : ?>";
@@ -79,16 +79,16 @@ return [
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (! is_null({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (! is_null({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (! is_null({$expression})) : ?>";
     },
 
     'endisnotnull' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -97,23 +97,21 @@ return [
     |---------------------------------------------------------------------
     */
 
-
     'notempty' => function ($expression) {
         if (Str::contains($expression, ',')) {
             $expression = Util::parse($expression);
 
-            return "<?php if (! empty({$expression->get(0)})) : ?>" .
-                   "<?php echo {$expression->get(1)}; ?>" .
-                   "<?php endif; ?>";
+            return "<?php if (! empty({$expression->get(0)})) : ?>".
+                   "<?php echo {$expression->get(1)}; ?>".
+                   '<?php endif; ?>';
         }
 
         return "<?php if (! empty({$expression})) : ?>";
     },
 
     'endnotempty' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
-
 
     /*
     |---------------------------------------------------------------------
@@ -130,7 +128,7 @@ return [
     },
 
     'endinstanceof' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -148,7 +146,7 @@ return [
     },
 
     'endtypeof' => function () {
-        return "<?php endif; ?>";
+        return '<?php endif; ?>';
     },
 
     /*
@@ -207,7 +205,7 @@ return [
     */
 
     'repeat' => function ($expression) {
-        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>" .
+        return "<?php for (\$iteration = 0 ; \$iteration < (int) {$expression}; \$iteration++) : ?>".
                "<?php \$loop = (object) [
                    'index' => \$iteration,
                    'iteration' => \$iteration + 1,
@@ -230,7 +228,7 @@ return [
 
     'style' => function ($expression) {
         if (! empty($expression)) {
-            return '<link rel="stylesheet" href="' . Util::strip($expression) . '">';
+            return '<link rel="stylesheet" href="'.Util::strip($expression).'">';
         }
 
         return '<style>';
@@ -248,7 +246,7 @@ return [
 
     'script' => function ($expression) {
         if (! empty($expression)) {
-            return '<script src="' . Util::strip($expression) . '"></script>';
+            return '<script src="'.Util::strip($expression).'"></script>';
         }
 
         return '<script>';
@@ -268,9 +266,9 @@ return [
         $expression = Util::parse($expression);
         $variable = Util::strip($expression->get(0));
 
-        return "<script>\n" .
-               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n" . // phpcs:ignore
-               "</script>";
+        return "<script>\n".
+               "window.{$variable} = <?php echo is_array({$expression->get(1)}) ? json_encode({$expression->get(1)}) : '\'' . {$expression->get(1)} . '\''; ?>;\n". // phpcs:ignore
+               '</script>';
     },
 
     /*

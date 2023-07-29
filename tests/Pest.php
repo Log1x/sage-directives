@@ -1,8 +1,6 @@
 <?php
 
-use Roots\Acorn\Application;
 use Tests\TestCase;
-use Illuminate\Support\Fluent;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,12 +48,12 @@ function get_option($key, $default = null)
 
 function get_stylesheet_directory()
 {
-    return __DIR__ . '/fixtures';
+    return __DIR__.'/fixtures';
 }
 
 function get_template_directory()
 {
-    return __DIR__ . '/fixtures';
+    return __DIR__.'/fixtures';
 }
 
 if (! defined('WP_PLUGIN_DIR')) {

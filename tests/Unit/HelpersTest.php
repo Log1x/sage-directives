@@ -2,11 +2,11 @@
 
 describe('@istrue', function () {
     it('compiles correctly', function () {
-        $directive = "@istrue(false)";
+        $directive = '@istrue(false)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (isset(false) && (bool) false === true) : ?>");
+        expect($compiled)->toBe('<?php if (isset(false) && (bool) false === true) : ?>');
     });
 
     it('compiles correctly with output', function () {
@@ -20,21 +20,21 @@ describe('@istrue', function () {
 
 describe('@endistrue', function () {
     it('compiles correctly', function () {
-        $directive = "@endistrue";
+        $directive = '@endistrue';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
 describe('@isfalse', function () {
     it('compiles correctly', function () {
-        $directive = "@isfalse(true)";
+        $directive = '@isfalse(true)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (isset(true) && (bool) true === false) : ?>");
+        expect($compiled)->toBe('<?php if (isset(true) && (bool) true === false) : ?>');
     });
 
     it('compiles correctly with output', function () {
@@ -48,11 +48,11 @@ describe('@isfalse', function () {
 
 describe('@endisfalse', function () {
     it('compiles correctly', function () {
-        $directive = "@endisfalse";
+        $directive = '@endisfalse';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -76,11 +76,11 @@ describe('@isnull', function () {
 
 describe('@endisnull', function () {
     it('compiles correctly', function () {
-        $directive = "@endisnull";
+        $directive = '@endisnull';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -104,11 +104,11 @@ describe('@isnotnull', function () {
 
 describe('@endisnotnull', function () {
     it('compiles correctly', function () {
-        $directive = "@endisnotnull";
+        $directive = '@endisnotnull';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -132,11 +132,11 @@ describe('@notempty', function () {
 
 describe('@endnotempty', function () {
     it('compiles correctly', function () {
-        $directive = "@endnotempty";
+        $directive = '@endnotempty';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -152,11 +152,11 @@ describe('@instanceof', function () {
 
 describe('@endinstanceof', function () {
     it('compiles correctly', function () {
-        $directive = "@endinstanceof";
+        $directive = '@endinstanceof';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -172,51 +172,51 @@ describe('@typeof', function () {
 
 describe('@endtypeof', function () {
     it('compiles correctly', function () {
-        $directive = "@endtypeof";
+        $directive = '@endtypeof';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
 describe('@global', function () {
     it('compiles correctly', function () {
-        $directive = "@global(\$post)";
+        $directive = '@global($post)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php global \$post; ?>");
+        expect($compiled)->toBe('<?php global $post; ?>');
     });
 });
 
 describe('@set', function () {
     it('compiles correctly', function () {
-        $directive = "@set(\$post, get_post())";
+        $directive = '@set($post, get_post())';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$post = get_post(); ?>");
+        expect($compiled)->toBe('<?php $post = get_post(); ?>');
     });
 });
 
 describe('@unset', function () {
     it('compiles correctly', function () {
-        $directive = "@unset(\$post)";
+        $directive = '@unset($post)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php unset(\$post); ?>");
+        expect($compiled)->toBe('<?php unset($post); ?>');
     });
 });
 
 describe('@extract', function () {
     it('compiles correctly', function () {
-        $directive = "@extract(\$post)";
+        $directive = '@extract($post)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php extract(\$post); ?>");
+        expect($compiled)->toBe('<?php extract($post); ?>');
     });
 });
 
@@ -232,7 +232,7 @@ describe('@implode', function () {
 
 describe('@repeat', function () {
     it('compiles correctly', function () {
-        $directive = "@repeat(5)";
+        $directive = '@repeat(5)';
 
         $compiled = $this->compile($directive);
 
@@ -242,17 +242,17 @@ describe('@repeat', function () {
 
 describe('@endrepeat', function () {
     it('compiles correctly', function () {
-        $directive = "@endrepeat";
+        $directive = '@endrepeat';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endfor; ?>");
+        expect($compiled)->toBe('<?php endfor; ?>');
     });
 });
 
 describe('@style', function () {
     it('compiles correctly', function () {
-        $directive = "@style";
+        $directive = '@style';
 
         $compiled = $this->compile($directive);
 
@@ -270,7 +270,7 @@ describe('@style', function () {
 
 describe('@endstyle', function () {
     it('compiles correctly', function () {
-        $directive = "@endstyle";
+        $directive = '@endstyle';
 
         $compiled = $this->compile($directive);
 
@@ -280,7 +280,7 @@ describe('@endstyle', function () {
 
 describe('@script', function () {
     it('compiles correctly', function () {
-        $directive = "@script";
+        $directive = '@script';
 
         $compiled = $this->compile($directive);
 
@@ -298,7 +298,7 @@ describe('@script', function () {
 
 describe('@endscript', function () {
     it('compiles correctly', function () {
-        $directive = "@endscript";
+        $directive = '@endscript';
 
         $compiled = $this->compile($directive);
 

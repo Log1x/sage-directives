@@ -12,11 +12,11 @@ describe('@query', function () {
 
 describe('@posts', function () {
     it('compiles correctly', function () {
-        $directive = "@posts";
+        $directive = '@posts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (empty(\$query)) : ?><?php global \$wp_query; ?><?php \$query = \$wp_query; ?><?php endif; ?><?php if (\$query->have_posts()) : ?><?php while (\$query->have_posts()) : \$query->the_post(); ?>");
+        expect($compiled)->toBe('<?php if (empty($query)) : ?><?php global $wp_query; ?><?php $query = $wp_query; ?><?php endif; ?><?php if ($query->have_posts()) : ?><?php while ($query->have_posts()) : $query->the_post(); ?>');
     });
 
     it('compiles correctly with options array', function () {
@@ -30,21 +30,21 @@ describe('@posts', function () {
 
 describe('@endposts', function () {
     it('compiles correctly', function () {
-        $directive = "@endposts";
+        $directive = '@endposts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endwhile; wp_reset_postdata(); endif; ?>");
+        expect($compiled)->toBe('<?php endwhile; wp_reset_postdata(); endif; ?>');
     });
 });
 
 describe('@hasposts', function () {
     it('compiles correctly', function () {
-        $directive = "@hasposts";
+        $directive = '@hasposts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (empty(\$query)) : ?><?php global \$wp_query; ?><?php \$query = \$wp_query; ?><?php endif; ?><?php if (\$query->have_posts()) : ?>");
+        expect($compiled)->toBe('<?php if (empty($query)) : ?><?php global $wp_query; ?><?php $query = $wp_query; ?><?php endif; ?><?php if ($query->have_posts()) : ?>');
     });
 
     it('compiles correctly with options array', function () {
@@ -58,21 +58,21 @@ describe('@hasposts', function () {
 
 describe('@endhasposts', function () {
     it('compiles correctly', function () {
-        $directive = "@endhasposts";
+        $directive = '@endhasposts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php wp_reset_postdata(); endif; ?>");
+        expect($compiled)->toBe('<?php wp_reset_postdata(); endif; ?>');
     });
 });
 
 describe('@noposts', function () {
     it('compiles correctly', function () {
-        $directive = "@noposts";
+        $directive = '@noposts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (empty(\$query)) : ?><?php global \$wp_query; ?><?php \$query = \$wp_query; ?><?php endif; ?><?php if (! \$query->have_posts()) : ?>");
+        expect($compiled)->toBe('<?php if (empty($query)) : ?><?php global $wp_query; ?><?php $query = $wp_query; ?><?php endif; ?><?php if (! $query->have_posts()) : ?>');
     });
 
     it('compiles correctly with options array', function () {
@@ -86,73 +86,73 @@ describe('@noposts', function () {
 
 describe('@endnoposts', function () {
     it('compiles correctly', function () {
-        $directive = "@endnoposts";
+        $directive = '@endnoposts';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php wp_reset_postdata(); endif; ?>");
+        expect($compiled)->toBe('<?php wp_reset_postdata(); endif; ?>');
     });
 });
 
 describe('@title', function () {
     it('compiles correctly', function () {
-        $directive = "@title";
+        $directive = '@title';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_title(); ?>");
+        expect($compiled)->toBe('<?php echo get_the_title(); ?>');
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@title(1)";
+        $directive = '@title(1)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_title(1); ?>");
+        expect($compiled)->toBe('<?php echo get_the_title(1); ?>');
     });
 });
 
 describe('@content', function () {
     it('compiles correctly', function () {
-        $directive = "@content";
+        $directive = '@content';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php the_content(); ?>");
+        expect($compiled)->toBe('<?php the_content(); ?>');
     });
 });
 
 describe('@excerpt', function () {
     it('compiles correctly', function () {
-        $directive = "@excerpt";
+        $directive = '@excerpt';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php the_excerpt(); ?>");
+        expect($compiled)->toBe('<?php the_excerpt(); ?>');
     });
 });
 
 describe('@permalink', function () {
     it('compiles correctly', function () {
-        $directive = "@permalink";
+        $directive = '@permalink';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_permalink(); ?>");
+        expect($compiled)->toBe('<?php echo get_permalink(); ?>');
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@permalink(1)";
+        $directive = '@permalink(1)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_permalink(1); ?>");
+        expect($compiled)->toBe('<?php echo get_permalink(1); ?>');
     });
 });
 
 describe('@thumbnail', function () {
     it('compiles correctly', function () {
-        $directive = "@thumbnail";
+        $directive = '@thumbnail';
 
         $compiled = $this->compile($directive);
 
@@ -160,7 +160,7 @@ describe('@thumbnail', function () {
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@thumbnail(1)";
+        $directive = '@thumbnail(1)';
 
         $compiled = $this->compile($directive);
 
@@ -184,15 +184,15 @@ describe('@thumbnail', function () {
     });
 
     it('compiles correctly with post and custom size', function () {
-        $directive = "@thumbnail(1, 128)";
+        $directive = '@thumbnail(1, 128)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_post_thumbnail(1, is_numeric(128) ? [128, 128] : 128); ?>");
+        expect($compiled)->toBe('<?php echo get_the_post_thumbnail(1, is_numeric(128) ? [128, 128] : 128); ?>');
     });
 
     it('compiles correctly with using URL', function () {
-        $directive = "@thumbnail(false)";
+        $directive = '@thumbnail(false)';
 
         $compiled = $this->compile($directive);
 
@@ -200,7 +200,7 @@ describe('@thumbnail', function () {
     });
 
     it('compiles correctly with ID and using URL', function () {
-        $directive = "@thumbnail(1, false)";
+        $directive = '@thumbnail(1, false)';
 
         $compiled = $this->compile($directive);
 
@@ -224,17 +224,17 @@ describe('@thumbnail', function () {
     });
 
     it('compiles correctly with post, custom size and using URL', function () {
-        $directive = "@thumbnail(1, 128, false)";
+        $directive = '@thumbnail(1, 128, false)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_post_thumbnail_url(1, is_numeric(128) ? [128, 128] : 128); ?>");
+        expect($compiled)->toBe('<?php echo get_the_post_thumbnail_url(1, is_numeric(128) ? [128, 128] : 128); ?>');
     });
 });
 
 describe('@author', function () {
     it('compiles correctly', function () {
-        $directive = "@author";
+        $directive = '@author';
 
         $compiled = $this->compile($directive);
 
@@ -242,7 +242,7 @@ describe('@author', function () {
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@author(1)";
+        $directive = '@author(1)';
 
         $compiled = $this->compile($directive);
 
@@ -252,7 +252,7 @@ describe('@author', function () {
 
 describe('@authorurl', function () {
     it('compiles correctly', function () {
-        $directive = "@authorurl";
+        $directive = '@authorurl';
 
         $compiled = $this->compile($directive);
 
@@ -260,7 +260,7 @@ describe('@authorurl', function () {
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@authorurl(1)";
+        $directive = '@authorurl(1)';
 
         $compiled = $this->compile($directive);
 
@@ -270,15 +270,15 @@ describe('@authorurl', function () {
 
 describe('@published', function () {
     it('compiles correctly', function () {
-        $directive = "@published";
+        $directive = '@published';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_date(); ?>");
+        expect($compiled)->toBe('<?php echo get_the_date(); ?>');
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@published(1)";
+        $directive = '@published(1)';
 
         $compiled = $this->compile($directive);
 
@@ -288,15 +288,15 @@ describe('@published', function () {
 
 describe('@modified', function () {
     it('compiles correctly', function () {
-        $directive = "@modified";
+        $directive = '@modified';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo get_the_modified_date(); ?>");
+        expect($compiled)->toBe('<?php echo get_the_modified_date(); ?>');
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@modified(1)";
+        $directive = '@modified(1)';
 
         $compiled = $this->compile($directive);
 
@@ -306,41 +306,41 @@ describe('@modified', function () {
 
 describe('@category', function () {
     it('compiles correctly', function () {
-        $directive = "@category";
+        $directive = '@category';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (collect(get_the_category())->isNotEmpty()) : ?><?php echo collect(get_the_category())->shift()->name; ?><?php endif; ?>");
+        expect($compiled)->toBe('<?php if (collect(get_the_category())->isNotEmpty()) : ?><?php echo collect(get_the_category())->shift()->name; ?><?php endif; ?>');
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@category(1)";
+        $directive = '@category(1)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (collect(get_the_category(1))->isNotEmpty()) : ?><?php echo collect(get_the_category(1))->shift()->name; ?><?php endif; ?>");
+        expect($compiled)->toBe('<?php if (collect(get_the_category(1))->isNotEmpty()) : ?><?php echo collect(get_the_category(1))->shift()->name; ?><?php endif; ?>');
     });
 
     it('compiles correctly as link', function () {
-        $directive = "@category(true)";
+        $directive = '@category(true)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (collect(get_the_category())->isNotEmpty()) : ?><a href=\"<?php echo get_category_link(collect(get_the_category())->shift()->cat_ID); ?>\"><?php echo collect(get_the_category())->shift()->name; ?></a><?php endif; ?>");
+        expect($compiled)->toBe('<?php if (collect(get_the_category())->isNotEmpty()) : ?><a href="<?php echo get_category_link(collect(get_the_category())->shift()->cat_ID); ?>"><?php echo collect(get_the_category())->shift()->name; ?></a><?php endif; ?>');
     });
 
     it('compiles correctly as link with post', function () {
-        $directive = "@category(1, true)";
+        $directive = '@category(1, true)';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (collect(get_the_category(1))->isNotEmpty()) : ?><a href=\"<?php echo get_category_link(collect(get_the_category(1))->shift()->cat_ID); ?>\"><?php echo collect(get_the_category(1))->shift()->name; ?></a><?php endif; ?>");
+        expect($compiled)->toBe('<?php if (collect(get_the_category(1))->isNotEmpty()) : ?><a href="<?php echo get_category_link(collect(get_the_category(1))->shift()->cat_ID); ?>"><?php echo collect(get_the_category(1))->shift()->name; ?></a><?php endif; ?>');
     });
 });
 
 describe('@categories', function () {
     it('compiles correctly', function () {
-        $directive = "@categories";
+        $directive = '@categories';
 
         $compiled = $this->compile($directive);
 
@@ -348,7 +348,7 @@ describe('@categories', function () {
     });
 
     it('compiles correctly with post', function () {
-        $directive = "@categories(1)";
+        $directive = '@categories(1)';
 
         $compiled = $this->compile($directive);
 
@@ -356,7 +356,7 @@ describe('@categories', function () {
     });
 
     it('compiles correctly as links', function () {
-        $directive = "@categories(true)";
+        $directive = '@categories(true)';
 
         $compiled = $this->compile($directive);
 
@@ -364,7 +364,7 @@ describe('@categories', function () {
     });
 
     it('compiles correctly as links with post', function () {
-        $directive = "@categories(1, true)";
+        $directive = '@categories(1, true)';
 
         $compiled = $this->compile($directive);
 
@@ -442,7 +442,7 @@ describe('@terms', function () {
 
 describe('@image', function () {
     it('compiles correctly', function () {
-        $directive = "@image(1)";
+        $directive = '@image(1)';
 
         $compiled = $this->compile($directive);
 
@@ -478,7 +478,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_url(1); ?>");
+        expect($compiled)->toBe('<?php echo wp_get_attachment_url(1); ?>');
     });
 
     it('compiles correctly using a field name', function () {
@@ -526,51 +526,51 @@ describe('@role', function () {
 
 describe('@endrole', function () {
     it('compiles correctly', function () {
-        $directive = "@endrole";
+        $directive = '@endrole';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
 describe('@user', function () {
     it('compiles correctly', function () {
-        $directive = "@user";
+        $directive = '@user';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (is_user_logged_in()) : ?>");
+        expect($compiled)->toBe('<?php if (is_user_logged_in()) : ?>');
     });
 });
 
 describe('@enduser', function () {
     it('compiles correctly', function () {
-        $directive = "@enduser";
+        $directive = '@enduser';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
 describe('@guest', function () {
     it('compiles correctly', function () {
-        $directive = "@guest";
+        $directive = '@guest';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (! is_user_logged_in()) : ?>");
+        expect($compiled)->toBe('<?php if (! is_user_logged_in()) : ?>');
     });
 });
 
 describe('@endguest', function () {
     it('compiles correctly', function () {
-        $directive = "@endguest";
+        $directive = '@endguest';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php endif; ?>");
+        expect($compiled)->toBe('<?php endif; ?>');
     });
 });
 
@@ -626,37 +626,37 @@ describe('@filter', function () {
 
 describe('@wphead', function () {
     it('compiles correctly', function () {
-        $directive = "@wphead";
+        $directive = '@wphead';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php wp_head(); ?>");
+        expect($compiled)->toBe('<?php wp_head(); ?>');
     });
 });
 
 describe('@wpfooter', function () {
     it('compiles correctly', function () {
-        $directive = "@wpfooter";
+        $directive = '@wpfooter';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php wp_footer(); ?>");
+        expect($compiled)->toBe('<?php wp_footer(); ?>');
     });
 });
 
 describe('@bodyclass', function () {
     it('compiles correctly', function () {
-        $directive = "@bodyclass";
+        $directive = '@bodyclass';
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php body_class(); ?>");
+        expect($compiled)->toBe('<?php body_class(); ?>');
     });
 });
 
 describe('@wpbodyopen', function () {
     it('compiles correctly', function () {
-        $directive = "@wpbodyopen";
+        $directive = '@wpbodyopen';
 
         $compiled = $this->compile($directive);
 
