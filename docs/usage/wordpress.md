@@ -519,3 +519,17 @@ This is a directive version of [`wp_body_open`](https://developer.wordpress.org/
 @postclass('bg-white')
 @postclass('bg-white', $post->ID)
 ```
+
+## @sidebar
+
+`@sidebar` is a simply directive that calls [`dynamic_sidebar`](https://developer.wordpress.org/reference/functions/dynamic_sidebar/).
+
+It comes with two assisting directives `@hassidebar` and `@endhassidebar` that checks for the existence of the sidebar using [`is_active_sidebar`](https://developer.wordpress.org/reference/functions/is_active_sidebar/).
+
+```php
+@sidebar('sidebar-primary')
+
+@hassidebar('sidebar-primary')
+  @sidebar('sidebar-primary')
+@endhassidebar
+```

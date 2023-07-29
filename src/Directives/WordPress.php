@@ -584,6 +584,24 @@ return [
 
     /*
     |---------------------------------------------------------------------
+    | @sidebar / @hassidebar / @endhassidebar
+    |---------------------------------------------------------------------
+    */
+
+    'sidebar' => function ($expression) {
+        return "<?php dynamic_sidebar($expression); ?>";
+    },
+
+    'hassidebar' => function ($expression) {
+        return "<?php if (is_active_sidebar($expression)) : ?>";
+    },
+
+    'endhassidebar' => function () {
+        return '<?php endif; ?>';
+    },
+
+    /*
+    |---------------------------------------------------------------------
     | @__
     |---------------------------------------------------------------------
     */

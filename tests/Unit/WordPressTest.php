@@ -764,6 +764,36 @@ describe('@postclass', function () {
     });
 });
 
+describe('@sidebar', function () {
+    it('compiles correctly', function () {
+        $directive = "@sidebar('sidebar-1')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php dynamic_sidebar('sidebar-1'); ?>");
+    });
+});
+
+describe('@hassidebar', function () {
+    it('compiles correctly', function () {
+        $directive = "@hassidebar('sidebar-1')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php if (is_active_sidebar('sidebar-1')) : ?>");
+    });
+});
+
+describe('@endhassidebar', function () {
+    it('compiles correctly', function () {
+        $directive = '@endhassidebar';
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe('<?php endif; ?>');
+    });
+});
+
 describe('@__', function () {
     it('compiles correctly', function () {
         $directive = "@__('Hello World', 'sage')";
