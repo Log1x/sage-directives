@@ -17,8 +17,25 @@ class Util
     {
         return collect(explode(',', $expression, $limit))
             ->map(function ($item) {
-                return trim($item);
+                $item = trim($item);
+
+                if (is_numeric($item)) {
+                    return (int) $item;
+                }
+
+                return $item;
             });
+    }
+
+    /**
+     * Determine if the string is a valid identifier.
+     *
+     * @param  string  $expression
+     * @return boolean
+     */
+    public static function isIdentifier($expression = null)
+    {
+        return ! empty($expression) && (is_numeric($expression) || Str::startsWith($expression, '$') || Str::startsWith($expression, 'get_'));
     }
 
     /**
@@ -27,9 +44,9 @@ class Util
      * @param  string $expression
      * @return string
      */
-    public static function strip($expression)
+    public static function strip($expression = null)
     {
-        return str_replace(["'", "\""], '', $expression);
+        return ! empty($expression) ? str_replace(["'", "\""], '', $expression) : $expression;
     }
 
     /**
