@@ -431,8 +431,15 @@ return [
 
     'role' => function ($expression) {
         $expression = Util::parse($expression);
+        $condition = [];
 
-        return "<?php if (is_user_logged_in() && in_array(strtolower({$expression->get(0)}), (array) wp_get_current_user()->roles)) : ?>"; // phpcs:ignore
+        foreach ($expression as $value) {
+            $condition[] = "&& in_array(strtolower({$value}), (array) wp_get_current_user()->roles)";
+        }
+
+        $conditions = implode(' ', $condition);
+
+        return "<?php if (is_user_logged_in() {$conditions}) : ?>"; // phpcs:ignore
     },
 
     'endrole' => function () {
