@@ -146,11 +146,9 @@ class Util
         $keys = '';
 
         foreach ($expression as $key => $value) {
-            if ($single) {
-                $keys .= self::wrap($value).',';
-            } else {
-                $keys .= self::wrap($key).' => '.self::wrap($value).', ';
-            }
+            $keys .= $single ?
+                self::wrap($value).',' :
+                self::wrap($key).' => '.self::wrap($value).', ';
         }
 
         $keys = trim(Str::replaceLast(',', '', $keys));
