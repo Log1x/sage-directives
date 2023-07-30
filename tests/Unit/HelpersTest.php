@@ -236,7 +236,7 @@ describe('@repeat', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$__currentLoopData = range(1, 5); \$__env->addLoop(\$__currentLoopData); foreach(\$__currentLoopData as \$__i) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); ?>");
+        expect($compiled)->toBe('<?php $__currentLoopData = range(1, 5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $__i) : $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>');
     });
 });
 

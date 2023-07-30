@@ -2,8 +2,8 @@
 
 namespace Log1x\SageDirectives\Directives;
 
-use Log1x\SageDirectives\Util;
 use Illuminate\Support\Str;
+use Log1x\SageDirectives\Util;
 
 return [
 

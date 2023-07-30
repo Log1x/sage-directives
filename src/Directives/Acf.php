@@ -12,7 +12,7 @@ return [
     | ACF Directives
     |--------------------------------------------------------------------------
     |
-    | Directives specific to Advance Custom Fields.
+    | Directives specific to Advanced Custom Fields.
     |
     */
 

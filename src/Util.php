@@ -146,11 +146,9 @@ class Util
         $keys = '';
 
         foreach ($expression as $key => $value) {
-            if ($single) {
-                $keys .= self::wrap($value).',';
-            } else {
-                $keys .= self::wrap($key).' => '.self::wrap($value).', ';
-            }
+            $keys .= $single ?
+                self::wrap($value).',' :
+                self::wrap($key).' => '.self::wrap($value).', ';
         }
 
         $keys = trim(Str::replaceLast(',', '', $keys));
@@ -164,18 +162,7 @@ class Util
     }
 
     /**
-     * A sad attempt to check if an expression passed is actually an array.
-     * Unfortunately, ANY expression passed to Blade is a string until it is
-     * returned and parsed through the compiler. Even attempting to manually
-     * convert the string to an array will then cause a string to array exception
-     * during compiled time– so regardless, it must then be converted back to a
-     * string.
-     *
-     * @see Utilities::toString()
-     *
-     * The only other way to approach this would be a clever `preg_match_all()`
-     * or `eval()` which isn't happening. I've poached every other Blade directives
-     * library and none have a viable solution.
+     * Determine if the expression looks like an array.
      *
      * @param  mixed  $expression
      * @return bool
