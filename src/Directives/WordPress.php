@@ -3,6 +3,7 @@
 namespace Log1x\SageDirectives\Directives;
 
 use Log1x\SageDirectives\Util;
+use Illuminate\Support\Str;
 
 return [
 
@@ -482,12 +483,14 @@ return [
         $condition = [];
 
         foreach ($expression as $value) {
-            $condition[] = "&& in_array(strtolower({$value}), (array) wp_get_current_user()->roles)";
+            $condition[] = "in_array(strtolower({$value}), (array) wp_get_current_user()->roles) ||";
         }
 
         $conditions = implode(' ', $condition);
 
-        return "<?php if (is_user_logged_in() {$conditions}) : ?>"; // phpcs:ignore
+        $conditions = Str::beforeLast($conditions, ' ||');
+
+        return "<?php if (is_user_logged_in() && ({$conditions})) : ?>";
     },
 
     'endrole' => function () {
