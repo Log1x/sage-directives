@@ -16,11 +16,11 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (empty(\$query)) : ?><?php global \$wp_query; ?><?php \$query = \$wp_query; ?><?php endif; ?> <?php if (\$query->have_posts()) : ?><?php \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+        expect($compiled)->toBe('<?php if (empty($query)) : ?><?php global $wp_query; ?><?php $query = $wp_query; ?><?php endif; ?> <?php if ($query->have_posts()) : ?><?php $__currentLoopData = range(1, $query->post_count); $__env->addLoop($__currentLoopData); while ($query->have_posts()) : $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $query->the_post(); ?>');
     });
 
     it('compiles correctly with post ID', function () {
-        $directive = "@posts(1)";
+        $directive = '@posts(1)';
 
         $compiled = $this->compile($directive);
 
@@ -28,7 +28,7 @@ describe('@posts', function () {
     });
 
     it('compiles correctly with post object', function () {
-        $directive = "@posts(get_post(1))";
+        $directive = '@posts(get_post(1))';
 
         $compiled = $this->compile($directive);
 
@@ -36,7 +36,7 @@ describe('@posts', function () {
     });
 
     it('compiles correctly with post ID array', function () {
-        $directive = "@posts([1, 2, 3])";
+        $directive = '@posts([1, 2, 3])';
 
         $compiled = $this->compile($directive);
 
@@ -44,7 +44,7 @@ describe('@posts', function () {
     });
 
     it('compiles correctly with post ID array containing object', function () {
-        $directive = "@posts([1, get_post(2), 3])";
+        $directive = '@posts([1, get_post(2), 3])';
 
         $compiled = $this->compile($directive);
 
