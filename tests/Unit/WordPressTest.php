@@ -594,7 +594,7 @@ describe('@role', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (is_user_logged_in() && in_array(strtolower('editor'), (array) wp_get_current_user()->roles)) : ?>");
+        expect($compiled)->toBe("<?php if (is_user_logged_in() && (in_array(strtolower('editor'), (array) wp_get_current_user()->roles))) : ?>");
     });
 
     it('compiles correctly with multiple roles', function () {
@@ -602,7 +602,7 @@ describe('@role', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php if (is_user_logged_in() && in_array(strtolower('editor'), (array) wp_get_current_user()->roles) && in_array(strtolower('author'), (array) wp_get_current_user()->roles) && in_array(strtolower('contributor'), (array) wp_get_current_user()->roles)) : ?>");
+        expect($compiled)->toBe("<?php if (is_user_logged_in() && (in_array(strtolower('editor'), (array) wp_get_current_user()->roles) || in_array(strtolower('author'), (array) wp_get_current_user()->roles) || in_array(strtolower('contributor'), (array) wp_get_current_user()->roles))) : ?>");
     });
 });
 
