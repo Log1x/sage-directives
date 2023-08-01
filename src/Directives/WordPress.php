@@ -631,7 +631,7 @@ return [
         $mod = $expression->get(0);
         $default = $expression->get(1);
 
-        if (!empty($default)) {
+        if (! empty($default)) {
             return "<?php echo get_theme_mod({$mod}, {$default}); ?>";
         }
 
