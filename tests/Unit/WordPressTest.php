@@ -827,3 +827,21 @@ describe('@__', function () {
         expect($compiled)->toBe("<?php _e('Hello World', 'sage'); ?>");
     });
 });
+
+describe('@thememod', function () {
+    it('compiles correctly', function () {
+        $directive = "@thememod('mod')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_theme_mod('mod'); ?>");
+    });
+
+    it('compiles correctly with default value', function () {
+        $directive = "@thememod('mod', 'default')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php echo get_theme_mod('mod', 'default'); ?>");
+    });
+});

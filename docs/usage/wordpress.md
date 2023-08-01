@@ -535,3 +535,12 @@ It comes with two assisting directives `@hassidebar` and `@endhassidebar` that c
   @sidebar('sidebar-primary')
 @endhassidebar
 ```
+
+## @thememod
+
+`@thememod` echoes the result of [`get_theme_mod`](https://developer.wordpress.org/reference/functions/get_theme_mod/) function accepting theme modification name and optional default value
+
+```php
+@thememod('header-bg-color')
+@thememod('header-bg-color', '#fff')
+```

@@ -618,4 +618,23 @@ return [
 
         return "<?php _e({$expression[0]}, {$expression[1]}); ?>";
     },
+
+    /*
+    |---------------------------------------------------------------------
+    | @thememod
+    |---------------------------------------------------------------------
+    */
+
+    'thememod' => function ($expression) {
+        $expression = Util::parse($expression);
+
+        $mod = $expression->get(0);
+        $default = $expression->get(1);
+
+        if (! empty($default)) {
+            return "<?php echo get_theme_mod({$mod}, {$default}); ?>";
+        }
+
+        return "<?php echo get_theme_mod({$mod}); ?>";
+    },
 ];
