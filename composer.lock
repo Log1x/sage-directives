@@ -1770,16 +1770,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.10.5",
+            "version": "v1.10.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "a458fb057bfa2f5a09888a8aa349610be807b0c3"
+                "reference": "d1915b6ecc6406c00472c6b9ae75b46aa153bbb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/a458fb057bfa2f5a09888a8aa349610be807b0c3",
-                "reference": "a458fb057bfa2f5a09888a8aa349610be807b0c3",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/d1915b6ecc6406c00472c6b9ae75b46aa153bbb2",
+                "reference": "d1915b6ecc6406c00472c6b9ae75b46aa153bbb2",
                 "shasum": ""
             },
             "require": {
@@ -1832,7 +1832,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2023-07-14T10:26:01+00:00"
+            "time": "2023-08-08T15:17:16+00:00"
         },
         {
             "name": "league/flysystem",
