@@ -432,7 +432,7 @@ return [
             ! Util::isIdentifier($image) &&
             $image = Util::field($image)
         ) {
-            $expression = $expression->put(0, is_array($image) && ! empty($image['id']) ? $image['id'] : $image);
+            $expression = $expression->put(0, is_array($image) && ! empty($image['id']) ? "get_field({$expression->get(0)})['id']" : "get_field({$expression->get(0)})");
         }
 
         if (Util::strip($expression->get(1)) == 'raw') {
