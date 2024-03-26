@@ -191,20 +191,20 @@ Similar to Laravel's native looping, a `$loop` variable is available inside of `
 @endrepeat
 ```
 
-## @style
+## @stylesheet
 
-`@style` allows you to quickly inline a block of CSS or define a path to a stylesheet. When being used for inline CSS, it can be closed using `@endstyle`.
+`@stylesheet` allows you to quickly inline a block of CSS or define a path to a stylesheet. When being used for inline CSS, it can be closed using `@endstyle`.
 
 ```php
-@style
+@stylesheet
   .button {
     background-color: LightGreen;
     color: white;
     padding: 0.75rem 1rem;
   }
-@endstyle
+@endstylesheet
 
-@style('/path/to/style.css')
+@stylesheet('/path/to/style.css')
 ```
 
 ## @script

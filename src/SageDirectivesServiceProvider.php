@@ -2,36 +2,26 @@
 
 namespace Log1x\SageDirectives;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class SageDirectivesServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
+     * The directive providers.
      */
-    public function boot()
-    {
-        $this->directives()
-            ->each(function ($directive, $function) {
-                Blade::directive($function, $directive);
-            });
-    }
+    protected array $directives = [
+        Directives\Acf::class,
+        Directives\Helpers::class,
+        Directives\WordPress::class,
+    ];
 
     /**
-     * Get the Blade directives.
-     *
-     * @return array
+     * Bootstrap any application services.
      */
-    public function directives()
+    public function boot(): void
     {
-        return collect(['Acf', 'Helpers', 'WordPress'])
-            ->flatMap(function ($directive) {
-                if (file_exists($directives = __DIR__.'/Directives/'.$directive.'.php')) {
-                    return require_once $directives;
-                }
-            });
+        collect($this->directives)
+            ->filter(fn ($directive) => is_subclass_of($directive, Directives\Directives::class))
+            ->each(fn ($directive) => $directive::make()->register());
     }
 }

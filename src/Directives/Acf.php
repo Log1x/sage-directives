@@ -2,305 +2,300 @@
 
 namespace Log1x\SageDirectives\Directives;
 
-use Illuminate\Support\Str;
-use Log1x\SageDirectives\Util;
+class Acf extends Directives
+{
+    /**
+     * The Advanced Custom Fields directives.
+     */
+    public function directives(): array
+    {
+        return [
+            /*
+            |---------------------------------------------------------------------
+            | @fields / @endfields / @hasfields / @endhasfields
+            |---------------------------------------------------------------------
+            */
 
-return [
+            'fields' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    /*
-    |--------------------------------------------------------------------------
-    | ACF Directives
-    |--------------------------------------------------------------------------
-    |
-    | Directives specific to Advanced Custom Fields.
-    |
-    */
-
-    /*
-    |---------------------------------------------------------------------
-    | @fields / @endfields / @hasfields / @endhasfields
-    |---------------------------------------------------------------------
-    */
-
-    'fields' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
-
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
-                   "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
-        }
-
-        return "<?php if (have_rows({$expression})) : ?>".
-               "<?php while (have_rows({$expression})) : the_row(); ?>";
-    },
-
-    'endfields' => function () {
-        return '<?php endwhile; endif; ?>';
-    },
-
-    'hasfields' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
-
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>";
-        }
-
-        return "<?php if (have_rows({$expression})) : ?>";
-    },
-
-    'endhasfields' => function () {
-        return '<?php endif; ?>';
-    },
-
-    /*
-    |---------------------------------------------------------------------
-    | @field / @hasfield / @isfield / @endfield
-    |---------------------------------------------------------------------
-    */
-
-    'field' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
-
-            if (Util::isIdentifier($expression->get(2))) {
-                if (empty($expression->get(3))) {
-                    $expression->put(3, 'true');
+                    return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+                        "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
                 }
 
-                return "<?php echo get_field({$expression->get(0)}, {$expression->get(2)}, {$expression->get(3)})[{$expression->get(1)}]; ?>";
-            }
+                return "<?php if (have_rows({$expression})) : ?>".
+                    "<?php while (have_rows({$expression})) : the_row(); ?>";
+            },
 
-            if (Util::isIdentifier($expression->get(1))) {
-                if (empty($expression->get(2))) {
-                    $expression->put(2, 'true');
+            'endfields' => function () {
+                return '<?php endwhile; endif; ?>';
+            },
+
+            'hasfields' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
+
+                    return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>";
                 }
 
-                return "<?php echo get_field({$expression->get(0)}, {$expression->get(1)}, {$expression->get(2)}); ?>";
-            }
+                return "<?php if (have_rows({$expression})) : ?>";
+            },
 
-            if (empty($expression->get(2))) {
-                $expression->put(2, 'true');
-            }
+            'endhasfields' => function () {
+                return '<?php endif; ?>';
+            },
 
-            return "<?php echo get_field({$expression->get(0)}, null, {$expression->get(2)})[{$expression->get(1)}]; ?>";
-        }
+            /*
+            |---------------------------------------------------------------------
+            | @field / @hasfield / @isfield / @endfield
+            |---------------------------------------------------------------------
+            */
 
-        return "<?php echo get_field({$expression}); ?>";
-    },
+            'field' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    'hasfield' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    if ($this->isToken($expression->get(2))) {
+                        if (empty($expression->get(3))) {
+                            $expression->put(3, 'true');
+                        }
 
-            if (Util::isIdentifier($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
-            }
+                        return "<?php echo get_field({$expression->get(0)}, {$expression->get(2)}, {$expression->get(3)})[{$expression->get(1)}]; ?>";
+                    }
 
-            if (Util::isIdentifier($expression->get(1))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
-            }
+                    if ($this->isToken($expression->get(1))) {
+                        if (empty($expression->get(2))) {
+                            $expression->put(2, 'true');
+                        }
 
-            return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
-        }
+                        return "<?php echo get_field({$expression->get(0)}, {$expression->get(1)}, {$expression->get(2)}); ?>";
+                    }
 
-        return "<?php if (get_field({$expression})) : ?>";
-    },
+                    if (empty($expression->get(2))) {
+                        $expression->put(2, 'true');
+                    }
 
-    'isfield' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    return "<?php echo get_field({$expression->get(0)}, null, {$expression->get(2)})[{$expression->get(1)}]; ?>";
+                }
 
-            if (Util::isIdentifier($expression->get(3))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
-            }
+                return "<?php echo get_field({$expression}); ?>";
+            },
 
-            if (Util::isIdentifier($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>"; // phpcs:ignore
-            }
+            'hasfield' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-            if (! empty($expression->get(2)) && ! Util::isIdentifier($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
-            }
+                    if ($this->isToken($expression->get(2))) {
+                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
+                    }
 
-            return "<?php if (get_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
-        }
-    },
+                    if ($this->isToken($expression->get(1))) {
+                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
+                    }
 
-    'endfield' => function () {
-        return '<?php endif; ?>';
-    },
+                    return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
+                }
 
-    /*
-    |---------------------------------------------------------------------
-    | @sub / @hassub / @issub / @endsub
-    |---------------------------------------------------------------------
-    */
+                return "<?php if (get_field({$expression})) : ?>";
+            },
 
-    'sub' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+            'isfield' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-            if (! empty($expression->get(2))) {
-                return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]; ?>";
-            }
+                    if ($this->isToken($expression->get(3))) {
+                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                    }
 
-            return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
-        }
+                    if ($this->isToken($expression->get(2))) {
+                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)}) === {$expression->get(1)}) : ?>"; // phpcs:ignore
+                    }
 
-        return "<?php echo get_sub_field({$expression}); ?>";
-    },
+                    if (! empty($expression->get(2)) && ! $this->isToken($expression->get(2))) {
+                        return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                    }
 
-    'hassub' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    return "<?php if (get_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
+                }
+            },
 
-            if (! empty($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>"; // phpcs:ignore
-            }
+            'endfield' => function () {
+                return '<?php endif; ?>';
+            },
 
-            return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
-        }
+            /*
+            |---------------------------------------------------------------------
+            | @sub / @hassub / @issub / @endsub
+            |---------------------------------------------------------------------
+            */
 
-        return "<?php if (get_sub_field({$expression})) : ?>";
-    },
+            'sub' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    'issub' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    if (! empty($expression->get(2))) {
+                        return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]; ?>";
+                    }
 
-            if (! empty($expression->get(2))) {
-                return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
-            }
+                    return "<?php echo get_sub_field({$expression->get(0)})[{$expression->get(1)}]; ?>";
+                }
 
-            return "<?php if (get_sub_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
-        }
-    },
+                return "<?php echo get_sub_field({$expression}); ?>";
+            },
 
-    'endsub' => function () {
-        return '<?php endif; ?>';
-    },
+            'hassub' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    /*
-    |---------------------------------------------------------------------
-    | @layouts / @endlayouts
-    |---------------------------------------------------------------------
-    */
+                    if (! empty($expression->get(2))) {
+                        return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>"; // phpcs:ignore
+                    }
 
-    'layouts' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
+                }
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
-                   "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
-        }
+                return "<?php if (get_sub_field({$expression})) : ?>";
+            },
 
-        return "<?php if (have_rows({$expression})) : ?>".
-               "<?php while (have_rows({$expression})) : the_row(); ?>";
-    },
+            'issub' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    'endlayouts' => function () {
-        return '<?php endwhile; endif; ?>';
-    },
+                    if (! empty($expression->get(2))) {
+                        return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                    }
 
-    /*
-    |---------------------------------------------------------------------
-    | @layout / @endlayout
-    |---------------------------------------------------------------------
-    */
+                    return "<?php if (get_sub_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
+                }
+            },
 
-    'layout' => function ($expression) {
-        return "<?php if (get_row_layout() === {$expression}) : ?>";
-    },
+            'endsub' => function () {
+                return '<?php endif; ?>';
+            },
 
-    'endlayout' => function () {
-        return '<?php endif; ?>';
-    },
+            /*
+            |---------------------------------------------------------------------
+            | @layouts / @endlayouts
+            |---------------------------------------------------------------------
+            */
 
-    /*
-    |---------------------------------------------------------------------
-    | @group / @endgroup
-    |---------------------------------------------------------------------
-    */
+            'layouts' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    'group' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+                    return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+                        "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
+                }
 
-            return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
-                   "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
-        }
+                return "<?php if (have_rows({$expression})) : ?>".
+                    "<?php while (have_rows({$expression})) : the_row(); ?>";
+            },
 
-        return "<?php if (have_rows({$expression})) : ?>".
-               "<?php while (have_rows({$expression})) : the_row(); ?>";
-    },
+            'endlayouts' => function () {
+                return '<?php endwhile; endif; ?>';
+            },
 
-    'endgroup' => function () {
-        return '<?php endwhile; endif; ?>';
-    },
+            /*
+            |---------------------------------------------------------------------
+            | @layout / @endlayout
+            |---------------------------------------------------------------------
+            */
 
-    /*
-    |---------------------------------------------------------------------
-    | @options / @endoptions / @hasoptions / @endhasoptions
-    |---------------------------------------------------------------------
-    */
+            'layout' => function ($expression) {
+                return "<?php if (get_row_layout() === {$expression}) : ?>";
+            },
 
-    'options' => function ($expression) {
-        return "<?php if (have_rows({$expression}, 'option')) : ?>".
-               "<?php while (have_rows({$expression}, 'option')) : the_row(); ?>";
-    },
+            'endlayout' => function () {
+                return '<?php endif; ?>';
+            },
 
-    'endoptions' => function () {
-        return '<?php endwhile; endif; ?>';
-    },
+            /*
+            |---------------------------------------------------------------------
+            | @group / @endgroup
+            |---------------------------------------------------------------------
+            */
 
-    'hasoptions' => function ($expression) {
-        return "<?php if (have_rows({$expression}, 'option')) : ?>";
-    },
+            'group' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-    'endhasoptions' => function () {
-        return '<?php endif; ?>';
-    },
+                    return "<?php if (have_rows({$expression->get(0)}, {$expression->get(1)})) : ?>".
+                        "<?php while (have_rows({$expression->get(0)}, {$expression->get(1)})) : the_row(); ?>";
+                }
 
-    /*
-    |---------------------------------------------------------------------
-    | @option / @hasoption / @isoption / @endoption
-    |---------------------------------------------------------------------
-    */
+                return "<?php if (have_rows({$expression})) : ?>".
+                    "<?php while (have_rows({$expression})) : the_row(); ?>";
+            },
 
-    'option' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+            'endgroup' => function () {
+                return '<?php endwhile; endif; ?>';
+            },
 
-            return "<?php echo get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
-        }
+            /*
+            |---------------------------------------------------------------------
+            | @options / @endoptions / @hasoptions / @endhasoptions
+            |---------------------------------------------------------------------
+            */
 
-        return "<?php echo get_field({$expression}, 'option'); ?>";
-    },
+            'options' => function ($expression) {
+                return "<?php if (have_rows({$expression}, 'option')) : ?>".
+                    "<?php while (have_rows({$expression}, 'option')) : the_row(); ?>";
+            },
 
-    'hasoption' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+            'endoptions' => function () {
+                return '<?php endwhile; endif; ?>';
+            },
 
-            return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]) : ?>";
-        }
+            'hasoptions' => function ($expression) {
+                return "<?php if (have_rows({$expression}, 'option')) : ?>";
+            },
 
-        return "<?php if (get_field({$expression}, 'option')) : ?>";
-    },
+            'endhasoptions' => function () {
+                return '<?php endif; ?>';
+            },
 
-    'isoption' => function ($expression) {
-        if (Str::contains($expression, ',')) {
-            $expression = Util::parse($expression);
+            /*
+            |---------------------------------------------------------------------
+            | @option / @hasoption / @isoption / @endoption
+            |---------------------------------------------------------------------
+            */
 
-            if (! empty($expression->get(2))) {
-                return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
-            }
+            'option' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
 
-            return "<?php if (get_field({$expression->get(0)}, 'option') === {$expression->get(1)}) : ?>";
-        }
-    },
+                    return "<?php echo get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]; ?>";
+                }
 
-    'endoption' => function () {
-        return '<?php endif; ?>';
-    },
+                return "<?php echo get_field({$expression}, 'option'); ?>";
+            },
 
-];
+            'hasoption' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
+
+                    return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}]) : ?>";
+                }
+
+                return "<?php if (get_field({$expression}, 'option')) : ?>";
+            },
+
+            'isoption' => function ($expression) {
+                if ($this->shouldParse($expression)) {
+                    $expression = $this->parse($expression);
+
+                    if (! empty($expression->get(2))) {
+                        return "<?php if (get_field({$expression->get(0)}, 'option')[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                    }
+
+                    return "<?php if (get_field({$expression->get(0)}, 'option') === {$expression->get(1)}) : ?>";
+                }
+            },
+
+            'endoption' => function () {
+                return '<?php endif; ?>';
+            },
+        ];
+    }
+}
