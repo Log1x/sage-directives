@@ -24,7 +24,7 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(1, 'WP_Post') || is_numeric(1)) : ?><?php \$posts->put('p', is_a(1, 'WP_Post') ? (1)->ID : 1); ?><?php endif; ?><?php if (is_array(1)) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(1) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : 1; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(1, 'WP_Post') || is_numeric(1)) : ?><?php \$posts->put('p', is_a(1, 'WP_Post') ? (1)->ID : 1); ?><?php endif; ?><?php if (is_array(1)) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect(1)->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : 1; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 
     it('compiles correctly with post object', function () {
@@ -32,7 +32,7 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(get_post(1), 'WP_Post') || is_numeric(get_post(1))) : ?><?php \$posts->put('p', is_a(get_post(1), 'WP_Post') ? (get_post(1))->ID : get_post(1)); ?><?php endif; ?><?php if (is_array(get_post(1))) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(get_post(1)) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : get_post(1); ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(get_post(1), 'WP_Post') || is_numeric(get_post(1))) : ?><?php \$posts->put('p', is_a(get_post(1), 'WP_Post') ? (get_post(1))->ID : get_post(1)); ?><?php endif; ?><?php if (is_array(get_post(1))) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect(get_post(1))->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : get_post(1); ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 
     it('compiles correctly with post ID array', function () {
@@ -40,7 +40,7 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a([1, 2, 3], 'WP_Post') || is_numeric([1, 2, 3])) : ?><?php \$posts->put('p', is_a([1, 2, 3], 'WP_Post') ? ([1, 2, 3])->ID : [1, 2, 3]); ?><?php endif; ?><?php if (is_array([1, 2, 3])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect([1, 2, 3]) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : [1, 2, 3]; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a([1, 2, 3], 'WP_Post') || is_numeric([1, 2, 3])) : ?><?php \$posts->put('p', is_a([1, 2, 3], 'WP_Post') ? ([1, 2, 3])->ID : [1, 2, 3]); ?><?php endif; ?><?php if (is_array([1, 2, 3])) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect([1, 2, 3])->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : [1, 2, 3]; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 
     it('compiles correctly with post ID array containing object', function () {
@@ -48,7 +48,7 @@ describe('@posts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a([1, get_post(2), 3], 'WP_Post') || is_numeric([1, get_post(2), 3])) : ?><?php \$posts->put('p', is_a([1, get_post(2), 3], 'WP_Post') ? ([1, get_post(2), 3])->ID : [1, get_post(2), 3]); ?><?php endif; ?><?php if (is_array([1, get_post(2), 3])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect([1, get_post(2), 3]) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : [1, get_post(2), 3]; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a([1, get_post(2), 3], 'WP_Post') || is_numeric([1, get_post(2), 3])) : ?><?php \$posts->put('p', is_a([1, get_post(2), 3], 'WP_Post') ? ([1, get_post(2), 3])->ID : [1, get_post(2), 3]); ?><?php endif; ?><?php if (is_array([1, get_post(2), 3])) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect([1, get_post(2), 3])->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : [1, get_post(2), 3]; ?><?php if (\$query->have_posts()) : \$__currentLoopData = range(1, \$query->post_count); \$__env->addLoop(\$__currentLoopData); while (\$query->have_posts()) : \$__env->incrementLoopIndices(); \$loop = \$__env->getLastLoop(); \$query->the_post(); ?>");
     });
 });
 
@@ -76,7 +76,7 @@ describe('@hasposts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(['post_type' => 'post'], 'WP_Post') || is_numeric(['post_type' => 'post'])) : ?><?php \$posts->put('p', is_a(['post_type' => 'post'], 'WP_Post') ? (['post_type' => 'post'])->ID : ['post_type' => 'post']); ?><?php endif; ?><?php if (is_array(['post_type' => 'post'])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(['post_type' => 'post']) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : ['post_type' => 'post']; ?><?php if (\$query->have_posts()) : ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(['post_type' => 'post'], 'WP_Post') || is_numeric(['post_type' => 'post'])) : ?><?php \$posts->put('p', is_a(['post_type' => 'post'], 'WP_Post') ? (['post_type' => 'post'])->ID : ['post_type' => 'post']); ?><?php endif; ?><?php if (is_array(['post_type' => 'post'])) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect(['post_type' => 'post'])->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : ['post_type' => 'post']; ?><?php if (\$query->have_posts()) : ?>");
     });
 });
 
@@ -104,7 +104,7 @@ describe('@noposts', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(['post_type' => 'post'], 'WP_Post') || is_numeric(['post_type' => 'post'])) : ?><?php \$posts->put('p', is_a(['post_type' => 'post'], 'WP_Post') ? (['post_type' => 'post'])->ID : ['post_type' => 'post']); ?><?php endif; ?><?php if (is_array(['post_type' => 'post'])) : ?><?php \$posts ->put('ignore_sticky_posts', true) ->put('posts_per_page', -1) ->put('post__in', collect(['post_type' => 'post']) ->map(function (\$post) { return is_a(\$post, 'WP_Post') ? \$post->ID : \$post; })->all()) ->put('orderby', 'post__in'); ?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : ['post_type' => 'post']; ?><?php if (! \$query->have_posts()) : ?>");
+        expect($compiled)->toBe("<?php \$posts = collect(); ?><?php if (is_a(['post_type' => 'post'], 'WP_Post') || is_numeric(['post_type' => 'post'])) : ?><?php \$posts->put('p', is_a(['post_type' => 'post'], 'WP_Post') ? (['post_type' => 'post'])->ID : ['post_type' => 'post']); ?><?php endif; ?><?php if (is_array(['post_type' => 'post'])) : ?><?php \$posts->put('ignore_sticky_posts', true)->put('posts_per_page', -1)->put('post__in', collect(['post_type' => 'post'])->map(fn (\$post) => is_a(\$post, 'WP_Post') ? \$post->ID : \$post)->all())->put('orderby', 'post__in');?><?php endif; ?><?php \$query = \$posts->isNotEmpty() ? new WP_Query(\$posts->all()) : ['post_type' => 'post']; ?><?php if (! \$query->have_posts()) : ?>");
     });
 });
 
@@ -536,7 +536,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image(1, 'thumbnail', false); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective, 'thumbnail', false); ?>");
     });
 
     it('compiles correctly with size', function () {
@@ -544,7 +544,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image(1, 'medium', false); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective, 'medium', false); ?>");
     });
 
     it('compiles correctly with size and alt tag', function () {
@@ -552,7 +552,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image(1,'medium',false,['alt' => 'Alt Text']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text']); ?>");
     });
 
     it('compiles correctly with size and options array', function () {
@@ -560,7 +560,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image(1,'medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
     });
 
     it('compiles correctly as a raw URL', function () {
@@ -568,7 +568,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe('<?php echo wp_get_attachment_url(1); ?>');
+        expect($compiled)->toBe('<?php $__imageDirective = 1; ?><?php echo wp_get_attachment_url($__imageDirective); ?>');
     });
 
     it('compiles correctly using a field name', function () {
@@ -576,7 +576,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image('image', 'thumbnail', false); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective, 'thumbnail', false); ?>");
     });
 
     it('compiles correctly using a field name and size', function () {
@@ -584,7 +584,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image('image', 'medium', false); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective, 'medium', false); ?>");
     });
 
     it('compiles correctly using a field name, size and alt tag', function () {
@@ -592,7 +592,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image('image','medium',false,['alt' => 'Alt Text']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text']); ?>");
     });
 
     it('compiles correctly using a field name, size and options array', function () {
@@ -600,7 +600,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php echo wp_get_attachment_image('image','medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
     });
 });
 
