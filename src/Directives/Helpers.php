@@ -215,11 +215,11 @@ return [
 
     /*
     |---------------------------------------------------------------------
-    | @style / @endstyle
+    | @stylesheet / @endstylesheet
     |---------------------------------------------------------------------
     */
 
-    'style' => function ($expression) {
+    'stylesheet' => function ($expression) {
         if (! empty($expression)) {
             return '<link rel="stylesheet" href="'.Util::strip($expression).'">';
         }
@@ -227,7 +227,7 @@ return [
         return '<style>';
     },
 
-    'endstyle' => function () {
+    'endstylesheet' => function () {
         return '</style>';
     },
 

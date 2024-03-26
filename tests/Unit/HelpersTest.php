@@ -250,9 +250,9 @@ describe('@endrepeat', function () {
     });
 });
 
-describe('@style', function () {
+describe('@stylesheet', function () {
     it('compiles correctly', function () {
-        $directive = '@style';
+        $directive = '@stylesheet';
 
         $compiled = $this->compile($directive);
 
@@ -260,7 +260,7 @@ describe('@style', function () {
     });
 
     it('compiles correctly with stylesheet', function () {
-        $directive = "@style('path/to/stylesheet.css')";
+        $directive = "@stylesheet('path/to/stylesheet.css')";
 
         $compiled = $this->compile($directive);
 
@@ -268,9 +268,9 @@ describe('@style', function () {
     });
 });
 
-describe('@endstyle', function () {
+describe('@endstylesheet', function () {
     it('compiles correctly', function () {
-        $directive = '@endstyle';
+        $directive = '@endstylesheet';
 
         $compiled = $this->compile($directive);
 
