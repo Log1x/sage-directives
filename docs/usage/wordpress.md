@@ -544,3 +544,13 @@ It comes with two assisting directives `@hassidebar` and `@endhassidebar` that c
 @thememod('header-bg-color')
 @thememod('header-bg-color', '#fff')
 ```
+
+## @menu
+
+`@menu` allows you to easily call `wp_nav_menu()` and is typically wrapped in `@hasmenu` and `@endhasmenu`.
+
+```php
+@hasmenu('primary_navigation')
+  @menu(['theme_location' => 'primary_navigation'])
+@endhasmenu
+```
