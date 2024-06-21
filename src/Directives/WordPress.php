@@ -631,6 +631,25 @@ class WordPress extends Directives
 
                 return "<?php echo get_theme_mod({$mod}); ?>";
             },
+
+            /*
+            |---------------------------------------------------------------------
+            | @menu / @hasmenu / @endhasmenu
+            |---------------------------------------------------------------------
+            */
+
+            'menu' => function ($expression) {
+                $expression = $this->parse($expression);
+                return "<?php wp_nav_menu({$expression->get(0)}); ?>";
+            },
+
+            'hasmenu' => function ($expression) {
+                return "<?php if (has_nav_menu($expression)) : ?>";
+            },
+
+            'endhasmenu' => function () {
+                return '<?php endif; ?>';
+            },
         ];
     }
 }
