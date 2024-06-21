@@ -845,3 +845,33 @@ describe('@thememod', function () {
         expect($compiled)->toBe("<?php echo get_theme_mod('mod', 'default'); ?>");
     });
 });
+
+describe('@menu', function () {
+    it('compiles correctly', function () {
+        $directive = "@menu(['theme_location' => 'primary_navigation'])";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php wp_nav_menu(['theme_location' => 'primary_navigation']); ?>");
+    });
+});
+
+describe('@hasmenu', function () {
+    it('compiles correctly', function () {
+        $directive = "@hasmenu('primary_navigation')";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php if (has_nav_menu('primary_navigation')) : ?>");
+    });
+});
+
+describe('@endhasmenu', function () {
+    it('compiles correctly', function () {
+        $directive = '@endhasmenu';
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe('<?php endif; ?>');
+    });
+});
