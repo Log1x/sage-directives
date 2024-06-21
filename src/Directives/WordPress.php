@@ -639,8 +639,7 @@ class WordPress extends Directives
             */
 
             'menu' => function ($expression) {
-                $expression = $this->parse($expression);
-                return "<?php wp_nav_menu({$expression->get(0)}); ?>";
+                return "<?php wp_nav_menu($expression); ?>";
             },
 
             'hasmenu' => function ($expression) {
