@@ -15,11 +15,16 @@ abstract class Directives implements DirectivesContract
     protected bool $registered = false;
 
     /**
+     * Directives to not load when a conflicting class exists.
+     */
+    protected array $conflicts = [];
+
+    /**
      * Make an instance of the Directives.
      */
     public static function make(): self
     {
-        return new static();
+        return new static;
     }
 
     /**
@@ -31,9 +36,13 @@ abstract class Directives implements DirectivesContract
             return;
         }
 
-        foreach ($this->directives() as $function => $directive) {
-            Blade::directive($function, $directive);
-        }
+        $conflicts = collect($this->conflicts)
+            ->filter(fn ($directives, $class) => class_exists($class))
+            ->flatMap(fn ($directives) => (array) $directives);
+
+        collect($this->directives())
+            ->except($conflicts)
+            ->each(fn ($callback, $directive) => Blade::directive($directive, $callback));
 
         $this->registered = true;
     }
