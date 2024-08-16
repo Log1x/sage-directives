@@ -7,6 +7,13 @@ use Illuminate\Support\Str;
 class Helpers extends Directives
 {
     /**
+     * Directives to not load when a conflicting class exists.
+     */
+    protected array $conflicts = [
+        'Livewire\Livewire' => ['script', 'endscript', 'js'],
+    ];
+
+    /**
      * The Helper directives.
      */
     public function directives(): array
