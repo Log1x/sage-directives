@@ -168,7 +168,7 @@ describe('@hasfield', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_field('item')['key']) : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_field('item')['key']) && get_field('item')['key']) : ?>");
     });
 
     it('compiles correctly with post ID', function () {
@@ -210,7 +210,7 @@ describe('@isfield', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_field('cta')['type'] === 'phone') : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_field('cta')['type']) && get_field('cta')['type'] === 'phone') : ?>");
     });
 
     it('compiles correctly with array key and post ID', function () {
@@ -218,7 +218,7 @@ describe('@isfield', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_field('cta', 1)['type'] === 'phone') : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_field('cta', 1)['type']) && get_field('cta', 1)['type'] === 'phone') : ?>");
     });
 
     it('compiles correctly with array key and post object', function () {
@@ -226,7 +226,7 @@ describe('@isfield', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_field('cta', \$post->ID)['type'] === 'phone') : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_field('cta', \$post->ID)['type']) && get_field('cta', \$post->ID)['type'] === 'phone') : ?>");
     });
 });
 
@@ -280,7 +280,7 @@ describe('@hassub', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_sub_field('item')['key']) : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_sub_field('item')['key']) && get_sub_field('item')['key']) : ?>");
     });
 
     it('compiles correctly with array key', function () {
@@ -288,7 +288,7 @@ describe('@hassub', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_sub_field('item')['key']['value']) : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_sub_field('item')['key']['value']) && get_sub_field('item')['key']['value']) : ?>");
     });
 });
 
@@ -306,7 +306,7 @@ describe('@issub', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toEqual("<?php if (get_sub_field('cta')['type'] === 'phone') : ?>");
+        expect($compiled)->toEqual("<?php if (isset(get_sub_field('cta')['type']) && get_sub_field('cta')['type'] === 'phone') : ?>");
     });
 });
 

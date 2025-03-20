@@ -87,14 +87,14 @@ class Acf extends Directives
                     $expression = $this->parse($expression);
 
                     if ($this->isToken($expression->get(2))) {
-                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
+                        return "<?php if (isset(get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) && get_field({$expression->get(0)}, {$expression->get(2)})[{$expression->get(1)}]) : ?>";
                     }
 
                     if ($this->isToken($expression->get(1))) {
                         return "<?php if (get_field({$expression->get(0)}, {$expression->get(1)})) : ?>";
                     }
 
-                    return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
+                    return "<?php if (isset(get_field({$expression->get(0)})[{$expression->get(1)}]) && get_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
                 }
 
                 return "<?php if (get_field({$expression})) : ?>";
@@ -105,7 +105,7 @@ class Acf extends Directives
                     $expression = $this->parse($expression);
 
                     if ($this->isToken($expression->get(3))) {
-                        return "<?php if (get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                        return "<?php if (isset(get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}]) && get_field({$expression->get(0)}, {$expression->get(3)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
                     }
 
                     if ($this->isToken($expression->get(2))) {
@@ -113,7 +113,7 @@ class Acf extends Directives
                     }
 
                     if (! empty($expression->get(2)) && ! $this->isToken($expression->get(2))) {
-                        return "<?php if (get_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                        return "<?php if (isset(get_field({$expression->get(0)})[{$expression->get(1)}]) && get_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
                     }
 
                     return "<?php if (get_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
@@ -149,10 +149,10 @@ class Acf extends Directives
                     $expression = $this->parse($expression);
 
                     if (! empty($expression->get(2))) {
-                        return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>"; // phpcs:ignore
+                        return "<?php if (isset(get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) && get_sub_field({$expression->get(0)})[{$expression->get(1)}][{$expression->get(2)}]) : ?>"; // phpcs:ignore
                     }
 
-                    return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
+                    return "<?php if (isset(get_sub_field({$expression->get(0)})[{$expression->get(1)}]) && get_sub_field({$expression->get(0)})[{$expression->get(1)}]) : ?>";
                 }
 
                 return "<?php if (get_sub_field({$expression})) : ?>";
@@ -163,7 +163,7 @@ class Acf extends Directives
                     $expression = $this->parse($expression);
 
                     if (! empty($expression->get(2))) {
-                        return "<?php if (get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
+                        return "<?php if (isset(get_sub_field({$expression->get(0)})[{$expression->get(1)}]) && get_sub_field({$expression->get(0)})[{$expression->get(1)}] === {$expression->get(2)}) : ?>"; // phpcs:ignore
                     }
 
                     return "<?php if (get_sub_field({$expression->get(0)}) === {$expression->get(1)}) : ?>";
