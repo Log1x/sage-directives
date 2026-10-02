@@ -37,7 +37,7 @@
   },
   "require-dev": {
     "roots/acorn": "*",
-    "pestphp/pest": "^2.9 || ^3.0",
+    "pestphp/pest": "^5.2.1",
     "laravel/pint": "^1.10"
   },
   "extra": {
