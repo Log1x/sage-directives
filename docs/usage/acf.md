@@ -42,7 +42,7 @@ To echo a field for a specific post that is also an array, you can pass the post
 @endfield
 ```
 
-To check the existance of a field for a specific post, you can pass a post ID as a second parameter:
+To check the existence of a field for a specific post, you can pass a post ID as a second parameter:
 
 ```php
 @hasfield('list', 5)
@@ -64,7 +64,7 @@ If the field you are checking against is an array, you can pass the array key as
 @endfield
 ```
 
-To check the existance of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
+To check the existence of a field that is an array for a specific post, you can pass the array key as a second parameter and the post ID as a third parameter:
 
 ```php
 @hasfield('image', 'url', 1)
@@ -144,7 +144,7 @@ To retrieve fields for a specific post, you can pass a post ID as a second param
 @endhasfields
 ```
 
-To check the existance of a parent field (such as Repeater or Flexible Content) for a specific post, you can pass a post ID as a second parameter:
+To check the existence of a parent field (such as Repeater or Flexible Content) for a specific post, you can pass a post ID as a second parameter:
 
 ```php
 @hasfields('lists', 5)
