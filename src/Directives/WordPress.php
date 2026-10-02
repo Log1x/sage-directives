@@ -418,7 +418,7 @@ class WordPress extends Directives
             */
 
             'image' => function ($expression) {
-                $expression = $this->parse($expression);
+                $expression = $this->parse($expression, 3);
                 $output = "<?php \$__imageDirective = {$expression->get(0)}; ?>";
 
                 if (! $this->isToken($expression->get(0))) {
@@ -431,10 +431,6 @@ class WordPress extends Directives
 
                 if ($this->strip($expression->get(1)) == 'raw') {
                     return $output.'<?php echo wp_get_attachment_url($__imageDirective); ?>';
-                }
-
-                if (! empty($expression->get(3))) {
-                    $expression = $expression->put(2, $this->unwrap($this->toString($expression->slice(2)->all(), true)));
                 }
 
                 if (! empty($expression->get(2)) && ! $this->isArray($expression->get(2))) {

@@ -560,7 +560,31 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text', 'class' => 'class']); ?>");
+    });
+
+    it('compiles correctly with an empty alt before other options', function () {
+        $directive = "@image(1, 'medium', ['alt' => '', 'class' => 'class'])";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => '', 'class' => 'class']); ?>");
+    });
+
+    it('compiles correctly with a variable before other options', function () {
+        $directive = "@image(1, 'medium', ['sizes' => \$sizes, 'class' => 'class'])";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['sizes' => \$sizes, 'class' => 'class']); ?>");
+    });
+
+    it('compiles correctly with a function call in the options', function () {
+        $directive = "@image(1, 'medium', ['alt' => get_post_meta(1, '_wp_attachment_image_alt', true), 'class' => 'class'])";
+
+        $compiled = $this->compile($directive);
+
+        expect($compiled)->toBe("<?php \$__imageDirective = 1; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => get_post_meta(1, '_wp_attachment_image_alt', true), 'class' => 'class']); ?>");
     });
 
     it('compiles correctly as a raw URL', function () {
@@ -600,7 +624,7 @@ describe('@image', function () {
 
         $compiled = $this->compile($directive);
 
-        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text','class' => 'class']); ?>");
+        expect($compiled)->toBe("<?php \$__imageDirective = 'image'; ?><?php \$__imageDirective = function_exists('acf') ? (get_field(\$__imageDirective) ?? get_sub_field(\$__imageDirective) ?? get_field(\$__imageDirective, 'option') ?? \$__imageDirective): \$__imageDirective; ?><?php \$__imageDirective = is_array(\$__imageDirective) && ! empty(\$__imageDirective['id']) ? \$__imageDirective['id'] : \$__imageDirective; ?><?php echo wp_get_attachment_image(\$__imageDirective,'medium',false,['alt' => 'Alt Text', 'class' => 'class']); ?>");
     });
 });
 
